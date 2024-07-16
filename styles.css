@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007acc;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: #005f99;
+}
