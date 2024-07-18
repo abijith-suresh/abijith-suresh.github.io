@@ -9,12 +9,13 @@
 </head>
 
 <body>
-    <aside class="sidebar">
-        <header class="profile">
+    <header>
+        <div class="profile">
             <h1 id="name">Abijith S</h1>
             <p id="designation">Software Developer</p>
-            <p id="description">A brief description about yourself. Passionate about coding and problem-solving.</p>
-        </header>
+            <p id="description">Building the future with code by day, gaming and getting lost in a good book by night.
+            </p>
+        </div>
         <nav class="navigation">
             <ul>
                 <li><a href="#about">About Me</a></li>
@@ -25,36 +26,70 @@
                 <li><a href="#resume">Resume Download</a></li>
             </ul>
         </nav>
-        <footer class="social-media">
-            <a href="https://linkedin.com/in/yourprofile" class="social-link"><img src="linkedin-icon.png"
-                    alt="LinkedIn"></a>
-            <a href="https://github.com/yourprofile" class="social-link"><img src="github-icon.png" alt="GitHub"></a>
-            <a href="https://twitter.com/yourprofile" class="social-link"><img src="twitter-icon.png" alt="Twitter"></a>
-        </footer>
-    </aside>
+        <ul class="social-media">
+            <li><a href="https://linkedin.com/in/yourprofile" class="social-link"><img src="images/LinkedIn.png"
+                        alt="LinkedIn"></a></li>
+            <li><a href="https://github.com/yourprofile" class="social-link"><img src="images/GitHub.png"
+                        alt="GitHub"></a></li>
+            <li><a href="https://twitter.com/yourprofile" class="social-link"><img src="images/X.png" alt="Twitter"></a>
+            </li>
+            <li><a href="https://twitter.com/yourprofile" class="social-link"><img src="images/Mastodon.png"
+                        alt="Mastodon"></a></li>
+            <li><a href="https://twitter.com/yourprofile" class="social-link"><img src="images/Email.png"
+                        alt="Email"></a></li>
+        </ul>
+    </header>
+
     <main>
         <section id="about">
             <h2>About Me</h2>
-            <p>Hi I'm Abijith..</p>
+            <p>Back in 2018, I decided to dive into the world of software development and discovered a deep passion
+                for coding and creating innovative solutions. Fast-forward to today, and I’ve had the privilege of
+                developing software for various exciting projects and organizations.</p>
+            <p>I recently graduated from Adi Shankara Institute of Engineering and Technology with a degree in Computer
+                Science. My
+                academic journey has equipped me with a strong foundation in multiple programming languages, software
+                development methodologies, and problem-solving techniques.</p>
+            <p>As a software developer, I am dedicated to creating clean, efficient, and maintainable code. I thrive in
+                collaborative environments where I can work with others to bring ideas to life. My goal is to contribute
+                to impactful projects and continuously grow in my field.</p>
         </section>
         <section id="experience">
             <h2>Experience</h2>
             <div class="job">
-                <h3>Job Title 1</h3>
-                <p>Company Name | Duration</p>
-                <ul>
-                    <li>Responsibility 1</li>
-                    <li>Responsibility 2</li>
-                    <li>Achievement 1</li>
-                </ul>
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-title-company">
+                            <h3>Frontend Web Developer Intern</h3>
+                            <p>Suyati Technologies</p>
+                        </div>
+                        <div class="job-duration">
+                            <p>Feb 2023 - Aug 2023</p>
+                        </div>
+                    </div>
+                    <p>I collaborated with a team of three students to develop the frontend of a property retail portal
+                        using HTML, CSS, and JavaScript. Our goal was to enhance responsiveness and visual appeal, which
+                        involved integrating it seamlessly with the Django backend for efficient data flow. Throughout
+                        the project, I focused on streamlining design and functionality based on user feedback, ensuring
+                        the final product met both aesthetic and functional requirements.</p>
+                </div>
             </div>
         </section>
         <section id="education">
             <h2>Education</h2>
-            <div class="education-entry">
-                <h3>Degree 1</h3>
-                <p>Institution Name | Graduation Date</p>
-                <p>Relevant Coursework: ...</p>
+            <div class="education-entries">
+                <div class="education-card">
+                    <div class="education-header">
+                        <div class="education-degree-institution">
+                            <h3>BTech in Computer Science</h3>
+                            <p>Adi Shankara Institute of Engineering and Technology</p>
+                        </div>
+                        <div class="education-graduation">
+                            <p>July 2024</p>
+                        </div>
+                    </div>
+                    <p>Relevant Coursework: Data Structures, Database Management Systems, Object Oriented Programming, Operating Systems</p>
+                </div>
             </div>
         </section>
         <section id="certifications">
