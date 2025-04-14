@@ -1,10 +1,10 @@
-import typography from '@tailwindcss/typography'
+import { fontFamily } from 'tailwindcss/defaultTheme'
 import type { Config } from 'tailwindcss'
-import animate from 'tailwindcss-animate'
-import defaultTheme from 'tailwindcss/defaultTheme'
+import animatePlugin from 'tailwindcss-animate'
+import typography from '@tailwindcss/typography'
 
-const config: Config = {
-  darkMode: 'class',
+const config = {
+  darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -21,10 +21,10 @@ const config: Config = {
       }
     },
     extend: {
-        fontFamily: {
-            sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
-            serif: ['var(--font-serif)', ...defaultTheme.fontFamily.serif],
-          },
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+        serif: ['var(--font-serif)', ...fontFamily.serif]
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -81,7 +81,7 @@ const config: Config = {
       }
     }
   },
-  plugins: [typography, animate]
-}
+  plugins: [animatePlugin, typography]
+} satisfies Config
 
 export default config
