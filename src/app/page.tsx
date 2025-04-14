@@ -1,9 +1,11 @@
-import React from "react";
+import Intro from '@/components/intro'
 
-export default function Page() {
+export default function Home() {
   return (
-    <div>
-
-    </div>
-  );
+    <section className='pb-24 pt-40'>
+      <div className='container max-w-3xl'>
+        <Intro />
+      </div>
+    </section>
+  )
 }
