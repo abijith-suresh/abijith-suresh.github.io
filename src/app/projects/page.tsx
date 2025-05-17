@@ -1,5 +1,5 @@
-import Projects from '@/components/projects'
-import { getProjects } from '@/lib/projects'
+// import Projects from '@/components/projects'
+// import { getProjects } from '@/lib/projects'
 
 export default async function ProjectsPage() {
   // const projects = await getProjects()

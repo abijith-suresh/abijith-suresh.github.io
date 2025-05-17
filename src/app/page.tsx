@@ -1,5 +1,5 @@
 import Intro from '@/components/intro'
-import RecentProjects from '@/components/recent-projects'
+// import RecentProjects from '@/components/recent-projects'
 
 export default function Home() {
   return (
