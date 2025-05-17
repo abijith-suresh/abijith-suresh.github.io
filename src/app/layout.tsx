@@ -15,8 +15,13 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Abijith',
-  description: 'Portfolio of Abijith'
+  title: 'Abijith | Software Engineer & Tech Enthusiast',
+  description: 'Portfolio of Abijith, a software engineer based in Kochi, India. Passionate about web development, modern tech, and continuous learning.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
