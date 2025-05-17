@@ -6,7 +6,7 @@ export default function Home() {
     <section className='pb-24 pt-40'>
       <div className='container max-w-3xl'>
         <Intro />
-        <RecentProjects />
+        {/* <RecentProjects /> */}
       </div>
     </section>
   )
