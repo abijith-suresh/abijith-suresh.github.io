@@ -1,10 +1,24 @@
 import Posts from '@/components/posts'
 import { getPosts } from '@/lib/posts'
 import Link from 'next/link'
+import { Suspense } from 'react'
+import { PostsGridSkeleton } from './skeletons/post-skeleton'
 
-export default async function RecentPosts() {
+async function RecentPostsList() {
   const posts = await getPosts(2)
 
+  return (
+    <Posts
+      posts={posts}
+      emptyMessage={{
+        title: "No Posts Yet",
+        description: "Stay tuned! New blog posts are coming soon."
+      }}
+    />
+  )
+}
+
+export default function RecentPosts() {
   return (
     <section className='pb-24'>
       <div>
@@ -18,13 +32,9 @@ export default async function RecentPosts() {
           </Link>
         </div>
 
-        <Posts
-          posts={posts}
-          emptyMessage={{
-            title: "No Posts Yet",
-            description: "Stay tuned! New blog posts are coming soon."
-          }}
-        />
+        <Suspense fallback={<PostsGridSkeleton count={2} />}>
+          <RecentPostsList />
+        </Suspense>
       </div>
     </section>
   )

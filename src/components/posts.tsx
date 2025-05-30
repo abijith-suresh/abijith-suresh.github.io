@@ -2,9 +2,11 @@ import { PostMetadata } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import { PostsGridSkeleton } from './skeletons/post-skeleton'
 
 interface PostsProps {
   posts: PostMetadata[]
+  isLoading?: boolean
   emptyMessage?: {
     title?: string
     description?: string
@@ -13,11 +15,16 @@ interface PostsProps {
 
 export default function Posts({
   posts,
+  isLoading = false,
   emptyMessage = {
     title: 'No Posts Yet',
     description: 'Stay tuned! Blog posts are coming soon.'
   }
 }: PostsProps) {
+  if (isLoading) {
+    return <PostsGridSkeleton />
+  }
+
   if (posts.length === 0) {
     return (
       <div className="rounded-lg border border-dashed p-8 text-center">

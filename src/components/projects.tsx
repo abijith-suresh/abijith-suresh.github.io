@@ -1,11 +1,12 @@
-import Image from 'next/image'
-import Link from 'next/link'
-
 import { ProjectMetadata } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ProjectsGridSkeleton } from './skeletons/project-skeleton'
 
 interface ProjectsProps {
   projects: ProjectMetadata[]
+  isLoading?: boolean
   emptyMessage?: {
     title?: string
     description?: string
@@ -14,11 +15,16 @@ interface ProjectsProps {
 
 export default function Projects({
   projects,
+  isLoading = false,
   emptyMessage = {
     title: 'No Projects Yet',
     description: 'Exciting projects are in the works! Check back soon.'
   }
 }: ProjectsProps) {
+  if (isLoading) {
+    return <ProjectsGridSkeleton />
+  }
+
   if (projects.length === 0) {
     return (
       <div className="rounded-lg border border-dashed p-8 text-center">

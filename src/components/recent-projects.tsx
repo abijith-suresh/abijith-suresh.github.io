@@ -1,10 +1,24 @@
 import Projects from '@/components/projects'
 import { getProjects } from '@/lib/projects'
 import Link from 'next/link'
+import { Suspense } from 'react'
+import { ProjectsGridSkeleton } from './skeletons/project-skeleton'
 
-export default async function RecentProjects() {
+async function RecentProjectsList() {
   const projects = await getProjects(2)
 
+  return (
+    <Projects
+      projects={projects}
+      emptyMessage={{
+        title: "No Projects Yet",
+        description: "Exciting projects are in the works! Check back soon."
+      }}
+    />
+  )
+}
+
+export default function RecentProjects() {
   return (
     <section className='pb-24'>
       <div>
@@ -18,13 +32,9 @@ export default async function RecentProjects() {
           </Link>
         </div>
 
-        <Projects
-          projects={projects}
-          emptyMessage={{
-            title: "No Projects Yet",
-            description: "Exciting projects are in the works! Check back soon."
-          }}
-        />
+        <Suspense fallback={<ProjectsGridSkeleton count={2} />}>
+          <RecentProjectsList />
+        </Suspense>
       </div>
     </section>
   )
