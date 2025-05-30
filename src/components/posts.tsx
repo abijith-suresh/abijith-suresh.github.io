@@ -3,11 +3,32 @@ import { formatDate } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Posts({
-  posts
-}: {
+interface PostsProps {
   posts: PostMetadata[]
-}) {
+  emptyMessage?: {
+    title?: string
+    description?: string
+  }
+}
+
+export default function Posts({
+  posts,
+  emptyMessage = {
+    title: 'No Posts Yet',
+    description: 'Stay tuned! Blog posts are coming soon.'
+  }
+}: PostsProps) {
+  if (posts.length === 0) {
+    return (
+      <div className="rounded-lg border border-dashed p-8 text-center">
+        <h2 className="text-xl font-semibold mb-2">{emptyMessage.title}</h2>
+        <p className="text-muted-foreground">
+          {emptyMessage.description}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <ul className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
       {posts.map(post => (

@@ -18,12 +18,33 @@ export type PostMetadata = {
   slug: string
 }
 
+// Ensure the posts directory exists
+function ensureDirectoryExists() {
+  if (!fs.existsSync(rootDirectory)) {
+    fs.mkdirSync(rootDirectory, { recursive: true })
+  }
+}
+
 export async function getPostBySlug(slug: string): Promise<Post | null> {
+  ensureDirectoryExists()
+
   try {
     const filePath = path.join(rootDirectory, `${slug}.mdx`)
+    if (!fs.existsSync(filePath)) {
+      return null
+    }
+
     const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
     const { data, content } = matter(fileContent)
-    return { metadata: { ...data, slug }, content }
+    return {
+      metadata: {
+        ...data,
+        slug,
+        title: data.title || 'Untitled Post',
+        summary: data.summary || 'No summary available'
+      },
+      content
+    }
   } catch (error) {
     console.error('Failed to load post:', error)
     return null
@@ -31,29 +52,60 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 }
 
 export async function getPosts(limit?: number): Promise<PostMetadata[]> {
-  const files = fs.readdirSync(rootDirectory)
+  ensureDirectoryExists()
 
-  const posts = files
-    .map(file => getPostMetadata(file))
-    .sort((a, b) => {
-      if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? '')) {
-        return 1
-      } else {
-        return -1
-      }
-    })
+  try {
+    const files = fs.readdirSync(rootDirectory)
 
-  if (limit) {
-    return posts.slice(0, limit)
+    // Filter for only .mdx files
+    const mdxFiles = files.filter(file => file.endsWith('.mdx'))
+
+    if (mdxFiles.length === 0) {
+      return []
+    }
+
+    const posts = mdxFiles
+      .map(file => getPostMetadata(file))
+      .filter((post): post is PostMetadata => post !== null)
+      .sort((a, b) => {
+        if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? '')) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+
+    if (limit) {
+      return posts.slice(0, limit)
+    }
+
+    return posts
+  } catch (error) {
+    console.error('Failed to get posts:', error)
+    return []
   }
-
-  return posts
 }
 
-export function getPostMetadata(filepath: string): PostMetadata {
-  const slug = filepath.replace(/\.mdx$/, '')
-  const filePath = path.join(rootDirectory, filepath)
-  const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-  const { data } = matter(fileContent)
-  return { ...data, slug }
+export function getPostMetadata(filepath: string): PostMetadata | null {
+  try {
+    const slug = filepath.replace(/\.mdx$/, '')
+    const filePath = path.join(rootDirectory, filepath)
+
+    if (!fs.existsSync(filePath)) {
+      return null
+    }
+
+    const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
+    const { data } = matter(fileContent)
+
+    return {
+      ...data,
+      slug,
+      title: data.title || 'Untitled Post',
+      summary: data.summary || 'No summary available'
+    }
+  } catch (error) {
+    console.error('Failed to get post metadata:', error)
+    return null
+  }
 }

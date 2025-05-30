@@ -4,11 +4,32 @@ import Link from 'next/link'
 import { ProjectMetadata } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
 
-export default function Projects({
-  projects
-}: {
+interface ProjectsProps {
   projects: ProjectMetadata[]
-}) {
+  emptyMessage?: {
+    title?: string
+    description?: string
+  }
+}
+
+export default function Projects({
+  projects,
+  emptyMessage = {
+    title: 'No Projects Yet',
+    description: 'Exciting projects are in the works! Check back soon.'
+  }
+}: ProjectsProps) {
+  if (projects.length === 0) {
+    return (
+      <div className="rounded-lg border border-dashed p-8 text-center">
+        <h2 className="text-xl font-semibold mb-2">{emptyMessage.title}</h2>
+        <p className="text-muted-foreground">
+          {emptyMessage.description}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <ul className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
       {projects.map(project => (
