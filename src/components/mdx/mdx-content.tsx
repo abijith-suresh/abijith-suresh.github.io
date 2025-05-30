@@ -1,6 +1,7 @@
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { JSX } from 'react'
 import { highlight } from 'sugar-high'
+import { useMDXComponents } from '../../../mdx-components'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Code({ children, ...props }: any) {
@@ -13,9 +14,6 @@ function Code({ children, ...props }: any) {
     />
   )
 }
-
-// Import our MDX components from the root mdx-components.tsx
-import { useMDXComponents } from '../../mdx-components'
 
 export default function MDXContent(
   props: JSX.IntrinsicAttributes & MDXRemoteProps

@@ -1,12 +1,12 @@
 'use client';
 
-import { StaggerItem } from './animations/stagger-in';
+import { StaggerItem } from '../framer/transitions';
 
-interface HeroAnimationProps {
+interface SectionAnimationProps {
   children: React.ReactNode;
 }
 
-export function HeroAnimation({ children }: HeroAnimationProps) {
+export function SectionAnimation({ children }: SectionAnimationProps) {
   return (
     <StaggerItem
       initial={{ opacity: 0, y: 20 }}

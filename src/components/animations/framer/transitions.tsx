@@ -1,7 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { HTMLMotionProps, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { HTMLMotionProps } from './motion';
 
 interface StaggerInProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode
@@ -9,7 +10,8 @@ interface StaggerInProps extends HTMLMotionProps<'div'> {
   staggerDelay?: number
 }
 
-const container = {
+// Animation variants
+export const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -20,7 +22,7 @@ const container = {
   }
 }
 
-const item = {
+export const item = {
   hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
@@ -32,6 +34,7 @@ const item = {
   }
 }
 
+// Animation components
 export function StaggerIn({
   children,
   delay = 0,

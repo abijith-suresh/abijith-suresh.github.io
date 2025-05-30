@@ -1,4 +1,4 @@
-import Projects from '@/components/projects'
+import Projects from '@/components/sections/projects'
 import { getProjects } from '@/lib/projects'
 
 export default async function ProjectsPage() {

@@ -1,8 +1,8 @@
 'use client';
 
-import MDXContent from '@/components/mdx-content';
 import { formatDate } from '@/lib/utils';
-import { MotionDiv } from './animations/motion-wrapper';
+import { MotionDiv } from '../animations/framer/motion';
+import MDXContent from './mdx-content';
 
 interface MDXArticleProps {
   title: string

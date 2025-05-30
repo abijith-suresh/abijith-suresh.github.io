@@ -1,11 +1,12 @@
 'use client';
 
+import { StaggerIn, StaggerItem } from '@/components/animations/framer/transitions';
+import { PostsGridSkeleton } from '@/components/skeletons/post-skeleton';
 import { PostMetadata } from '@/lib/posts';
 import { formatDate } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { StaggerIn, StaggerItem } from './animations/stagger-in';
-import { PostsGridSkeleton } from './skeletons/post-skeleton';
+
 
 interface PostsProps {
   posts: PostMetadata[]

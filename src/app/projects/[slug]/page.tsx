@@ -1,4 +1,4 @@
-import MDXArticle from '@/components/mdx-article'
+import MDXArticle from '@/components/mdx/mdx-article'
 import { getProjectBySlug } from '@/lib/projects'
 import { notFound } from 'next/navigation'
 

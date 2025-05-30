@@ -1,4 +1,4 @@
-import Posts from '@/components/posts'
+import Posts from '@/components/sections/posts'
 import { getPosts } from '@/lib/posts'
 
 export default async function BlogPage() {

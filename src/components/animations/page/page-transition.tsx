@@ -1,6 +1,6 @@
 'use client';
 
-import { StaggerIn } from './animations/stagger-in';
+import { StaggerIn } from '../framer/transitions';
 
 interface PageTransitionProps {
   children: React.ReactNode;

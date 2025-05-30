@@ -1,8 +1,8 @@
-import Projects from '@/components/projects'
 import { getProjects } from '@/lib/projects'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { ProjectsGridSkeleton } from './skeletons/project-skeleton'
+import Projects from '.'
+import { ProjectsGridSkeleton } from '@/components/skeletons/project-skeleton'
 
 async function RecentProjectsList() {
   const projects = await getProjects(2)

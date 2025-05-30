@@ -1,11 +1,11 @@
 'use client';
 
+import { StaggerIn, StaggerItem } from '@/components/animations/framer/transitions';
+import { ProjectsGridSkeleton } from '@/components/skeletons/project-skeleton';
 import { ProjectMetadata } from '@/lib/projects';
 import { formatDate } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { StaggerIn, StaggerItem } from './animations/stagger-in';
-import { ProjectsGridSkeleton } from './skeletons/project-skeleton';
 
 interface ProjectsProps {
   projects: ProjectMetadata[]
