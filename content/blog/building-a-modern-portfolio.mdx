@@ -1,0 +1,58 @@
+---
+title: "Building a Modern Portfolio with Next.js"
+description: "A deep dive into creating a performant and beautiful portfolio website using Next.js, TypeScript, and Tailwind CSS."
+date: "2024-03-15"
+image: "/blog/portfolio-hero.jpg"
+---
+
+# Building a Modern Portfolio with Next.js
+
+Creating a portfolio website is one of the best ways to showcase your work and skills as a developer. In this post, I'll share my experience building this portfolio using modern web technologies.
+
+## Why Next.js?
+
+Next.js has become my go-to framework for building web applications. Here's why:
+
+- **Performance**: Built-in optimizations for images, fonts, and static assets
+- **Developer Experience**: Great TypeScript support and intuitive file-based routing
+- **Flexibility**: Choose between static generation and server-side rendering
+- **Scalability**: Easy to start small and grow as needed
+
+## Key Features
+
+Some of the key features I implemented in this portfolio:
+
+1. **Dark Mode Support**: Using next-themes for seamless theme switching
+2. **MDX Blog Posts**: Writing content in Markdown with JSX components
+3. **Responsive Design**: Mobile-first approach with Tailwind CSS
+4. **Image Optimization**: Leveraging Next.js Image component
+5. **Type Safety**: Full TypeScript support throughout the project
+
+## Code Example
+
+Here's a simple example of how I implemented the theme toggle:
+
+```tsx
+import { useTheme } from 'next-themes'
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+      Toggle Theme
+    </button>
+  )
+}
+```
+
+## What's Next?
+
+I'm planning to add more features to this portfolio:
+
+- Analytics integration
+- Interactive project demos
+- Improved accessibility
+- Performance optimizations
+
+Stay tuned for more updates!
