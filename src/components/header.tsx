@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import ThemeToggle  from './theme-toggle'
+import ThemeToggle from './theme-toggle'
 
 export default function Header() {
   return (
     <header className='fixed inset-x-0 top-0 z-50 bg-background/75 py-6 backdrop-blur-xs'>
-      <nav className='container flex max-w-3xl items-center justify-between'>
+      <nav className='container flex max-w-4xl items-center justify-between'>
         <div>
           <Link href='/' className='font-serif text-2xl font-bold'>
             AS
@@ -20,6 +20,9 @@ export default function Header() {
           </li>
           <li className='transition-colors hover:text-foreground'>
             <Link href='/contact'>Contact</Link>
+          </li>
+          <li className='transition-colors hover:text-foreground'>
+            <Link href='/about'>About</Link>
           </li>
         </ul>
 
