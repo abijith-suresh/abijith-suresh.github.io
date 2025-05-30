@@ -10,11 +10,11 @@ export type Post = {
 }
 
 export type PostMetadata = {
-  title: string
-  description: string
+  title?: string
+  description?: string
   image?: string
   author?: string
-  date: string
+  publishedAt?: string
   slug: string
 }
 
@@ -36,7 +36,7 @@ export async function getPosts(limit?: number): Promise<PostMetadata[]> {
   const posts = files
     .map(file => getPostMetadata(file))
     .sort((a, b) => {
-      if (new Date(a.date) < new Date(b.date)) {
+      if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? '')) {
         return 1
       } else {
         return -1

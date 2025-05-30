@@ -35,7 +35,7 @@ export default function Posts({
                 {post.description}
               </p>
               <p className='text-xs font-light text-muted-foreground'>
-                {formatDate(post.date)}
+                {formatDate(post.publishedAt ?? '')}
               </p>
             </div>
           </Link>
