@@ -1,8 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-
 import { PostMetadata } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Posts({
   posts
@@ -32,7 +31,7 @@ export default function Posts({
                 {post.title}
               </h2>
               <p className='line-clamp-1 text-sm text-muted-foreground'>
-                {post.description}
+                {post.summary}
               </p>
               <p className='text-xs font-light text-muted-foreground'>
                 {formatDate(post.publishedAt ?? '')}

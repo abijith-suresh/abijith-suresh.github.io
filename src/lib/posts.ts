@@ -2,7 +2,7 @@ import fs from 'fs'
 import matter from 'gray-matter'
 import path from 'path'
 
-const rootDirectory = path.join(process.cwd(), 'content', 'blog')
+const rootDirectory = path.join(process.cwd(), 'content', 'posts')
 
 export type Post = {
   metadata: PostMetadata
@@ -11,7 +11,7 @@ export type Post = {
 
 export type PostMetadata = {
   title?: string
-  description?: string
+  summary?: string
   image?: string
   author?: string
   publishedAt?: string
