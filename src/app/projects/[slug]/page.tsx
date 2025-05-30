@@ -3,14 +3,13 @@ import { getProjectBySlug } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
-interface ProjectPageProps {
-  params: {
-    slug: string
-  }
-}
-
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await getProjectBySlug(params.slug)
+export default async function ProjectPage({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const project = await getProjectBySlug(slug)
 
   if (!project) {
     notFound()
@@ -22,7 +21,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {/* Header */}
         <header className='mb-8'>
           <h1 className='title mb-4'>{project.metadata.title}</h1>
-          <div className='flex items-center gap-2 text-sm text-muted-foreground'>
+          <div className='text-muted-foreground flex items-center gap-2 text-sm'>
             {project.metadata.author && (
               <>
                 <span>{project.metadata.author}</span>

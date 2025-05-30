@@ -3,14 +3,13 @@ import { getPostBySlug } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
-interface BlogPostPageProps {
-  params: {
-    slug: string
-  }
-}
-
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug)
+export default async function BlogPostPage({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     notFound()
@@ -22,7 +21,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Header */}
         <header className='mb-8'>
           <h1 className='title mb-4'>{post.metadata.title}</h1>
-          <div className='flex items-center gap-2 text-sm text-muted-foreground'>
+          <div className='text-muted-foreground flex items-center gap-2 text-sm'>
             {post.metadata.author && (
               <>
                 <span>{post.metadata.author}</span>

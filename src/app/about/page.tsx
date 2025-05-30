@@ -14,9 +14,8 @@ export default function AboutPage() {
         <h1 className="title mb-8">About Me</h1>
         <div className="prose dark:prose-invert">
           <p className="text-lg leading-relaxed">
-            {/* Add your personal introduction here */}
             I am a passionate software engineer with a love for creating elegant solutions to complex problems.
-            My journey in technology began... {/* Complete your story */}
+            When I&apos;m not coding, you can find me exploring new technologies and contributing to open-source projects.
           </p>
         </div>
         <div className="mt-8">
@@ -41,7 +40,6 @@ export default function AboutPage() {
                 <span className="h-2 w-2 rounded-full bg-primary"></span>
                 React & Next.js
               </li>
-              {/* Add more skills */}
             </ul>
           </div>
           {/* Backend */}
@@ -52,7 +50,6 @@ export default function AboutPage() {
                 <span className="h-2 w-2 rounded-full bg-primary"></span>
                 Node.js
               </li>
-              {/* Add more skills */}
             </ul>
           </div>
           {/* Other Skills */}
@@ -63,7 +60,6 @@ export default function AboutPage() {
                 <span className="h-2 w-2 rounded-full bg-primary"></span>
                 Git & Version Control
               </li>
-              {/* Add more skills */}
             </ul>
           </div>
         </div>
@@ -84,7 +80,6 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-          {/* Add more experience entries */}
         </div>
       </section>
 
@@ -97,7 +92,6 @@ export default function AboutPage() {
             <p className="text-sm text-muted-foreground">University Name • Year - Year</p>
             <p className="mt-2">Brief description or achievements</p>
           </div>
-          {/* Add more education entries */}
         </div>
       </section>
 
@@ -106,7 +100,7 @@ export default function AboutPage() {
         <h2 className="title-sm mb-8">Interests & Hobbies</h2>
         <div className="prose dark:prose-invert">
           <p>
-            When I'm not coding, you can find me... {/* Add your interests */}
+            When I&apos;m not coding, I enjoy exploring new technologies and contributing to the developer community.
           </p>
         </div>
       </section>
