@@ -1,24 +1,37 @@
+import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { JSX } from 'react'
 import { highlight } from 'sugar-high'
-import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Code({ children, ...props }: any) {
   const codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+  return (
+    <code
+      dangerouslySetInnerHTML={{ __html: codeHTML }}
+      className="rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm"
+      {...props}
+    />
+  )
 }
 
-const components = {
-  code: Code,
-}
+// Import our MDX components from the root mdx-components.tsx
+import { useMDXComponents } from '../../mdx-components'
 
 export default function MDXContent(
   props: JSX.IntrinsicAttributes & MDXRemoteProps
 ) {
+  // Get our custom components
+  const mdxComponents = useMDXComponents({})
+
   return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
+    <div className="prose prose-lg dark:prose-invert max-w-none">
+      <MDXRemote
+        {...props}
+        components={{
+          ...mdxComponents,
+          code: Code,
+          ...(props.components || {}),
+        }}
+      />
+    </div>
   )
 }
