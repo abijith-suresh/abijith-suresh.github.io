@@ -1,5 +1,4 @@
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
-import { JSX } from 'react'
 import { highlight } from 'sugar-high'
 import { useMDXComponents } from '../../../mdx-components'
 
@@ -15,10 +14,7 @@ function Code({ children, ...props }: any) {
   )
 }
 
-export default function MDXContent(
-  props: JSX.IntrinsicAttributes & MDXRemoteProps
-) {
-  // Get our custom components
+export default async function MDXContent(props: MDXRemoteProps) {
   const mdxComponents = useMDXComponents({})
 
   return (
@@ -28,7 +24,7 @@ export default function MDXContent(
         components={{
           ...mdxComponents,
           code: Code,
-          ...(props.components || {}),
+          ...(props.components || {})
         }}
       />
     </div>
