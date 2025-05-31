@@ -1,6 +1,54 @@
 import MDXArticle from '@/components/mdx/mdx-article'
+import BlogSchema from '@/components/seo/blog-schema'
 import { getPostBySlug } from '@/lib/posts'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
+type Props = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
+
+  if (!post) {
+    return {}
+  }
+
+  const { title, summary, image, author, publishedAt } = post.metadata
+
+  const ogImage = image || '/og-image.jpg'
+
+  return {
+    title: `${title} | Blog | Abijith`,
+    description: summary,
+    openGraph: {
+      title: `${title} | Blog | Abijith`,
+      description: summary,
+      type: 'article',
+      publishedTime: publishedAt,
+      authors: author ? [author] : undefined,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} | Blog | Abijith`,
+      description: summary,
+      images: [ogImage]
+    },
+    alternates: {
+      canonical: `https://abijith.sh/blog/${slug}`
+    }
+  }
+}
 
 export default async function BlogPostPage({
   params
@@ -14,12 +62,17 @@ export default async function BlogPostPage({
     notFound()
   }
 
+  const url = `https://abijith.sh/blog/${slug}`
+
   return (
-    <MDXArticle
-      title={post.metadata.title || ''}
-      publishedAt={post.metadata.publishedAt}
-      author={post.metadata.author}
-      content={post.content}
-    />
+    <>
+      <BlogSchema post={post.metadata} url={url} />
+      <MDXArticle
+        title={post.metadata.title || ''}
+        publishedAt={post.metadata.publishedAt}
+        author={post.metadata.author}
+        content={post.content}
+      />
+    </>
   )
 }
