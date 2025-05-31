@@ -4,13 +4,15 @@ import { SectionAnimation } from '@/components/animations/section/section-animat
 interface SkillCardProps {
   title: string
   skills: string[]
+  description: string
 }
 
-function SkillCard({ title, skills }: SkillCardProps) {
+function SkillCard({ title, skills, description }: SkillCardProps) {
   return (
     <StaggerItem>
-      <div className="rounded-lg border p-6">
-        <h3 className="mb-4 font-semibold">{title}</h3>
+      <div className="rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+        <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{description}</p>
         <ul className="space-y-2">
           {skills.map((skill) => (
             <li key={skill} className="flex items-center gap-2">
@@ -26,31 +28,59 @@ function SkillCard({ title, skills }: SkillCardProps) {
 
 const skillsData = [
   {
-    title: 'Frontend Development',
-    skills: ['React & Next.js']
+    title: 'Programming Languages',
+    description:
+      'Proficient in core programming languages for building efficient, maintainable codebases.',
+    skills: [
+      'JavaScript & TypeScript',
+      'Python',
+      'Java',
+      'C & C++'
+    ],
   },
   {
-    title: 'Backend Development',
-    skills: ['Node.js']
+    title: 'Frameworks & Libraries',
+    description:
+      'Hands-on experience with modern frontend and backend frameworks.',
+    skills: [
+      'React.js & Next.js',
+      'Django, Flask & FastAPI',
+      'Spring & Spring Boot',
+      'Node.js & Express',
+    ],
   },
   {
-    title: 'Other Skills',
-    skills: ['Git & Version Control']
-  }
+    title: 'Databases & Data',
+    description:
+      'Designing and managing both relational and NoSQL databases as well as performing data analysis.',
+    skills: [
+      'PostgreSQL',
+      'MySQL',
+      'MongoDB',
+      'Data Analysis with Pandas (Python)',
+    ],
+  },
+  {
+    title: 'DevOps & Cloud Tools',
+    description:
+      'Familiar with containerization, CI/CD pipelines, and cloud deployment for production-grade apps.',
+    skills: ['Docker', 'AWS (EC2, S3, RDS)', 'Jenkins', 'Git & GitHub'],
+  },
 ]
 
 export default function Skills() {
   return (
     <section className="mb-16">
       <SectionAnimation>
-        <h2 className="title-sm mb-8">Skills & Technologies</h2>
+        <h2 className="title mb-8">Skills & Technologies</h2>
       </SectionAnimation>
       <StaggerIn>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {skillsData.map((skillSet) => (
             <SkillCard
               key={skillSet.title}
               title={skillSet.title}
+              description={skillSet.description}
               skills={skillSet.skills}
             />
           ))}

@@ -29,12 +29,24 @@ function ExperienceItem({ title, company, period, achievements }: ExperienceItem
 
 const experienceData = [
   {
-    title: 'Senior Software Engineer',
-    company: 'Company Name',
-    period: '2020 - Present',
+    title: 'Developer-1 Software Engineering',
+    company: 'UST, Trivandrum',
+    period: 'Sept 2024 - Present',
     achievements: [
-      'Key achievement 1',
-      'Key achievement 2'
+      'Working as a full-stack developer contributing to enterprise-level applications',
+      'Collaborating with cross-functional teams to deliver high-quality software solutions',
+      'Participating in code reviews and implementing best practices in software development'
+    ]
+  },
+  {
+    title: 'Frontend Web Developer Intern',
+    company: 'Suyati Technologies, Kochi',
+    period: 'Feb 2023 - Aug 2023',
+    achievements: [
+      'Collaborated with a team of 3 students, focusing on frontend development using HTML, CSS, and JS.',
+      'Engineered the frontend of the property retail portal with HTML, CSS, and JS to enhance responsiveness and visual appeal.',
+      'Integrated the frontend with the Django backend, ensuring seamless communication and data flow.',
+      'Streamlined the frontend design and functionality, incorporating user feedback and making necessary adjustments.'
     ]
   }
 ]
@@ -43,7 +55,7 @@ export default function Experience() {
   return (
     <section className="mb-16">
       <SectionAnimation>
-        <h2 className="title-sm mb-8">Work Experience</h2>
+        <h2 className="title mb-8">Work Experience</h2>
       </SectionAnimation>
       <StaggerIn>
         <div className="space-y-12">

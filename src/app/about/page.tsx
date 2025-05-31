@@ -15,8 +15,8 @@ export default function AboutPage() {
     <PageTransition>
       <div className="container max-w-4xl py-24">
         <Introduction />
-        <Skills />
         <Experience />
+        <Skills />
         <Education />
         <Interests />
       </div>
