@@ -1,3 +1,5 @@
+'use client'
+
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import { useMDXComponents } from '../../../mdx-components'
@@ -14,7 +16,11 @@ function Code({ children, ...props }: any) {
   )
 }
 
-export default async function MDXContent(props: MDXRemoteProps) {
+interface MDXContentProps extends MDXRemoteProps {
+  children?: React.ReactNode
+}
+
+function MDXContent(props: MDXContentProps) {
   const mdxComponents = useMDXComponents({})
 
   return (
@@ -30,3 +36,5 @@ export default async function MDXContent(props: MDXRemoteProps) {
     </div>
   )
 }
+
+export default MDXContent

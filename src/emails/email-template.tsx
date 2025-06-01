@@ -103,7 +103,7 @@ const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
         color: '#666666',
         textAlign: 'center'
       }}>
-        This email was sent from your portfolio website's contact form
+        This email was sent from your portfolio website&apos;s contact form
       </p>
     </div>
   </div>
