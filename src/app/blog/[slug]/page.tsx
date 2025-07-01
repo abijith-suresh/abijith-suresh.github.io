@@ -3,6 +3,7 @@ import BlogSchema from '@/components/seo/blog-schema'
 import { getPostBySlug } from '@/lib/posts'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { ArticleHeader } from '@/components/article-header'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -62,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  * Also includes `BlogSchema` for SEO purposes.
  * @param params - The parameters object containing the post slug.
  */
-export default async function BlogPostPage({
+export default async function PostPage({
   params
 }: {
   params: Promise<{ slug: string }>
@@ -79,12 +80,16 @@ export default async function BlogPostPage({
   return (
     <>
       <BlogSchema post={post.metadata} url={url} />
-      <MDXArticle
+      <ArticleHeader
         title={post.metadata.title || ''}
         publishedAt={post.metadata.publishedAt}
         author={post.metadata.author}
-        content={post.content}
+        backLink={{
+          href: '/blog',
+          text: 'Back to Blog'
+        }}
       />
+      <MDXArticle content={post.content} />
     </>
   )
 }

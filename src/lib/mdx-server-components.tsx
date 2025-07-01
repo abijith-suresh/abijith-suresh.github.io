@@ -1,5 +1,6 @@
 import { highlight } from 'sugar-high'
 import type { MDXComponents } from 'mdx/types'
+import Image from 'next/image'
 
 /**
  * Renders code blocks with syntax highlighting using the 'sugar-high' library.
@@ -38,6 +39,34 @@ export const mdxServerComponents: MDXComponents = {
   ),
   ol: ({ children }) => (
     <ol className='my-4 ml-6 list-decimal space-y-2'>{children}</ol>
+  ),
+  // Custom image component for responsive images
+  img: props => (
+    <Image
+      {...props}
+      alt={props.alt || ''}
+      width={800}
+      height={450}
+      className='my-4 rounded-lg'
+    />
+  ),
+  // Custom link component for consistent styling
+  a: ({ children, ...props }) => (
+    <a {...props} className='text-primary underline hover:no-underline'>
+      {children}
+    </a>
+  ),
+  // Custom blockquote styling
+  blockquote: ({ children }) => (
+    <blockquote className='border-l-4 border-primary pl-4 italic'>
+      {children}
+    </blockquote>
+  ),
+  // Custom pre (code block) styling
+  pre: ({ children }) => (
+    <pre className='overflow-x-auto rounded-md bg-gray-800 p-4 text-white'>
+      {children}
+    </pre>
   ),
   code: Code
 }

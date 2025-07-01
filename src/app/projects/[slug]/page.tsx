@@ -3,6 +3,7 @@ import ProjectSchema from '@/components/seo/project-schema'
 import { getProjectBySlug } from '@/lib/projects'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { ArticleHeader } from '@/components/article-header'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -79,12 +80,16 @@ export default async function ProjectPage({
   return (
     <>
       <ProjectSchema project={project.metadata} url={url} />
-      <MDXArticle
+      <ArticleHeader
         title={project.metadata.title || ''}
         publishedAt={project.metadata.publishedAt}
         author={project.metadata.author}
-        content={project.content}
+        backLink={{
+          href: '/projects',
+          text: 'Back to Projects'
+        }}
       />
+      <MDXArticle content={project.content} />
     </>
   )
 }
