@@ -6,8 +6,10 @@ import type { MDXComponents } from 'mdx/types'
  * The highlighted HTML is injected directly using `dangerouslySetInnerHTML`.
  */
 function Code({ children, ...props }: React.ComponentProps<'code'>) {
-  const codeString = Array.isArray(children) ? children.join('') : String(children);
-  const codeHTML = highlight(codeString);
+  const codeString = Array.isArray(children)
+    ? children.join('')
+    : String(children)
+  const codeHTML = highlight(codeString)
   return (
     <code
       dangerouslySetInnerHTML={{ __html: codeHTML }}
