@@ -1,8 +1,8 @@
 import { getProjects } from '@/lib/projects'
-import Link from 'next/link'
 import { Suspense } from 'react'
 import Projects from '@/app/projects/components/projects'
 import { ProjectsGridSkeleton } from '@/components/skeletons/project-skeleton'
+import { ViewAllLink } from '@/components/view-all-link'
 
 /**
  * Fetches and displays a limited number of recent projects.
@@ -31,13 +31,8 @@ export default function RecentProjects() {
     <section className='pb-24'>
       <div>
         <div className='mb-12 flex items-center justify-between'>
-          <h2 className='title'>Recent projects</h2>
-          <Link
-            href='/projects'
-            className='text-muted-foreground hover:text-foreground underline decoration-1 underline-offset-2 transition-colors'
-          >
-            View all projects
-          </Link>
+          <h2 className='title'>Recent Projects</h2>
+          <ViewAllLink href='/projects' text='View all projects' />
         </div>
 
         <Suspense fallback={<ProjectsGridSkeleton count={2} />}>
