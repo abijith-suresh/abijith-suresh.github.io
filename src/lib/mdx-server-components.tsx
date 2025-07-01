@@ -1,12 +1,11 @@
 import { highlight } from 'sugar-high'
 import type { MDXComponents } from 'mdx/types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 /**
  * Renders code blocks with syntax highlighting using the 'sugar-high' library.
  * The highlighted HTML is injected directly using `dangerouslySetInnerHTML`.
  */
-function Code({ children, ...props }: any) {
+function Code({ children, ...props }: React.ComponentProps<'code'>) {
   const codeHTML = highlight(children)
   return (
     <code
