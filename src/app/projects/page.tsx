@@ -1,4 +1,4 @@
-import Projects from '@/components/sections/projects'
+import Projects from '@/app/projects/components/projects'
 import { getProjects } from '@/lib/projects'
 import { Metadata } from 'next'
 

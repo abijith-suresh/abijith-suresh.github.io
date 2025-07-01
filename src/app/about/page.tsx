@@ -1,9 +1,9 @@
 import { PageTransition } from '@/components/animations/page/page-transition'
-import Education from '@/components/sections/about/education'
-import Experience from '@/components/sections/about/experience'
-import Interests from '@/components/sections/about/interests'
-import Introduction from '@/components/sections/about/introduction'
-import Skills from '@/components/sections/about/skills'
+import Education from '@/app/about/components/education'
+import Experience from '@/app/about/components/experience'
+import Interests from '@/app/about/components/interests'
+import Introduction from '@/app/about/components/introduction'
+import Skills from '@/app/about/components/skills'
 
 export const metadata = {
   title: 'About Me',

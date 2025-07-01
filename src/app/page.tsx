@@ -1,7 +1,7 @@
 import { PageTransition } from '@/components/animations/page/page-transition'
-import Hero from '@/components/sections/hero'
-import RecentPosts from '@/components/sections/posts/recent-posts'
-import RecentProjects from '@/components/sections/projects/recent-projects'
+import Hero from '@/app/components/hero'
+import RecentPosts from '@/app/components/recent-posts'
+import RecentProjects from '@/app/components/recent-projects'
 
 export default function Home() {
   return (
