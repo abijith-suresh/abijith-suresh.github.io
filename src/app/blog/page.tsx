@@ -1,6 +1,8 @@
 import Posts from '@/app/blog/components/posts'
 import { getPosts } from '@/lib/posts'
 import { Metadata } from 'next'
+import { StaggerItem } from '@/components/animations/framer/transitions'
+import { PageTransition } from '@/components/animations/page/page-transition'
 
 export const metadata: Metadata = {
   title: 'Blog | Abijith',
@@ -37,9 +39,16 @@ export default async function BlogPage() {
   const posts = await getPosts()
 
   return (
-    <div className='container max-w-4xl pt-40 pb-24'>
-      <h1 className='title mb-8'>Blog</h1>
-      <Posts posts={posts} />
-    </div>
+    <PageTransition>
+      <div className='container max-w-4xl pt-40 pb-24'>
+        <StaggerItem>
+          <h1 className='title mb-8'>Blog</h1>
+          <p className='mb-16 text-lg leading-relaxed'>
+            Welcome to my blog, where I share my thoughts, insights, and experiences on software development, technology, and other topics that interest me.
+          </p>
+        </StaggerItem>
+        <Posts posts={posts} />
+      </div>
+    </PageTransition>
   )
 }
