@@ -11,6 +11,11 @@ interface EducationItemProps {
   description: string
 }
 
+/**
+ * Renders a single education entry.
+ * Displays degree, university, period, and a description of the academic experience.
+ * Uses `StaggerItem` for animated entry.
+ */
 function EducationItem({
   degree,
   university,
@@ -43,6 +48,10 @@ const educationData = [
   }
 ]
 
+/**
+ * Renders the Education section of the about page.
+ * Displays a timeline of educational background using `EducationItem` components with staggered animations.
+ */
 export default function Education() {
   return (
     <section className='mb-16'>

@@ -6,6 +6,10 @@ import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 
+/**
+ * A client-side component that provides a button to toggle between light and dark themes.
+ * It uses `next-themes` for theme management and handles hydration to prevent mismatches.
+ */
 export default function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)

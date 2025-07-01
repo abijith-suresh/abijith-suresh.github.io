@@ -1,3 +1,6 @@
+/**
+ * Configuration for the site, including name, URL, environment, and static routes.
+ */
 export const siteConfig = {
   name: 'Abijith',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://abijith.sh',

@@ -19,6 +19,10 @@ interface PostsProps {
   }
 }
 
+/**
+ * Renders a grid of blog post cards with optional loading states and empty messages.
+ * Each post card links to its detailed page and displays an image, title, summary, and publish date.
+ */
 export default function Posts({
   posts,
   isLoading = false,

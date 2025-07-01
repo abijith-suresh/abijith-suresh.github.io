@@ -1,5 +1,9 @@
 import ContactForm from '@/components/contact-form'
 
+/**
+ * Renders the contact page, which includes a contact form.
+ * Allows users to send messages through the provided form.
+ */
 export default function Contact() {
   return (
     <section className='pt-40 pb-24'>

@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 
+/**
+ * Renders a 404 Not Found page.
+ * Provides a user-friendly message and a link to navigate back to the home page.
+ */
 export default function NotFound() {
   return (
     <section className='pt-40 pb-24'>

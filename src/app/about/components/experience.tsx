@@ -11,6 +11,11 @@ interface ExperienceItemProps {
   achievements: string[]
 }
 
+/**
+ * Renders a single work experience entry.
+ * Displays job title, company, period, and a list of achievements.
+ * Uses `StaggerItem` for animated entry.
+ */
 function ExperienceItem({
   title,
   company,
@@ -61,6 +66,10 @@ const experienceData = [
   }
 ]
 
+/**
+ * Renders the Work Experience section of the about page.
+ * Displays a timeline of professional experiences using `ExperienceItem` components with staggered animations.
+ */
 export default function Experience() {
   return (
     <section className='mb-16'>

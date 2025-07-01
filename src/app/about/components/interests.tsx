@@ -9,6 +9,11 @@ interface InterestCardProps {
   description: string
 }
 
+/**
+ * Renders a card displaying a single interest or hobby.
+ * Includes a category title and a description.
+ * Uses `StaggerItem` for animated entry.
+ */
 function InterestCard({ category, description }: InterestCardProps) {
   return (
     <StaggerItem>
@@ -43,6 +48,10 @@ const interestsData = [
   }
 ]
 
+/**
+ * Renders the Interests & Hobbies section of the about page.
+ * Displays various interest categories using `InterestCard` components with staggered animations.
+ */
 export default function Interests() {
   return (
     <section>

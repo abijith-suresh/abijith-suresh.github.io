@@ -8,6 +8,12 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
+/**
+ * Generates dynamic metadata for a blog post page based on its slug.
+ * Fetches post data to populate title, description, Open Graph, and Twitter metadata.
+ * @param params - The parameters object containing the post slug.
+ * @returns A Promise that resolves to the Metadata object for the page.
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = await getPostBySlug(slug)
@@ -50,6 +56,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+/**
+ * Renders a single blog post page.
+ * Fetches post content by slug and displays it using the `MDXArticle` component.
+ * Also includes `BlogSchema` for SEO purposes.
+ * @param params - The parameters object containing the post slug.
+ */
 export default async function BlogPostPage({
   params
 }: {

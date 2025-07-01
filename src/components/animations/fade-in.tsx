@@ -6,6 +6,13 @@ interface FadeInProps extends HTMLMotionProps<'div'> {
   delay?: number
 }
 
+/**
+ * A component that applies a fade-in and slide-up animation to its children.
+ * Utilizes `framer-motion` for the animation effect.
+ * @param children - The React nodes to be animated.
+ * @param delay - Optional. The delay before the animation starts.
+ * @param className - Optional. Additional CSS class names.
+ */
 export function FadeIn({
   children,
   delay = 0,

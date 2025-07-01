@@ -63,6 +63,10 @@ const navigation = [
   // }
 ]
 
+/**
+ * Renders the footer of the application.
+ * Displays social media links and copyright information.
+ */
 export default function Footer() {
   return (
     <footer className='py-8'>

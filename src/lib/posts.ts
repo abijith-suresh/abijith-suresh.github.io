@@ -19,12 +19,20 @@ export type PostMetadata = {
 }
 
 // Ensure the posts directory exists
+/**
+ * Ensures that the posts content directory exists, creating it if it doesn't.
+ */
 function ensureDirectoryExists() {
   if (!fs.existsSync(rootDirectory)) {
     fs.mkdirSync(rootDirectory, { recursive: true })
   }
 }
 
+/**
+ * Retrieves a single post by its slug.
+ * @param slug - The slug of the post to retrieve.
+ * @returns A Promise that resolves to the Post object or null if not found/error.
+ */
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   ensureDirectoryExists()
 
@@ -51,6 +59,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   }
 }
 
+/**
+ * Retrieves a list of post metadata, optionally limited by count.
+ * Posts are sorted by published date in descending order.
+ * @param limit - Optional. The maximum number of posts to return.
+ * @returns A Promise that resolves to an array of PostMetadata.
+ */
 export async function getPosts(limit?: number): Promise<PostMetadata[]> {
   ensureDirectoryExists()
 
@@ -86,6 +100,11 @@ export async function getPosts(limit?: number): Promise<PostMetadata[]> {
   }
 }
 
+/**
+ * Extracts metadata from a single post MDX file.
+ * @param filepath - The filename of the MDX post (e.g., 'my-post.mdx').
+ * @returns The PostMetadata object or null if an error occurs.
+ */
 export function getPostMetadata(filepath: string): PostMetadata | null {
   try {
     const slug = filepath.replace(/\.mdx$/, '')

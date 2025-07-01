@@ -3,6 +3,10 @@
 import { ThemeProvider, useTheme } from 'next-themes'
 import { Toaster } from '@/components/ui/sonner'
 
+/**
+ * Provides theme and toaster context to the application.
+ * Wraps the application with `ThemeProvider` from `next-themes` and includes a `ToasterProvider`.
+ */
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
@@ -17,6 +21,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * Client-side component to provide `sonner` toast notifications.
+ * It sets the toaster theme based on the resolved theme from `next-themes`.
+ */
 function ToasterProvider() {
   const { resolvedTheme } = useTheme()
 

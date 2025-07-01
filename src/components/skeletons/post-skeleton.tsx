@@ -1,5 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
+/**
+ * Renders a skeleton loader for a single blog post card.
+ * Displays animated placeholder elements for title and summary.
+ */
 export function PostSkeleton() {
   return (
     <div className='group relative rounded-lg border p-6'>
@@ -16,6 +20,11 @@ export function PostSkeleton() {
   )
 }
 
+/**
+ * Renders a grid of `PostSkeleton` components.
+ * Useful for displaying multiple post placeholders during data loading.
+ * @param count - The number of post skeletons to display. Defaults to 4.
+ */
 export function PostsGridSkeleton({ count = 4 }: { count?: number }) {
   return (
     <div className='space-y-8'>
