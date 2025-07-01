@@ -1,4 +1,5 @@
 import ContactForm from '@/components/contact-form'
+import { PageTransition } from '@/components/animations/page/page-transition'
 
 /**
  * Renders the contact page, which includes a contact form.
@@ -6,12 +7,14 @@ import ContactForm from '@/components/contact-form'
  */
 export default function Contact() {
   return (
-    <section className='pt-40 pb-24'>
-      <div className='container max-w-3xl'>
-        <h2 className='title'>Let&apos;s talk about your project</h2>
+    <PageTransition>
+      <section className='pt-40 pb-24'>
+        <div className='container max-w-3xl'>
+          <h2 className='title'>Let&apos;s talk about your project</h2>
 
-        <ContactForm />
-      </div>
-    </section>
+          <ContactForm />
+        </div>
+      </section>
+    </PageTransition>
   )
 }
