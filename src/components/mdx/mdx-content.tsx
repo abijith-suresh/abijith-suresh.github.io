@@ -1,38 +1,13 @@
 'use client'
 
-import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
-import { highlight } from 'sugar-high'
-import { useMDXComponents } from '../../../mdx-components'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function Code({ children, ...props }: any) {
-  const codeHTML = highlight(children)
-  return (
-    <code
-      dangerouslySetInnerHTML={{ __html: codeHTML }}
-      className='bg-muted rounded px-[0.3rem] py-[0.2rem] font-mono text-sm'
-      {...props}
-    />
-  )
+interface MDXContentProps {
+  children: React.ReactNode
 }
 
-interface MDXContentProps extends MDXRemoteProps {
-  children?: React.ReactNode
-}
-
-function MDXContent(props: MDXContentProps) {
-  const mdxComponents = useMDXComponents({})
-
+function MDXContent({ children }: MDXContentProps) {
   return (
     <div className='prose prose-lg dark:prose-invert max-w-none'>
-      <MDXRemote
-        {...props}
-        components={{
-          ...mdxComponents,
-          code: Code,
-          ...(props.components || {})
-        }}
-      />
+      {children}
     </div>
   )
 }

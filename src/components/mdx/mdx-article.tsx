@@ -1,6 +1,7 @@
 import MDXArticleAnimations from '@/components/animations/mdx/mdx-article-animations'
 import { formatDate } from '@/lib/utils'
 import MDXContent from './mdx-content'
+import { MDXRemoteWrapper } from './mdx-remote-wrapper'
 
 interface MDXArticleProps {
   title: string
@@ -30,7 +31,11 @@ export default async function MDXArticle({
     </header>
   )
 
-  const mdxContent = <MDXContent source={content} />
+  const mdxContent = (
+    <MDXContent>
+      <MDXRemoteWrapper source={content} />
+    </MDXContent>
+  )
 
   return (
     <article className='pt-40 pb-24'>
