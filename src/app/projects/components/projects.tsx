@@ -65,13 +65,13 @@ export default function Projects({
               )}
 
               <div className='absolute inset-x-0 bottom-0 px-6 py-5'>
-                <h2 className='title line-clamp-1 text-xl no-underline'>
+                <h2 className='title line-clamp-1 text-xl no-underline text-white'>
                   {project.title}
                 </h2>
-                <p className='text-muted-foreground line-clamp-1 text-sm'>
+                <p className='line-clamp-1 text-sm text-gray-100'>
                   {project.summary}
                 </p>
-                <p className='text-muted-foreground text-xs font-light'>
+                <p className='text-xs font-light text-gray-200'>
                   {formatDate(project.publishedAt ?? '')}
                 </p>
               </div>
