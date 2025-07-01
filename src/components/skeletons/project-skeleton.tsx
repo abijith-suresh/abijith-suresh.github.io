@@ -1,5 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
+/**
+ * Renders a skeleton loader for a single project card.
+ * Displays animated placeholder elements for image, title, and description.
+ */
 export function ProjectSkeleton() {
   return (
     <div className='group relative overflow-hidden rounded-lg border'>
@@ -17,6 +21,11 @@ export function ProjectSkeleton() {
   )
 }
 
+/**
+ * Renders a grid of `ProjectSkeleton` components.
+ * Useful for displaying multiple project placeholders during data loading.
+ * @param count - The number of project skeletons to display. Defaults to 4.
+ */
 export function ProjectsGridSkeleton({ count = 4 }: { count?: number }) {
   return (
     <div className='grid gap-8 md:grid-cols-2'>

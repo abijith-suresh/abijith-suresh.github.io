@@ -8,6 +8,12 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
+/**
+ * Generates dynamic metadata for a project page based on its slug.
+ * Fetches project data to populate title, description, Open Graph, and Twitter metadata.
+ * @param params - The parameters object containing the project slug.
+ * @returns A Promise that resolves to the Metadata object for the page.
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const project = await getProjectBySlug(slug)
@@ -50,6 +56,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+/**
+ * Renders a single project page.
+ * Fetches project content by slug and displays it using the `MDXArticle` component.
+ * Also includes `ProjectSchema` for SEO purposes.
+ * @param params - The parameters object containing the project slug.
+ */
 export default async function ProjectPage({
   params
 }: {

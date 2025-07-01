@@ -8,6 +8,10 @@ interface MDXArticleAnimationsProps {
   content: ReactNode
 }
 
+/**
+ * Applies entrance animations to the header and content of an MDX article.
+ * Uses `MotionDiv` from `framer-motion` to animate opacity and vertical position.
+ */
 export default function MDXArticleAnimations({
   header,
   content

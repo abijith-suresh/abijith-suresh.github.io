@@ -17,6 +17,12 @@ if (!process.env.CONTACT_FORM_TO_EMAIL) {
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+/**
+ * Server action to send an email using the Resend API.
+ * Validates the input data against `ContactFormSchema` and sends an email using `EmailTemplate`.
+ * @param data - The contact form input data (name, email, message).
+ * @returns An object indicating success or containing an error message.
+ */
 export async function sendEmail(data: ContactFormInputs) {
   const result = ContactFormSchema.safeParse(data)
 

@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+/**
+ * Zod schema for validating contact form submissions.
+ * Ensures name, email, and message fields meet specified criteria.
+ */
 export const ContactFormSchema = z.object({
   name: z
     .string()

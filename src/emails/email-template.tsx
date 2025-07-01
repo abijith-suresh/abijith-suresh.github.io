@@ -4,6 +4,15 @@ interface EmailTemplateProps {
   message: string
 }
 
+/**
+ * React component for rendering an email template for contact form submissions.
+ * It displays the sender's name, email, and message in a structured HTML format.
+ *
+ * @param props - The props for the EmailTemplate component.
+ * @param props.name - The name of the person who sent the message.
+ * @param props.email - The email address of the person who sent the message.
+ * @param props.message - The content of the message.
+ */
 const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   name,
   email,

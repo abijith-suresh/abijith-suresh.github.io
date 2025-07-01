@@ -6,6 +6,10 @@ interface SectionAnimationProps {
   children: React.ReactNode
 }
 
+/**
+ * A component that applies a fade-in and slide-up animation to its children.
+ * Utilizes `StaggerItem` from framer-motion for the animation effect, with a slight delay.
+ */
 export function SectionAnimation({ children }: SectionAnimationProps) {
   return (
     <StaggerItem

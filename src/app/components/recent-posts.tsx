@@ -4,6 +4,10 @@ import { Suspense } from 'react'
 import Posts from '@/app/blog/components/posts'
 import { PostsGridSkeleton } from '@/components/skeletons/post-skeleton'
 
+/**
+ * Fetches and displays a limited number of recent blog posts.
+ * Uses `Posts` component for rendering and `PostsGridSkeleton` for loading state.
+ */
 async function RecentPostsList() {
   const posts = await getPosts(2)
 
@@ -18,6 +22,10 @@ async function RecentPostsList() {
   )
 }
 
+/**
+ * Renders a section displaying recent blog posts.
+ * Includes a heading, a link to view all posts, and a suspended `RecentPostsList` for data fetching.
+ */
 export default function RecentPosts() {
   return (
     <section className='pb-24'>

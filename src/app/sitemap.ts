@@ -3,6 +3,11 @@ import { getPosts } from '@/lib/posts'
 import { getProjects } from '@/lib/projects'
 import { MetadataRoute } from 'next'
 
+/**
+ * Generates a sitemap for the application, including static pages, blog posts, and projects.
+ * Dynamically fetches content to ensure the sitemap is always up-to-date.
+ * @returns A Promise that resolves to an array of sitemap entries.
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
 

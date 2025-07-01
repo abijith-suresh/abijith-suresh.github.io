@@ -13,6 +13,12 @@ import { z } from 'zod'
 
 type Inputs = z.infer<typeof ContactFormSchema>
 
+/**
+ * A client-side React component for a contact form.
+ * It handles form input, validation using `react-hook-form` and `zod`,
+ * and submission via the `sendEmail` server action.
+ * Displays success or error toasts based on the submission result.
+ */
 export default function ContactForm() {
   const {
     register,

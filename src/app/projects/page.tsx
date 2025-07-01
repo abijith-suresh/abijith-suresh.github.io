@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   }
 }
 
+/**
+ * Renders the main projects page, displaying a list of all projects.
+ * Fetches project data and passes it to the `Projects` component for rendering.
+ */
 export default async function ProjectsPage() {
   const projects = await getProjects()
 

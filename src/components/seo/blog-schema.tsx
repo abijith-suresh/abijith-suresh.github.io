@@ -5,6 +5,11 @@ interface BlogSchemaProps {
   url: string
 }
 
+/**
+ * Generates JSON-LD schema markup for a blog post, enhancing its visibility in search engine results.
+ * @param post - The blog post metadata.
+ * @param url - The canonical URL of the blog post page.
+ */
 export default function BlogSchema({ post, url }: BlogSchemaProps) {
   const jsonLd = {
     '@context': 'https://schema.org',

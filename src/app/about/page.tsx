@@ -10,6 +10,11 @@ export const metadata = {
   description: 'Learn more about my background, skills, and experience.'
 }
 
+/**
+ * Renders the main about page, combining various sections about the author.
+ * Includes introduction, experience, skills, education, and interests.
+ * Uses `PageTransition` for animated page entry.
+ */
 export default function AboutPage() {
   return (
     <PageTransition>

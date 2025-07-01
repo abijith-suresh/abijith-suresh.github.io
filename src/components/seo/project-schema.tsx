@@ -5,6 +5,11 @@ interface ProjectSchemaProps {
   url: string
 }
 
+/**
+ * Generates JSON-LD schema markup for a project, enhancing its visibility in search engine results.
+ * @param project - The project metadata.
+ * @param url - The canonical URL of the project page.
+ */
 export default function ProjectSchema({ project, url }: ProjectSchemaProps) {
   const jsonLd = {
     '@context': 'https://schema.org',

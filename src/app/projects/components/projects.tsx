@@ -19,6 +19,10 @@ interface ProjectsProps {
   }
 }
 
+/**
+ * Renders a grid of project cards with optional loading states and empty messages.
+ * Each project card links to its detailed page and displays an image, title, summary, and publish date.
+ */
 export default function Projects({
   projects,
   isLoading = false,

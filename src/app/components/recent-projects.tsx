@@ -4,6 +4,10 @@ import { Suspense } from 'react'
 import Projects from '@/app/projects/components/projects'
 import { ProjectsGridSkeleton } from '@/components/skeletons/project-skeleton'
 
+/**
+ * Fetches and displays a limited number of recent projects.
+ * Uses `Projects` component for rendering and `ProjectsGridSkeleton` for loading state.
+ */
 async function RecentProjectsList() {
   const projects = await getProjects(2)
 
@@ -18,6 +22,10 @@ async function RecentProjectsList() {
   )
 }
 
+/**
+ * Renders a section displaying recent projects.
+ * Includes a heading, a link to view all projects, and a suspended `RecentProjectsList` for data fetching.
+ */
 export default function RecentProjects() {
   return (
     <section className='pb-24'>

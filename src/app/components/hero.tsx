@@ -3,6 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import authorImage from '../../../public/images/abijith.png'
 
+/**
+ * Renders the hero section of the homepage.
+ * Displays a brief introduction, a link to the about page, and a profile image.
+ * Uses `SectionAnimation` for animated entry of content.
+ */
 export default function Hero() {
   return (
     <section className='pb-24'>

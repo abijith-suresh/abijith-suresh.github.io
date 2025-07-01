@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   }
 }
 
+/**
+ * Renders the main blog page, displaying a list of all blog posts.
+ * Fetches post data and passes it to the `Posts` component for rendering.
+ */
 export default async function BlogPage() {
   const posts = await getPosts()
 

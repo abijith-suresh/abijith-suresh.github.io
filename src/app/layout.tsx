@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   }
 }
 
+/**
+ * The root layout component for the entire application.
+ * It sets up the HTML structure, applies global styles, and provides common components like Header, Footer, and Providers.
+ * Handles font loading and metadata for the application.
+ */
 export default function RootLayout({
   children
 }: Readonly<{

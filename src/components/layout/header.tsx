@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import ThemeToggle from '../theme-toggle'
 
+/**
+ * Renders the main header of the application.
+ * Includes navigation links to different sections of the portfolio and a theme toggle button.
+ */
 export default function Header() {
   return (
     <header className='bg-background/75 fixed inset-x-0 top-0 z-50 py-6 backdrop-blur-xs'>

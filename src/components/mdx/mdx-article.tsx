@@ -10,6 +10,10 @@ interface MDXArticleProps {
   content: string
 }
 
+/**
+ * Renders an MDX article with a title, optional publication date and author, and the MDX content.
+ * It uses `MDXArticleAnimations` for animated entry and `MDXContent` to style the article.
+ */
 export default async function MDXArticle({
   title,
   publishedAt,

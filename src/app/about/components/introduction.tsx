@@ -2,6 +2,11 @@ import { SectionAnimation } from '@/components/animations/section/section-animat
 import { Button } from '@/components/ui/button'
 import { Download } from 'lucide-react'
 
+/**
+ * Renders the introduction section of the about page.
+ * Provides a brief overview of the author's background, role, and interests.
+ * Includes a button to download the resume.
+ */
 export default function Introduction() {
   return (
     <SectionAnimation>

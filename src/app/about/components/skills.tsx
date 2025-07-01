@@ -10,6 +10,11 @@ interface SkillCardProps {
   description: string
 }
 
+/**
+ * Renders a card displaying a category of skills.
+ * Includes a title, description, and a list of individual skills.
+ * Uses `StaggerItem` for animated entry.
+ */
 function SkillCard({ title, skills, description }: SkillCardProps) {
   return (
     <StaggerItem>
@@ -66,6 +71,10 @@ const skillsData = [
   }
 ]
 
+/**
+ * Renders the Skills & Technologies section of the about page.
+ * Displays various skill categories using `SkillCard` components with staggered animations.
+ */
 export default function Skills() {
   return (
     <section className='mb-16'>
