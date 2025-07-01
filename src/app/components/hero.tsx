@@ -1,7 +1,7 @@
 import { SectionAnimation } from '@/components/animations/section/section-animation'
 import Image from 'next/image'
 import Link from 'next/link'
-import authorImage from '../../../../public/images/abijith.png'
+import authorImage from '../../../public/images/abijith.png'
 
 export default function Hero() {
   return (

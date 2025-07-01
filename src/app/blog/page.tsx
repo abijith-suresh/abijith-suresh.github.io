@@ -1,4 +1,4 @@
-import Posts from '@/components/sections/posts'
+import Posts from '@/app/blog/components/posts'
 import { getPosts } from '@/lib/posts'
 import { Metadata } from 'next'
 

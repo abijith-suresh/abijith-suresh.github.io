@@ -1,7 +1,7 @@
 import { getPosts } from '@/lib/posts'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import Posts from '@/components/sections/posts'
+import Posts from '@/app/blog/components/posts'
 import { PostsGridSkeleton } from '@/components/skeletons/post-skeleton'
 
 async function RecentPostsList() {
