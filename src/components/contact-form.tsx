@@ -61,7 +61,7 @@ export default function ContactForm() {
               />
 
               {errors.name?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='mt-2 ml-1 text-sm text-rose-400'>
                   {errors.name.message}
                 </p>
               )}
@@ -78,7 +78,7 @@ export default function ContactForm() {
               />
 
               {errors.email?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='mt-2 ml-1 text-sm text-rose-400'>
                   {errors.email.message}
                 </p>
               )}
@@ -93,7 +93,7 @@ export default function ContactForm() {
               />
 
               {errors.message?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='mt-2 ml-1 text-sm text-rose-400'>
                   {errors.message.message}
                 </p>
               )}
@@ -108,7 +108,7 @@ export default function ContactForm() {
               {isSubmitting ? 'Submitting...' : 'Contact Us'}
             </Button>
           </div>
-          <p className='mt-4 text-xs text-muted-foreground'>
+          <p className='text-muted-foreground mt-4 text-xs'>
             By submitting this form, I agree to the{' '}
             <Link href='/privacy' className='font-bold'>
               privacy&nbsp;policy.

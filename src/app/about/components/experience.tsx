@@ -1,4 +1,7 @@
-import { StaggerIn, StaggerItem } from '@/components/animations/framer/transitions'
+import {
+  StaggerIn,
+  StaggerItem
+} from '@/components/animations/framer/transitions'
 import { SectionAnimation } from '@/components/animations/section/section-animation'
 
 interface ExperienceItemProps {
@@ -8,15 +11,22 @@ interface ExperienceItemProps {
   achievements: string[]
 }
 
-function ExperienceItem({ title, company, period, achievements }: ExperienceItemProps) {
+function ExperienceItem({
+  title,
+  company,
+  period,
+  achievements
+}: ExperienceItemProps) {
   return (
     <StaggerItem>
-      <div className="relative border-l pl-8">
-        <div className="absolute -left-[7px] h-4 w-4 rounded-full border-2 border-background bg-primary"></div>
+      <div className='relative border-l pl-8'>
+        <div className='border-background bg-primary absolute -left-[7px] h-4 w-4 rounded-full border-2'></div>
         <div>
-          <h3 className="font-semibold">{title}</h3>
-          <p className="text-sm text-muted-foreground">{company} • {period}</p>
-          <ul className="mt-4 list-disc space-y-2 pl-4">
+          <h3 className='font-semibold'>{title}</h3>
+          <p className='text-muted-foreground text-sm'>
+            {company} • {period}
+          </p>
+          <ul className='mt-4 list-disc space-y-2 pl-4'>
             {achievements.map((achievement, index) => (
               <li key={index}>{achievement}</li>
             ))}
@@ -53,12 +63,12 @@ const experienceData = [
 
 export default function Experience() {
   return (
-    <section className="mb-16">
+    <section className='mb-16'>
       <SectionAnimation>
-        <h2 className="title mb-8">Work Experience</h2>
+        <h2 className='title mb-8'>Work Experience</h2>
       </SectionAnimation>
       <StaggerIn>
-        <div className="space-y-12">
+        <div className='space-y-12'>
           {experienceData.map((experience, index) => (
             <ExperienceItem
               key={index}

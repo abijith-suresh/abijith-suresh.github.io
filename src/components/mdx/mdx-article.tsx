@@ -1,6 +1,6 @@
-import MDXArticleAnimations from '@/components/animations/mdx/mdx-article-animations';
-import { formatDate } from '@/lib/utils';
-import MDXContent from './mdx-content';
+import MDXArticleAnimations from '@/components/animations/mdx/mdx-article-animations'
+import { formatDate } from '@/lib/utils'
+import MDXContent from './mdx-content'
 
 interface MDXArticleProps {
   title: string
@@ -28,17 +28,14 @@ export default async function MDXArticle({
         {author && <span>{author}</span>}
       </div>
     </header>
-  );
+  )
 
-  const mdxContent = <MDXContent source={content} />;
+  const mdxContent = <MDXContent source={content} />
 
   return (
     <article className='pt-40 pb-24'>
       <div className='container max-w-3xl'>
-        <MDXArticleAnimations
-          header={header}
-          content={mdxContent}
-        />
+        <MDXArticleAnimations header={header} content={mdxContent} />
       </div>
     </article>
   )

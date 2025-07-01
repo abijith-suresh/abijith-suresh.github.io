@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
-import { HTMLMotionProps } from './motion';
+import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
+import { HTMLMotionProps } from './motion'
 
 interface StaggerInProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode
@@ -55,8 +55,8 @@ export function StaggerIn({
           }
         }
       }}
-      initial="hidden"
-      animate="show"
+      initial='hidden'
+      animate='show'
       className={cn(className)}
       {...props}
     >
@@ -71,11 +71,7 @@ export function StaggerItem({
   ...props
 }: HTMLMotionProps<'div'>) {
   return (
-    <motion.div
-      variants={item}
-      className={cn(className)}
-      {...props}
-    >
+    <motion.div variants={item} className={cn(className)} {...props}>
       {children}
     </motion.div>
   )

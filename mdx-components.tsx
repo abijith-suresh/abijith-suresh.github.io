@@ -13,9 +13,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h3 className='mt-6 mb-4 text-2xl font-semibold'>{children}</h3>
     ),
     // Add proper paragraph spacing
-    p: ({ children }) => (
-      <p className='my-4 leading-7'>{children}</p>
-    ),
+    p: ({ children }) => <p className='my-4 leading-7'>{children}</p>,
     // Add proper list spacing
     ul: ({ children }) => (
       <ul className='my-4 ml-6 list-disc space-y-2'>{children}</ul>
@@ -24,6 +22,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <ol className='my-4 ml-6 list-decimal space-y-2'>{children}</ol>
     ),
     // Merge with any other components passed in
-    ...components,
+    ...components
   }
 }

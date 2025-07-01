@@ -4,10 +4,12 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Projects | Abijith',
-  description: 'Explore my portfolio of software projects, web applications, and technical experiments.',
+  description:
+    'Explore my portfolio of software projects, web applications, and technical experiments.',
   openGraph: {
     title: 'Projects | Abijith',
-    description: 'Explore my portfolio of software projects, web applications, and technical experiments.',
+    description:
+      'Explore my portfolio of software projects, web applications, and technical experiments.',
     type: 'website',
     images: [
       {
@@ -21,7 +23,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Projects | Abijith',
-    description: 'Explore my portfolio of software projects, web applications, and technical experiments.',
+    description:
+      'Explore my portfolio of software projects, web applications, and technical experiments.',
     images: ['/og-image.jpg']
   }
 }
@@ -30,8 +33,8 @@ export default async function ProjectsPage() {
   const projects = await getProjects()
 
   return (
-    <div className="container max-w-4xl py-24">
-      <h1 className="title mb-8">Projects</h1>
+    <div className='container max-w-4xl py-24'>
+      <h1 className='title mb-8'>Projects</h1>
       <Projects projects={projects} />
     </div>
   )
