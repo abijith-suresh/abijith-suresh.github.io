@@ -37,7 +37,7 @@ export default async function ProjectsPage() {
   const projects = await getProjects()
 
   return (
-    <div className='container max-w-4xl py-24'>
+    <div className='container max-w-4xl pt-40 pb-24'>
       <h1 className='title mb-8'>Projects</h1>
       <Projects projects={projects} />
     </div>

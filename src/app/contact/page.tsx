@@ -10,7 +10,7 @@ export default function Contact() {
     <PageTransition>
       <section className='pt-40 pb-24'>
         <div className='container max-w-4xl'>
-          <h2 className='title'>Let&apos;s talk about your project</h2>
+          <h2 className='title mb-8'>Let&apos;s talk about your project</h2>
 
           <ContactForm />
         </div>
