@@ -18,7 +18,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <div className='container max-w-4xl py-24'>
+      <div className='container max-w-4xl pt-40 pb-24'>
         <Introduction />
         <Experience />
         <Skills />

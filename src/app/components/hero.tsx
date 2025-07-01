@@ -1,7 +1,7 @@
 import { SectionAnimation } from '@/components/animations/section/section-animation'
 import Image from 'next/image'
-import Link from 'next/link'
 import authorImage from '../../../public/images/abijith.png'
+import { ViewAllLink } from '@/components/view-all-link'
 
 /**
  * Renders the hero section of the homepage.
@@ -21,12 +21,7 @@ export default function Hero() {
               sharing knowledge with others.
             </p>
             <div className='mt-6'>
-              <Link
-                href='/about'
-                className='text-muted-foreground hover:text-foreground inline-flex items-center gap-2 underline decoration-1 underline-offset-2 transition-colors'
-              >
-                <span>More about me</span>
-              </Link>
+              <ViewAllLink href='/about' text='More about me' />
             </div>
           </div>
         </SectionAnimation>

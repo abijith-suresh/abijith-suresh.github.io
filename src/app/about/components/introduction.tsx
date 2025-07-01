@@ -10,7 +10,7 @@ import { Download } from 'lucide-react'
 export default function Introduction() {
   return (
     <SectionAnimation>
-      <section className='my-16'>
+      <section className='mb-16'>
         <h1 className='title mb-8'>About Me</h1>
         <div className='prose dark:prose-invert space-y-6'>
           <p className='text-lg leading-relaxed'>
