@@ -47,16 +47,18 @@ export default function Posts({
   return (
     <StaggerIn>
       <ul className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
-        {posts.map(post => (
+        {posts.map((post, index) => (
           <StaggerItem key={post.slug} className='group relative'>
             <Link href={`/blog/${post.slug}`}>
               {post.image && (
-                <div className='bg-muted h-72 w-full overflow-hidden sm:h-60'>
+                <div className='bg-muted h-72 w-full overflow-hidden sm:h-60 relative'>
                   <Image
                     src={post.image}
                     alt={post.title || ''}
                     fill
                     className='rounded-lg object-cover object-center transition-transform duration-500 group-hover:scale-105'
+                    sizes='(max-width: 640px) 100vw, 50vw'
+                    priority={index < 2}
                   />
                 </div>
               )}
