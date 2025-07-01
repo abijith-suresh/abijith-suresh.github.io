@@ -60,12 +60,11 @@ export default function Projects({
                     sizes='(max-width: 640px) 100vw, 50vw'
                     priority={index < 2}
                   />
+                  <div className='absolute inset-0 bg-gradient-to-t from-black/70 to-transparent'></div>
                 </div>
               )}
 
-              <div className='bg-background/70 absolute inset-[1px] rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
-
-              <div className='absolute inset-x-0 bottom-0 translate-y-2 px-6 py-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100'>
+              <div className='absolute inset-x-0 bottom-0 px-6 py-5'>
                 <h2 className='title line-clamp-1 text-xl no-underline'>
                   {project.title}
                 </h2>
