@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { ArticleHeader } from '@/components/article-header'
 import { PageTransition } from '@/components/animations/page/page-transition'
 
-  export default async function ProjectPage({
+export default async function ProjectPage({
   params
 }: {
   params: Promise<{ slug: string }>

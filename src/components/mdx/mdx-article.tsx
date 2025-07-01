@@ -10,9 +10,7 @@ interface MDXArticleProps {
  * Renders an MDX article with its content.
  * It uses `MDXArticleAnimations` for animated entry and `MDXContent` to style the article.
  */
-export default async function MDXArticle({
-  content
-}: MDXArticleProps) {
+export default async function MDXArticle({ content }: MDXArticleProps) {
   const mdxContent = (
     <MDXContent>
       <MDXRemoteWrapper source={content} />

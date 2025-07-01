@@ -51,7 +51,7 @@ export default function Projects({
           <StaggerItem key={project.slug} className='group relative'>
             <Link href={`/projects/${project.slug}`}>
               {project.image && (
-                <div className='bg-muted h-72 w-full overflow-hidden sm:h-60 relative'>
+                <div className='bg-muted relative h-72 w-full overflow-hidden sm:h-60'>
                   <Image
                     src={project.image}
                     alt={project.title || ''}
@@ -65,7 +65,7 @@ export default function Projects({
               )}
 
               <div className='absolute inset-x-0 bottom-0 px-6 py-5'>
-                <h2 className='title line-clamp-1 text-xl no-underline text-white'>
+                <h2 className='title line-clamp-1 text-xl text-white no-underline'>
                   {project.title}
                 </h2>
                 <p className='line-clamp-1 text-sm text-gray-100'>

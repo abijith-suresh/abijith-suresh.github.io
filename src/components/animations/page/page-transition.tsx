@@ -12,9 +12,5 @@ interface PageTransitionProps {
  * Utilizes `StaggerIn` from framer-motion for the animation effect.
  */
 export function PageTransition({ children, className }: PageTransitionProps) {
-  return (
-    <StaggerIn className={className}>
-      {children}
-    </StaggerIn>
-  )
+  return <StaggerIn className={className}>{children}</StaggerIn>
 }

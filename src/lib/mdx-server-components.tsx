@@ -58,7 +58,7 @@ export const mdxServerComponents: MDXComponents = {
   ),
   // Custom blockquote styling
   blockquote: ({ children }) => (
-    <blockquote className='border-l-4 border-primary pl-4 italic'>
+    <blockquote className='border-primary border-l-4 pl-4 italic'>
       {children}
     </blockquote>
   ),

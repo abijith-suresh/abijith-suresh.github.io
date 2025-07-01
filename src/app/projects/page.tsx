@@ -44,7 +44,9 @@ export default async function ProjectsPage() {
         <StaggerItem>
           <h1 className='title mb-8'>Projects</h1>
           <p className='mb-16 text-lg leading-relaxed'>
-            Here you&apos;ll find a collection of my personal and professional projects, showcasing my skills in various technologies and problem-solving approaches.
+            Here you&apos;ll find a collection of my personal and professional
+            projects, showcasing my skills in various technologies and
+            problem-solving approaches.
           </p>
         </StaggerItem>
         <Projects projects={projects} />

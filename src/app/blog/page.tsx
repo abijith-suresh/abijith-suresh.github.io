@@ -44,7 +44,9 @@ export default async function BlogPage() {
         <StaggerItem>
           <h1 className='title mb-8'>Blog</h1>
           <p className='mb-16 text-lg leading-relaxed'>
-            Welcome to my blog, where I share my thoughts, insights, and experiences on software development, technology, and other topics that interest me.
+            Welcome to my blog, where I share my thoughts, insights, and
+            experiences on software development, technology, and other topics
+            that interest me.
           </p>
         </StaggerItem>
         <Posts posts={posts} />
