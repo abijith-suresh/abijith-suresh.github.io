@@ -4,10 +4,12 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Blog | Abijith',
-  description: 'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+  description:
+    'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
   openGraph: {
     title: 'Blog | Abijith',
-    description: 'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+    description:
+      'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
     type: 'website',
     images: [
       {
@@ -21,7 +23,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blog | Abijith',
-    description: 'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+    description:
+      'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
     images: ['/og-image.jpg']
   }
 }
@@ -30,8 +33,8 @@ export default async function BlogPage() {
   const posts = await getPosts()
 
   return (
-    <div className="container max-w-4xl py-24">
-      <h1 className="title mb-8">Blog</h1>
+    <div className='container max-w-4xl py-24'>
+      <h1 className='title mb-8'>Blog</h1>
       <Posts posts={posts} />
     </div>
   )

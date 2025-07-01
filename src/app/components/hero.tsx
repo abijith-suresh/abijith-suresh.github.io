@@ -10,15 +10,15 @@ export default function Hero() {
         <SectionAnimation>
           <div className='flex-1'>
             <h1 className='title no-underline'>Hey, I&#39;m Abijith.</h1>
-            <p className='mt-3 text-lg font-light text-muted-foreground'>
-              I&#39;m a software engineer based in Kochi, Kerala, India, passionate about
-              building exceptional digital experiences and sharing knowledge with
-              others.
+            <p className='text-muted-foreground mt-3 text-lg font-light'>
+              I&#39;m a software engineer based in Kochi, Kerala, India,
+              passionate about building exceptional digital experiences and
+              sharing knowledge with others.
             </p>
             <div className='mt-6'>
               <Link
                 href='/about'
-                className='inline-flex items-center gap-2 text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground'
+                className='text-muted-foreground hover:text-foreground inline-flex items-center gap-2 underline decoration-1 underline-offset-2 transition-colors'
               >
                 <span>More about me</span>
               </Link>

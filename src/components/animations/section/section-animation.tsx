@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import { StaggerItem } from '../framer/transitions';
+import { StaggerItem } from '../framer/transitions'
 
 interface SectionAnimationProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function SectionAnimation({ children }: SectionAnimationProps) {
@@ -19,5 +19,5 @@ export function SectionAnimation({ children }: SectionAnimationProps) {
     >
       {children}
     </StaggerItem>
-  );
+  )
 }

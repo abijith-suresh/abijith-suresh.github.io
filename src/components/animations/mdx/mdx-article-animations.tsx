@@ -1,14 +1,17 @@
-'use client';
+'use client'
 
-import { ReactNode } from 'react';
-import { MotionDiv } from '../framer/motion';
+import { ReactNode } from 'react'
+import { MotionDiv } from '../framer/motion'
 
 interface MDXArticleAnimationsProps {
-  header: ReactNode;
-  content: ReactNode;
+  header: ReactNode
+  content: ReactNode
 }
 
-export default function MDXArticleAnimations({ header, content }: MDXArticleAnimationsProps) {
+export default function MDXArticleAnimations({
+  header,
+  content
+}: MDXArticleAnimationsProps) {
   return (
     <>
       <MotionDiv
@@ -35,5 +38,5 @@ export default function MDXArticleAnimations({ header, content }: MDXArticleAnim
         {content}
       </MotionDiv>
     </>
-  );
+  )
 }

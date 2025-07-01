@@ -10,7 +10,7 @@ function Code({ children, ...props }: any) {
   return (
     <code
       dangerouslySetInnerHTML={{ __html: codeHTML }}
-      className="rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm"
+      className='bg-muted rounded px-[0.3rem] py-[0.2rem] font-mono text-sm'
       {...props}
     />
   )
@@ -24,7 +24,7 @@ function MDXContent(props: MDXContentProps) {
   const mdxComponents = useMDXComponents({})
 
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none">
+    <div className='prose prose-lg dark:prose-invert max-w-none'>
       <MDXRemote
         {...props}
         components={{

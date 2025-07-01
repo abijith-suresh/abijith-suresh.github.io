@@ -47,7 +47,7 @@ const navigation = [
         />
       </svg>
     )
-  },
+  }
   // {
   //   name: 'YouTube',
   //   href: '#',
@@ -83,7 +83,7 @@ export default function Footer() {
             ))}
           </div>
           <div className='mt-8 md:order-1 md:mt-0'>
-            <p className='text-center text-xs leading-5 text-muted-foreground'>
+            <p className='text-muted-foreground text-center text-xs leading-5'>
               &copy; {new Date().getFullYear()} Abijith Suresh. All rights
               reserved.
             </p>

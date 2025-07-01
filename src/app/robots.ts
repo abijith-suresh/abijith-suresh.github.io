@@ -6,13 +6,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: siteConfig.isDevelopment ? [] : '/',
-      disallow: siteConfig.isDevelopment ? ['/'] : [
-        '/api/',
-        '/admin/',
-        '/*.json',
-        '/*.xml',
-      ],
+      disallow: siteConfig.isDevelopment
+        ? ['/']
+        : ['/api/', '/admin/', '/*.json', '/*.xml']
     },
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    sitemap: `${siteConfig.url}/sitemap.xml`
   }
 }

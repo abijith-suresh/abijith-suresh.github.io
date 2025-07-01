@@ -32,7 +32,7 @@ export default function BlogSchema({ post, url }: BlogSchemaProps) {
 
   return (
     <script
-      type="application/ld+json"
+      type='application/ld+json'
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   )

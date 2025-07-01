@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { StaggerIn } from '../framer/transitions';
+import { StaggerIn } from '../framer/transitions'
 
 interface PageTransitionProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 export function PageTransition({ children, className }: PageTransitionProps) {
@@ -17,5 +17,5 @@ export function PageTransition({ children, className }: PageTransitionProps) {
     >
       {children}
     </StaggerIn>
-  );
+  )
 }

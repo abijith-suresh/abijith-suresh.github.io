@@ -11,8 +11,8 @@ async function RecentPostsList() {
     <Posts
       posts={posts}
       emptyMessage={{
-        title: "No Posts Yet",
-        description: "Stay tuned! New blog posts are coming soon."
+        title: 'No Posts Yet',
+        description: 'Stay tuned! New blog posts are coming soon.'
       }}
     />
   )
@@ -22,11 +22,11 @@ export default function RecentPosts() {
   return (
     <section className='pb-24'>
       <div>
-        <div className="flex items-center justify-between mb-12">
+        <div className='mb-12 flex items-center justify-between'>
           <h2 className='title'>Recent blog posts</h2>
           <Link
             href='/blog'
-            className='text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground'
+            className='text-muted-foreground hover:text-foreground underline decoration-1 underline-offset-2 transition-colors'
           >
             View all posts
           </Link>
