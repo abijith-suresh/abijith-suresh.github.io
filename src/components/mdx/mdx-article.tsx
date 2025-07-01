@@ -21,7 +21,7 @@ export default async function MDXArticle({
 
   return (
     <article className='pb-24'>
-      <div className='container max-w-3xl'>
+      <div className='container max-w-4xl'>
         <MDXArticleAnimations content={mdxContent} />
       </div>
     </article>

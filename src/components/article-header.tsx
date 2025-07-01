@@ -14,10 +14,6 @@ interface ArticleHeaderProps {
     href: string
     text: string
   }
-  // Optional: for projects, you might want to add technologies, live demo, github repo
-  // technologies?: string[];
-  // liveDemoLink?: string;
-  // githubRepoLink?: string;
 }
 
 export function ArticleHeader({
@@ -28,7 +24,7 @@ export function ArticleHeader({
 }: ArticleHeaderProps) {
   return (
     <PageTransition>
-      <div className='container max-w-3xl pt-40 pb-12'>
+      <div className='container max-w-4xl pt-40 pb-12'>
         <StaggerItem>
           <Link
             href={backLink.href}
