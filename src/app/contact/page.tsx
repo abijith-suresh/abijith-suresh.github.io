@@ -1,13 +1,23 @@
 import ContactForm from '@/components/contact-form'
+import { PageTransition } from '@/components/animations/page/page-transition'
+import { StaggerItem } from '@/components/animations/framer/transitions'
 
+/**
+ * Renders the contact page, which includes a contact form.
+ * Allows users to send messages through the provided form.
+ */
 export default function Contact() {
   return (
-    <section className='pb-24 pt-40'>
-      <div className='container max-w-3xl'>
-        <h2 className='title'>Let&apos;s talk about your project</h2>
+    <PageTransition>
+      <StaggerItem>
+        <section className='pt-40 pb-24'>
+          <div className='container max-w-4xl'>
+            <h2 className='title mb-8'>Let&apos;s talk about your project</h2>
 
-        <ContactForm />
-      </div>
-    </section>
+            <ContactForm />
+          </div>
+        </section>
+      </StaggerItem>
+    </PageTransition>
   )
 }

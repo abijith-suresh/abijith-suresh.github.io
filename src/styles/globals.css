@@ -1,7 +1,16 @@
+/**
+ * This file defines global styles for the application, including Tailwind CSS imports,
+ * custom CSS properties for theming (colors, fonts, radii), and base element styling.
+ * It sets up light and dark mode variables and general typography for MDX content.
+ */
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
 
+/**
+ * Defines custom CSS properties for theming, including fonts, colors, and radii.
+ * Also includes keyframe animations for accordion components.
+ */
 @theme {
   --font-sans:
     var(--font-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
@@ -164,11 +173,11 @@
   }
 
   .title {
-    @apply font-serif text-3xl font-bold underline decoration-border/75 decoration-2 underline-offset-8;
+    @apply decoration-border/75 font-serif text-3xl font-bold underline decoration-2 underline-offset-8;
   }
 
   .prose pre {
-    @apply overflow-x-auto rounded-lg bg-accent px-5 py-4 text-sm;
+    @apply bg-accent overflow-x-auto rounded-lg px-5 py-4 text-sm;
   }
 
   .prose code {

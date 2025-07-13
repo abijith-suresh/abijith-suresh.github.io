@@ -6,9 +6,8 @@ A personal portfolio website built with Next.js.
 
 - Next.js 15.3.0
 - React
-- TypeScript 
-- Tailwind CSS 
-
+- TypeScript
+- Tailwind CSS
 
 ## 🛠️ Getting Started
 
@@ -32,5 +31,4 @@ yarn dev
 
 ## 📧 Contact
 
-LinkedIn: linkedin.com/in/abijith-suresh
-Twitter: @abijith.sh
+LinkedIn: linkedin.com/in/abijith-suresh Twitter: @abijith.sh

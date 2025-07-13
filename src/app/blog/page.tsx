@@ -1,19 +1,56 @@
+import Posts from '@/app/blog/components/posts'
+import { getPosts } from '@/lib/posts'
+import { Metadata } from 'next'
+import { StaggerItem } from '@/components/animations/framer/transitions'
+import { PageTransition } from '@/components/animations/page/page-transition'
+
+export const metadata: Metadata = {
+  title: 'Blog | Abijith',
+  description:
+    'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+  openGraph: {
+    title: 'Blog | Abijith',
+    description:
+      'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+    type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Blog | Abijith'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Abijith',
+    description:
+      'Read my latest thoughts, tutorials, and insights about software development, tech, and more.',
+    images: ['/og-image.jpg']
+  }
+}
+
+/**
+ * Renders the main blog page, displaying a list of all blog posts.
+ * Fetches post data and passes it to the `Posts` component for rendering.
+ */
 export default async function BlogPage() {
-  // const blogPosts = await getBlogPosts() // Uncomment when ready to fetch posts
+  const posts = await getPosts()
 
   return (
-    <section className='pt-40 pb-24'>
-      <div className='container max-w-3xl'>
-        <h1 className='title mb-12'>Blog</h1>
-        <div className='text-center'>
-          <p className='text-muted-foreground font-serif text-xl'>
-            My blog is currently under construction. Stay tuned for exciting
-            updates!
+    <PageTransition>
+      <div className='container max-w-4xl pt-40 pb-24'>
+        <StaggerItem>
+          <h1 className='title mb-8'>Blog</h1>
+          <p className='mb-16 text-lg leading-relaxed'>
+            Welcome to my blog, where I share my thoughts, insights, and
+            experiences on software development, technology, and other topics
+            that interest me.
           </p>
-        </div>
-
-        {/* <BlogPosts posts={blogPosts} /> */}
+        </StaggerItem>
+        <Posts posts={posts} />
       </div>
-    </section>
+    </PageTransition>
   )
 }
