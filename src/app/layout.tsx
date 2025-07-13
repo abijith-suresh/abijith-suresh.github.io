@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -44,6 +46,7 @@ export default function RootLayout({
           <main className='grow'>{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
