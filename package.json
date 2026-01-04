@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "astro": "^5.16.6",
-    "lucide-astro": "^0.556.0"
+    "clsx": "^2.1.1",
+    "lucide-astro": "^0.556.0",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
