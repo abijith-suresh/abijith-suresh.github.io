@@ -1,11 +1,16 @@
 ---
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import Layout from "../layouts/Layout.astro";
-import "../styles/global.css";
+import FeaturedProjects from "@/components/FeaturedProjects.astro";
+import Header from "@/components/Header.astro";
+import Hero from "@/components/Hero.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import "@/styles/global.css";
 ---
 
-<Layout title="Your Blog Name - Welcome">
+<Layout title={`${SITE.title} - ${SITE.description}`}>
   <Header />
-  <Hero />
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl">
+    <Hero />
+    <FeaturedProjects />
+  </main>
 </Layout>
