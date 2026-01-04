@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+/* Theme-aware color scheme */
+html[data-theme="light"] {
+  color-scheme: light;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --tw-bg-opacity: 1;
+  background-color: rgb(3 7 18 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}

@@ -1,0 +1,42 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Your Blog Name",
+  description = "A brief description of your blog. This will be used in meta tags and social sharing.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class="flex h-fit min-h-screen flex-col gap-y-6 bg-gray-950 text-gray-100">
+    <slot />
+
+    <script is:inline data-astro-rerun>
+      (() => {
+        const theme = (() => {
+          const stored = localStorage?.getItem('theme') ?? ''
+          if (['dark', 'light'].includes(stored)) return stored
+          return window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+        })()
+
+        document.documentElement.setAttribute('data-theme', theme)
+        window.localStorage.setItem('theme', theme)
+      })()
+    </script>
+  </body>
+</html>

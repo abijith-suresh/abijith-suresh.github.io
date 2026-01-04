@@ -1,0 +1,71 @@
+---
+import { ArrowRight, Github, Mail, Rss, Twitter } from "lucide-astro";
+---
+
+<main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl">
+  <section class="border border-gray-800/50 rounded-lg">
+    <div class="flex flex-col space-y-1.5 p-6">
+<h3 class="text-3xl leading-none font-medium">Welcome to</h3>
+      <h1 class="text-5xl font-bold leading-tight mt-2">
+        <span class="text-blue-500">Your Blog Name</span>
+      </h1>
+    </div>
+    <div class="p-6 pt-0">
+      <p class="text-gray-400 mb-6 text-sm">
+        A brief description of your blog. This will be used in meta tags and
+        social sharing.
+      </p>
+
+<div class="flex flex-wrap gap-3 mb-6">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md font-medium transition-colors"
+        >
+          Read the blog
+          <ArrowRight size={16} />
+        </a>
+        <a
+          href="/about"
+          class="inline-flex items-center gap-2 px-4 py-2 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white text-sm rounded-md font-medium transition-colors"
+        >
+          About me
+        </a>
+      </div>
+
+      <div class="flex gap-3">
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="p-2.5 border border-gray-800 hover:border-gray-700 rounded-md hover:bg-gray-800/50 transition-all"
+        >
+          <Github size={18} />
+        </a>
+        <a
+          href="https://twitter.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Twitter"
+          class="p-2.5 border border-gray-800 hover:border-gray-700 rounded-md hover:bg-gray-800/50 transition-all"
+        >
+          <Twitter size={18} />
+        </a>
+        <a
+          href="mailto:hello@example.com"
+          aria-label="Email"
+          class="p-2.5 border border-gray-800 hover:border-gray-700 rounded-md hover:bg-gray-800/50 transition-all"
+        >
+          <Mail size={18} />
+        </a>
+        <a
+          href="/rss.xml"
+          aria-label="RSS Feed"
+          class="p-2.5 border border-gray-800 hover:border-gray-700 rounded-md hover:bg-gray-800/50 transition-all"
+        >
+          <Rss size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
