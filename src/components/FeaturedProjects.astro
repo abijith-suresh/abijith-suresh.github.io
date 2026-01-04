@@ -1,0 +1,77 @@
+---
+import Link from "@/components/Link.astro";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-astro";
+
+// TODO: This will be connected to content collections in step 4
+// For now, using placeholder data
+const featuredProjects = [
+  {
+    name: "Project One",
+    description: "A brief description of this amazing project and what it does.",
+    tags: ["TypeScript", "React", "Tailwind"],
+    link: "#",
+    featured: true,
+  },
+  {
+    name: "Project Two",
+    description: "Another interesting project with cool features and functionality.",
+    tags: ["Astro", "MDX", "Node.js"],
+    link: "#",
+    featured: true,
+  },
+  {
+    name: "Project Three",
+    description: "This project showcases something unique and innovative.",
+    tags: ["Python", "FastAPI", "PostgreSQL"],
+    link: "#",
+    featured: true,
+  },
+];
+---
+
+<section class="flex flex-col gap-y-4">
+  <div class="flex items-center justify-between">
+    <h2 class="text-2xl font-medium text-foreground">Featured Projects</h2>
+    <Link
+      href="/projects"
+      class={cn(
+        "inline-flex items-center gap-1.5 text-sm",
+        "text-foreground/60 hover:text-foreground",
+        "transition-colors group"
+      )}
+    >
+      View all
+      <ArrowRight size={14} class="transition-transform group-hover:translate-x-1" />
+    </Link>
+  </div>
+
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {featuredProjects.map((project) => (
+      <li>
+        <Link
+          href={project.link}
+          class={cn(
+            "block p-4 border border-border rounded-lg",
+            "hover:bg-muted/50 transition-colors duration-300 ease-in-out",
+            "group"
+          )}
+        >
+          <h3 class="text-lg font-medium text-foreground mb-2 transition-colors">
+            {project.name}
+          </h3>
+          <p class="text-sm text-muted-foreground mb-3 line-clamp-2">
+            {project.description}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </Link>
+      </li>
+    ))}
+  </ul>
+</section>
