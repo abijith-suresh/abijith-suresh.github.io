@@ -1,111 +1,103 @@
 @import "tailwindcss";
 
-/* Base layer for CSS variables */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 9%;
     --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 93%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
   }
 
   html[data-theme="dark"] {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
     --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 63%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 83%;
   }
-}
 
-/* Apply theme colors to html/body */
-html[data-theme="light"] {
-  color-scheme: light;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-html[data-theme="dark"] {
-  color-scheme: dark;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-/* Utility classes for semantic colors */
-@layer utilities {
-  .bg-background {
-    background-color: hsl(var(--background));
-  }
-  .text-foreground {
-    color: hsl(var(--foreground));
-  }
-  .bg-card {
-    background-color: hsl(var(--card));
-  }
-  .text-card-foreground {
-    color: hsl(var(--card-foreground));
-  }
-  .bg-primary {
-    background-color: hsl(var(--primary));
-  }
-  .text-primary {
-    color: hsl(var(--primary));
-  }
-  .text-primary-foreground {
-    color: hsl(var(--primary-foreground));
-  }
-  .bg-secondary {
-    background-color: hsl(var(--secondary));
-  }
-  .text-secondary-foreground {
-    color: hsl(var(--secondary-foreground));
-  }
-  .bg-muted {
-    background-color: hsl(var(--muted));
-  }
-  .text-muted-foreground {
-    color: hsl(var(--muted-foreground));
-  }
-  .bg-accent {
-    background-color: hsl(var(--accent));
-  }
-  .text-accent-foreground {
-    color: hsl(var(--accent-foreground));
-  }
-  .border-border {
+  * {
     border-color: hsl(var(--border));
   }
-  .ring-ring {
-    --tw-ring-color: hsl(var(--ring));
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
+}
+
+/* Custom utility classes for theme colors */
+@layer utilities {
+  .bg-background { background-color: hsl(var(--background)); }
+  .bg-foreground { background-color: hsl(var(--foreground)); }
+  .bg-card { background-color: hsl(var(--card)); }
+  .bg-muted { background-color: hsl(var(--muted)); }
+  .bg-accent { background-color: hsl(var(--accent)); }
+  .bg-primary { background-color: hsl(var(--primary)); }
+  .bg-secondary { background-color: hsl(var(--secondary)); }
+  .bg-destructive { background-color: hsl(var(--destructive)); }
+
+  .text-foreground { color: hsl(var(--foreground)); }
+  .text-background { color: hsl(var(--background)); }
+  .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+  .text-card-foreground { color: hsl(var(--card-foreground)); }
+  .text-accent-foreground { color: hsl(var(--accent-foreground)); }
+  .text-primary { color: hsl(var(--primary)); }
+  .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+  .text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
+  .text-destructive { color: hsl(var(--destructive)); }
+  .text-destructive-foreground { color: hsl(var(--destructive-foreground)); }
+
+  .border-border { border-color: hsl(var(--border)); }
+  .border-input { border-color: hsl(var(--input)); }
+  .border-ring { border-color: hsl(var(--ring)); }
+  .border-primary { border-color: hsl(var(--primary)); }
+
+  .ring-ring { --tw-ring-color: hsl(var(--ring)); }
+
+  /* Opacity variants */
+  .text-foreground\/60 { color: hsl(var(--foreground) / 0.6); }
+  .text-foreground\/80 { color: hsl(var(--foreground) / 0.8); }
+  .bg-background\/50 { background-color: hsl(var(--background) / 0.5); }
+  .bg-muted\/50 { background-color: hsl(var(--muted) / 0.5); }
+
+  /* Hover variants */
+  .hover\:text-foreground:hover { color: hsl(var(--foreground)); }
+  .hover\:bg-muted:hover { background-color: hsl(var(--muted)); }
+  .hover\:bg-muted\/50:hover { background-color: hsl(var(--muted) / 0.5); }
+  .hover\:bg-accent:hover { background-color: hsl(var(--accent)); }
+
+  /* Group hover variants */
+  .group:hover .group-hover\:translate-x-1 { transform: translateX(0.25rem); }
+  .group:hover .group-hover\:text-foreground { color: hsl(var(--foreground)); }
 }
