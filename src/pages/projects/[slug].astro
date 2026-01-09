@@ -1,0 +1,216 @@
+---
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { formatProjectDate } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
+import "@/styles/global.css";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Calendar, ExternalLink, Github } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { title, description, tags, github, demo, image, startDate, endDate } = project.data;
+const { Content } = await project.render();
+const formattedDate = formatProjectDate(startDate, endDate);
+const projectImage = image || "/placeholder-project.jpg";
+---
+
+<Layout
+  title={`${title} - Projects - ${SITE.title}`}
+  description={description}
+>
+  <Header />
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
+      <Link href="/" class="hover:text-foreground transition-colors">Home</Link>
+      <span>/</span>
+      <Link href="/projects" class="hover:text-foreground transition-colors">Projects</Link>
+      <span>/</span>
+      <span class="text-foreground">{title}</span>
+    </nav>
+
+    <!-- Project Header -->
+    <article class="flex flex-col gap-y-6">
+      <header class="flex flex-col gap-y-4">
+        <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+          <div class="flex items-center gap-1.5">
+            <Calendar size={16} />
+            <time>{formattedDate}</time>
+          </div>
+        </div>
+
+        <p class="text-lg text-muted-foreground">{description}</p>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- Links -->
+        {(github || demo) && (
+          <div class="flex flex-wrap gap-3">
+            {github && (
+              <Link
+                href={github}
+                external
+                class={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                  "bg-muted hover:bg-muted/80 text-foreground",
+                  "transition-colors text-sm font-medium"
+                )}
+              >
+                <Github size={16} />
+                View Source
+              </Link>
+            )}
+            {demo && (
+              <Link
+                href={demo}
+                external
+                class={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                  "bg-primary text-primary-foreground hover:bg-primary/90",
+                  "transition-colors text-sm font-medium"
+                )}
+              >
+                <ExternalLink size={16} />
+                Live Demo
+              </Link>
+            )}
+          </div>
+        )}
+      </header>
+
+      <!-- Project Image -->
+      {image && (
+        <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
+          <img
+            src={projectImage}
+            alt={title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      <!-- Project Content -->
+      <div class="prose prose-neutral dark:prose-invert max-w-none">
+        <Content />
+      </div>
+    </article>
+
+    <!-- Back to Projects -->
+    <div class="pt-6 border-t border-border">
+      <Link
+        href="/projects"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Projects
+      </Link>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .prose {
+    color: var(--color-foreground);
+  }
+
+  .prose :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-foreground);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :global(p) {
+    color: var(--color-muted-foreground);
+    margin-bottom: 1rem;
+    line-height: 1.625;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    color: var(--color-muted-foreground);
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(a) {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .prose :global(a:hover) {
+    opacity: 0.8;
+  }
+
+  .prose :global(code) {
+    font-size: 0.875rem;
+    background-color: var(--color-muted);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    color: var(--color-foreground);
+  }
+
+  .prose :global(pre) {
+    background-color: var(--color-muted);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .prose :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 4px solid var(--color-border);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--color-muted-foreground);
+    margin: 1rem 0;
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--color-foreground);
+</style>
