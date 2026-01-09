@@ -1,14 +1,12 @@
 ---
 title: "Task Management Application"
 description: "A collaborative task management tool with real-time updates and team features."
-featured: true
 tags: ["React", "Node.js", "PostgreSQL", "WebSocket"]
 github: "https://github.com/abijith/task-app"
 demo: "https://tasks.abijith.sh"
 image: "/projects/task-app.jpg"
 startDate: 2025-06-15
 endDate: 2025-11-30
-order: 2
 ---
 
 A full-stack task management application designed for small teams, featuring real-time collaboration, project organization, and deadline tracking.

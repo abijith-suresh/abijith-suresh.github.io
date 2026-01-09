@@ -1,13 +1,11 @@
 ---
 title: "Personal Portfolio Website"
 description: "A minimal, clean portfolio website built with Astro, showcasing projects and technical writing."
-featured: true
 tags: ["Astro", "TypeScript", "Tailwind CSS"]
 github: "https://github.com/abijith/portfolio"
 demo: "https://abijith.sh"
 image: "/projects/portfolio.jpg"
 startDate: 2025-12-01
-order: 1
 ---
 
 A modern portfolio website built with Astro 5, featuring a clean design philosophy inspired by astro-erudite. The site emphasizes performance, accessibility, and content-first design.
