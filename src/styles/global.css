@@ -1,103 +1,105 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: oklch(98% 0 0);
+  --foreground: oklch(9% 0 0);
+
+  --card: oklch(98% 0 0);
+  --card-foreground: oklch(9% 0 0);
+
+  --popover: oklch(98% 0 0);
+  --popover-foreground: oklch(9% 0 0);
+
+  --primary: oklch(53.3% 0.17 264);
+  --primary-foreground: oklch(98% 0 0);
+
+  --secondary: oklch(96% 0 0);
+  --secondary-foreground: oklch(9% 0 0);
+
+  --muted: oklch(96% 0 0);
+  --muted-foreground: oklch(45% 0 0);
+
+  --accent: oklch(93% 0 0);
+  --accent-foreground: oklch(9% 0 0);
+
+  --destructive: oklch(60.2% 0.18 15);
+  --destructive-foreground: oklch(98% 0 0);
+
+  --border: oklch(89% 0 0);
+  --input: oklch(89% 0 0);
+  --ring: oklch(53.3% 0.17 264);
+}
+
+[data-theme="dark"] {
+  --background: oklch(7% 0 0);
+  --foreground: oklch(98% 0 0);
+
+  --card: oklch(7% 0 0);
+  --card-foreground: oklch(98% 0 0);
+
+  --popover: oklch(7% 0 0);
+  --popover-foreground: oklch(98% 0 0);
+
+  --primary: oklch(59.8% 0.19 253);
+  --primary-foreground: oklch(9% 0 0);
+
+  --secondary: oklch(15% 0 0);
+  --secondary-foreground: oklch(98% 0 0);
+
+  --muted: oklch(15% 0 0);
+  --muted-foreground: oklch(63% 0 0);
+
+  --accent: oklch(15% 0 0);
+  --accent-foreground: oklch(98% 0 0);
+
+  --destructive: oklch(30.6% 0.13 15);
+  --destructive-foreground: oklch(98% 0 0);
+
+  --border: oklch(20% 0 0);
+  --input: oklch(20% 0 0);
+  --ring: oklch(83% 0 0);
+}
+
 @layer base {
-  :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 9%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 93%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-  }
-
-  html[data-theme="dark"] {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 63%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 83%;
-  }
-
-  * {
-    border-color: hsl(var(--border));
+  *,
+  ::after,
+  ::before {
+    @apply border-border;
   }
 
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    @apply bg-background text-foreground;
   }
-}
-
-/* Custom utility classes for theme colors */
-@layer utilities {
-  .bg-background { background-color: hsl(var(--background)); }
-  .bg-foreground { background-color: hsl(var(--foreground)); }
-  .bg-card { background-color: hsl(var(--card)); }
-  .bg-muted { background-color: hsl(var(--muted)); }
-  .bg-accent { background-color: hsl(var(--accent)); }
-  .bg-primary { background-color: hsl(var(--primary)); }
-  .bg-secondary { background-color: hsl(var(--secondary)); }
-  .bg-destructive { background-color: hsl(var(--destructive)); }
-
-  .text-foreground { color: hsl(var(--foreground)); }
-  .text-background { color: hsl(var(--background)); }
-  .text-muted-foreground { color: hsl(var(--muted-foreground)); }
-  .text-card-foreground { color: hsl(var(--card-foreground)); }
-  .text-accent-foreground { color: hsl(var(--accent-foreground)); }
-  .text-primary { color: hsl(var(--primary)); }
-  .text-primary-foreground { color: hsl(var(--primary-foreground)); }
-  .text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
-  .text-destructive { color: hsl(var(--destructive)); }
-  .text-destructive-foreground { color: hsl(var(--destructive-foreground)); }
-
-  .border-border { border-color: hsl(var(--border)); }
-  .border-input { border-color: hsl(var(--input)); }
-  .border-ring { border-color: hsl(var(--ring)); }
-  .border-primary { border-color: hsl(var(--primary)); }
-
-  .ring-ring { --tw-ring-color: hsl(var(--ring)); }
-
-  /* Opacity variants */
-  .text-foreground\/60 { color: hsl(var(--foreground) / 0.6); }
-  .text-foreground\/80 { color: hsl(var(--foreground) / 0.8); }
-  .bg-background\/50 { background-color: hsl(var(--background) / 0.5); }
-  .bg-muted\/50 { background-color: hsl(var(--muted) / 0.5); }
-
-  /* Hover variants */
-  .hover\:text-foreground:hover { color: hsl(var(--foreground)); }
-  .hover\:bg-muted:hover { background-color: hsl(var(--muted)); }
-  .hover\:bg-muted\/50:hover { background-color: hsl(var(--muted) / 0.5); }
-  .hover\:bg-accent:hover { background-color: hsl(var(--accent)); }
-
-  /* Group hover variants */
-  .group:hover .group-hover\:translate-x-1 { transform: translateX(0.25rem); }
-  .group:hover .group-hover\:text-foreground { color: hsl(var(--foreground)); }
 }
