@@ -1,0 +1,60 @@
+---
+import Header from "@/components/Header.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { getAllProjects, sortProjects } from "@/lib/data-utils";
+import "@/styles/global.css";
+
+const allProjects = await getAllProjects();
+const sortedProjects = sortProjects(allProjects, "date");
+
+// Separate featured and non-featured projects
+const featuredProjects = sortedProjects.filter((p) => p.data.featured);
+const otherProjects = sortedProjects.filter((p) => !p.data.featured);
+---
+
+<Layout
+  title={`Projects - ${SITE.title}`}
+  description="A collection of projects I've built, including web applications, tools, and experiments."
+>
+  <Header />
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+    <div class="flex flex-col gap-y-2">
+      <h1 class="text-3xl font-bold text-foreground">Projects</h1>
+      <p class="text-muted-foreground">
+        A collection of projects I've built, ranging from web applications to CLI tools.
+      </p>
+    </div>
+
+    {featuredProjects.length > 0 && (
+      <section class="flex flex-col gap-y-4">
+        <h2 class="text-xl font-medium text-foreground">Featured</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {otherProjects.length > 0 && (
+      <section class="flex flex-col gap-y-4">
+        <h2 class="text-xl font-medium text-foreground">
+          {featuredProjects.length > 0 ? "Other Projects" : "All Projects"}
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {otherProjects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {sortedProjects.length === 0 && (
+      <p class="text-muted-foreground text-center py-8">
+        No projects to display yet.
+      </p>
+    )}
+  </main>
+</Layout>
