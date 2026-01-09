@@ -8,10 +8,6 @@ import "@/styles/global.css";
 
 const allProjects = await getAllProjects();
 const sortedProjects = sortProjects(allProjects, "date");
-
-// Separate featured and non-featured projects
-const featuredProjects = sortedProjects.filter((p) => p.data.featured);
-const otherProjects = sortedProjects.filter((p) => !p.data.featured);
 ---
 
 <Layout
@@ -27,31 +23,13 @@ const otherProjects = sortedProjects.filter((p) => !p.data.featured);
       </p>
     </div>
 
-    {featuredProjects.length > 0 && (
-      <section class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-medium text-foreground">Featured</h2>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <ProjectCard project={project} />
-          ))}
-        </div>
-      </section>
-    )}
-
-    {otherProjects.length > 0 && (
-      <section class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-medium text-foreground">
-          {featuredProjects.length > 0 ? "Other Projects" : "All Projects"}
-        </h2>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {otherProjects.map((project) => (
-            <ProjectCard project={project} />
-          ))}
-        </div>
-      </section>
-    )}
-
-    {sortedProjects.length === 0 && (
+    {sortedProjects.length > 0 ? (
+      <div class="flex flex-col gap-6">
+        {sortedProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    ) : (
       <p class="text-muted-foreground text-center py-8">
         No projects to display yet.
       </p>
