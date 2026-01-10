@@ -1,6 +1,7 @@
 ---
 import Header from "@/components/Header.astro";
 import Hero from "@/components/Hero.astro";
+import RecentPosts from "@/components/RecentPosts.astro";
 import RecentProjects from "@/components/RecentProjects.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
@@ -12,5 +13,6 @@ import "@/styles/global.css";
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl">
     <Hero />
     <RecentProjects />
+    <RecentPosts />
   </main>
 </Layout>
