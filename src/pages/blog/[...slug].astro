@@ -5,7 +5,7 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { cn, formatBlogDate } from "@/lib/utils";
 import "@/styles/global.css";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar } from "lucide-astro";
 
 export async function getStaticPaths() {
@@ -28,10 +28,7 @@ const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const postImage = image || "/placeholder-blog.jpg";
 ---
 
-<Layout
-  title={`${title} - Blog - ${SITE.title}`}
-  description={description}
->
+<Layout title={`${title} - Blog - ${SITE.title}`} description={description}>
   <Header />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
@@ -55,46 +52,46 @@ const postImage = image || "/placeholder-blog.jpg";
               {formattedDate}
             </time>
           </div>
-          {formattedUpdatedDate && (
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs">Updated:</span>
-              <time datetime={updatedDate!.toISOString()}>
-                {formattedUpdatedDate}
-              </time>
-            </div>
-          )}
+          {
+            formattedUpdatedDate && (
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs">Updated:</span>
+                <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
+              </div>
+            )
+          }
         </div>
 
         <p class="text-lg text-muted-foreground">{description}</p>
 
         <!-- Tags -->
-        {tags.length > 0 && (
-          <div class="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Link
-                href={`/tags/${tag}`}
-                class={cn(
-                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                  "hover:bg-muted/80 transition-colors"
-                )}
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
-        )}
+        {
+          tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Link
+                  href={`/tags/${tag}`}
+                  class:list={cn(
+                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                    "hover:bg-muted/80 transition-colors"
+                  )}
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )
+        }
       </header>
 
       <!-- Post Image -->
-      {image && (
-        <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
-          <img
-            src={postImage}
-            alt={title}
-            class="w-full h-full object-cover"
-          />
-        </div>
-      )}
+      {
+        image && (
+          <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
+            <img src={postImage} alt={title} class="w-full h-full object-cover" />
+          </div>
+        )
+      }
 
       <!-- Post Content -->
       <div class="prose prose-neutral dark:prose-invert max-w-none">
@@ -108,8 +105,19 @@ const postImage = image || "/placeholder-blog.jpg";
         href="/blog"
         class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
         Back to Blog
       </Link>

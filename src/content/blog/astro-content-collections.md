@@ -30,10 +30,10 @@ Content Collections solve these problems by providing:
 First, create a `src/content/config.ts` file:
 
 ```typescript
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -51,20 +51,22 @@ Query your content with the `getCollection` function:
 
 ```astro
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 const sortedPosts = posts.sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <ul>
-  {sortedPosts.map(post => (
-    <li>
-      <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-    </li>
-  ))}
+  {
+    sortedPosts.map((post) => (
+      <li>
+        <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+      </li>
+    ))
+  }
 </ul>
 ```
 
@@ -75,7 +77,7 @@ const sortedPosts = posts.sort(
 You can filter content based on frontmatter:
 
 ```typescript
-const publishedPosts = await getCollection('blog', ({ data }) => {
+const publishedPosts = await getCollection("blog", ({ data }) => {
   return data.draft !== true;
 });
 ```
@@ -86,9 +88,9 @@ Use the `render()` method to get the compiled content:
 
 ```astro
 ---
-import { getEntry } from 'astro:content';
+import { getEntry } from "astro:content";
 
-const post = await getEntry('blog', 'welcome');
+const post = await getEntry("blog", "welcome");
 const { Content } = await post.render();
 ---
 

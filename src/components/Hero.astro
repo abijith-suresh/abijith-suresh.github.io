@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
 ---
 
-<section class={cn("border border-border rounded-lg")}>
+<section class:list={cn("border border-border rounded-lg")}>
   <div class="flex flex-col space-y-1.5 p-6">
     <h1 class="text-3xl leading-none font-medium text-foreground">{AUTHOR.name}</h1>
     <p class="text-muted-foreground text-sm">
@@ -21,7 +21,7 @@ import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
       <Link
         href={SOCIAL_LINKS.github}
         external
-        class={cn(
+        class:list={cn(
           "inline-flex items-center justify-center",
           "size-9 rounded-md",
           "border border-border bg-background",
@@ -34,7 +34,7 @@ import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
       <Link
         href={SOCIAL_LINKS.twitter}
         external
-        class={cn(
+        class:list={cn(
           "inline-flex items-center justify-center",
           "size-9 rounded-md",
           "border border-border bg-background",
@@ -47,7 +47,7 @@ import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
       <Link
         href={SOCIAL_LINKS.bluesky}
         external
-        class={cn(
+        class:list={cn(
           "inline-flex items-center justify-center",
           "size-9 rounded-md",
           "border border-border bg-background",
@@ -60,7 +60,7 @@ import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
       <Link
         href={SOCIAL_LINKS.linkedin}
         external
-        class={cn(
+        class:list={cn(
           "inline-flex items-center justify-center",
           "size-9 rounded-md",
           "border border-border bg-background",

@@ -14,13 +14,7 @@ Web performance directly impacts user experience and conversion rates. Let's exp
 Use modern formats and lazy loading:
 
 ```html
-<img 
-  src="image.webp" 
-  alt="Description"
-  loading="lazy"
-  width="800"
-  height="600"
-/>
+<img src="image.webp" alt="Description" loading="lazy" width="800" height="600" />
 ```
 
 ## Code Splitting
@@ -28,7 +22,7 @@ Use modern formats and lazy loading:
 Split your JavaScript bundles:
 
 ```javascript
-const Component = lazy(() => import('./Component'));
+const Component = lazy(() => import("./Component"));
 ```
 
 ## Caching Strategies

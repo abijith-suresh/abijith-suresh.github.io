@@ -46,7 +46,7 @@ docker run -p 3000:3000 my-app:1.0
 Manage multi-container applications:
 
 ```yaml
-version: '3'
+version: "3"
 services:
   app:
     build: .

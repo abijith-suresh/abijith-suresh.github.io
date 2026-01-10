@@ -6,7 +6,7 @@ import Layout from "@/layouts/Layout.astro";
 import { formatProjectDate } from "@/lib/data-utils";
 import { cn } from "@/lib/utils";
 import "@/styles/global.css";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar, ExternalLink, Github } from "lucide-astro";
 
 export async function getStaticPaths() {
@@ -28,10 +28,7 @@ const formattedDate = formatProjectDate(startDate, endDate);
 const projectImage = image || "/placeholder-project.jpg";
 ---
 
-<Layout
-  title={`${title} - Projects - ${SITE.title}`}
-  description={description}
->
+<Layout title={`${title} - Projects - ${SITE.title}`} description={description}>
   <Header />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
@@ -59,58 +56,60 @@ const projectImage = image || "/placeholder-project.jpg";
 
         <!-- Tags -->
         <div class="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
-              {tag}
-            </span>
-          ))}
+          {
+            tags.map((tag) => (
+              <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
+                {tag}
+              </span>
+            ))
+          }
         </div>
 
         <!-- Links -->
-        {(github || demo) && (
-          <div class="flex flex-wrap gap-3">
-            {github && (
-              <Link
-                href={github}
-                external
-                class={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                  "bg-muted hover:bg-muted/80 text-foreground",
-                  "transition-colors text-sm font-medium"
-                )}
-              >
-                <Github size={16} />
-                View Source
-              </Link>
-            )}
-            {demo && (
-              <Link
-                href={demo}
-                external
-                class={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                  "bg-primary text-primary-foreground hover:bg-primary/90",
-                  "transition-colors text-sm font-medium"
-                )}
-              >
-                <ExternalLink size={16} />
-                Live Demo
-              </Link>
-            )}
-          </div>
-        )}
+        {
+          (github || demo) && (
+            <div class="flex flex-wrap gap-3">
+              {github && (
+                <Link
+                  href={github}
+                  external
+                  class:list={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "bg-muted hover:bg-muted/80 text-foreground",
+                    "transition-colors text-sm font-medium"
+                  )}
+                >
+                  <Github size={16} />
+                  View Source
+                </Link>
+              )}
+              {demo && (
+                <Link
+                  href={demo}
+                  external
+                  class:list={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "bg-primary text-primary-foreground hover:bg-primary/90",
+                    "transition-colors text-sm font-medium"
+                  )}
+                >
+                  <ExternalLink size={16} />
+                  Live Demo
+                </Link>
+              )}
+            </div>
+          )
+        }
       </header>
 
       <!-- Project Image -->
-      {image && (
-        <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
-          <img
-            src={projectImage}
-            alt={title}
-            class="w-full h-full object-cover"
-          />
-        </div>
-      )}
+      {
+        image && (
+          <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
+            <img src={projectImage} alt={title} class="w-full h-full object-cover" />
+          </div>
+        )
+      }
 
       <!-- Project Content -->
       <div class="prose prose-neutral dark:prose-invert max-w-none">
@@ -124,8 +123,19 @@ const projectImage = image || "/placeholder-project.jpg";
         href="/projects"
         class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
         Back to Projects
       </Link>

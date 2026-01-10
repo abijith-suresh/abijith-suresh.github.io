@@ -1,6 +1,6 @@
 ---
 import { Moon, Sun } from "lucide-astro";
-import { NAV_LINKS, AUTHOR } from "@/consts";
+import { AUTHOR, NAV_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 import Link from "@/components/Link.astro";
 ---
@@ -9,11 +9,13 @@ import Link from "@/components/Link.astro";
   <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-      <div class={cn(
-        "size-10 bg-muted rounded-lg",
-        "flex items-center justify-center",
-        "border border-border"
-      )}>
+      <div
+        class:list={cn(
+          "size-10 bg-muted rounded-lg",
+          "flex items-center justify-center",
+          "border border-border"
+        )}
+      >
         <span class="text-xl font-bold text-foreground leading-none">{AUTHOR.name[0]}</span>
       </div>
     </a>
@@ -21,14 +23,16 @@ import Link from "@/components/Link.astro";
     <!-- Navigation Links and Icons -->
     <div class="flex items-center gap-4">
       <nav class="flex items-center gap-4 text-sm sm:gap-6">
-        {NAV_LINKS.map((link) => (
-          <Link
-            href={link.href}
-            class="text-foreground/60 hover:text-foreground transition-colors capitalize"
-          >
-            {link.label}
-          </Link>
-        ))}
+        {
+          NAV_LINKS.map((link) => (
+            <Link
+              href={link.href}
+              class="text-foreground/60 hover:text-foreground transition-colors capitalize"
+            >
+              {link.label}
+            </Link>
+          ))
+        }
       </nav>
 
       <button
@@ -45,26 +49,24 @@ import Link from "@/components/Link.astro";
 
 <script>
   function handleToggleClick() {
-    const element = document.documentElement
-    const currentTheme = element.getAttribute('data-theme')
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+    const element = document.documentElement;
+    const currentTheme = element.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-    element.classList.add('[&_*]:transition-none')
-    element.setAttribute('data-theme', newTheme)
-    window.getComputedStyle(element).getPropertyValue('opacity')
+    element.classList.add("[&_*]:transition-none");
+    element.setAttribute("data-theme", newTheme);
+    window.getComputedStyle(element).getPropertyValue("opacity");
 
     requestAnimationFrame(() => {
-      element.classList.remove('[&_*]:transition-none')
-    })
+      element.classList.remove("[&_*]:transition-none");
+    });
 
-    localStorage.setItem('theme', newTheme)
+    localStorage.setItem("theme", newTheme);
   }
 
   function initThemeToggle() {
-    document
-      .getElementById('theme-toggle')
-      ?.addEventListener('click', handleToggleClick)
+    document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
   }
 
-  initThemeToggle()
+  initThemeToggle();
 </script>

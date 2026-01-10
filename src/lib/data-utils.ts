@@ -1,5 +1,5 @@
 import { SITE } from "@/consts";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 
 type Project = CollectionEntry<"projects">;
 type Blog = CollectionEntry<"blog">;
@@ -53,17 +53,11 @@ export function sortProjects(
 
   switch (sortBy) {
     case "date":
-      return sorted.sort(
-        (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
-      );
+      return sorted.sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
     case "title":
-      return sorted.sort((a, b) =>
-        a.data.title.localeCompare(b.data.title)
-      );
+      return sorted.sort((a, b) => a.data.title.localeCompare(b.data.title));
     case "order":
-      return sorted.sort(
-        (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999)
-      );
+      return sorted.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
     default:
       return sorted;
   }
@@ -158,9 +152,7 @@ export async function getAllBlogPosts(options?: {
   }
 
   // Sort by publish date (newest first)
-  posts = posts.sort(
-    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
-  );
+  posts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
   // Apply limit
   if (options?.limit) {

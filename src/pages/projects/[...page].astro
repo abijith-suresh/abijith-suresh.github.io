@@ -7,8 +7,8 @@ import Layout from "@/layouts/Layout.astro";
 import { getAllProjects, paginate, sortProjects } from "@/lib/data-utils";
 import { cn } from "@/lib/utils";
 import "@/styles/global.css";
+import type { CollectionEntry } from "astro:content";
 import { ChevronLeft, ChevronRight } from "lucide-astro";
-
 export async function getStaticPaths() {
   const allProjects = await getAllProjects();
   const sortedProjects = sortProjects(allProjects, "date");
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  items: any[];
+  items: CollectionEntry<"projects">[];
   currentPage: number;
   totalPages: number;
   hasNext: boolean;
@@ -54,61 +54,63 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
       </p>
     </div>
 
-    {projects.length > 0 ? (
-      <>
-        <div class="flex flex-col gap-6">
-          {projects.map((project) => (
-            <ProjectCard project={project} />
-          ))}
-        </div>
+    {
+      projects.length > 0 ? (
+        <>
+          <div class="flex flex-col gap-6">
+            {projects.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <nav class="flex items-center justify-between pt-6 border-t border-border">
-            <div class="flex-1">
-              {hasPrev && prevUrl && (
-                <Link
-                  href={prevUrl}
-                  class={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                    "text-sm font-medium text-foreground",
-                    "border border-border hover:bg-muted/50",
-                    "transition-colors"
-                  )}
-                >
-                  <ChevronLeft size={16} />
-                  Previous
-                </Link>
-              )}
-            </div>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <nav class="flex items-center justify-between pt-6 border-t border-border">
+              <div class="flex-1">
+                {hasPrev && prevUrl && (
+                  <Link
+                    href={prevUrl}
+                    class:list={cn(
+                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                      "text-sm font-medium text-foreground",
+                      "border border-border hover:bg-muted/50",
+                      "transition-colors"
+                    )}
+                  >
+                    <ChevronLeft size={16} />
+                    Previous
+                  </Link>
+                )}
+              </div>
 
-            <div class="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>Page {currentPage} of {totalPages}</span>
-            </div>
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+              </div>
 
-            <div class="flex-1 flex justify-end">
-              {hasNext && nextUrl && (
-                <Link
-                  href={nextUrl}
-                  class={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                    "text-sm font-medium text-foreground",
-                    "border border-border hover:bg-muted/50",
-                    "transition-colors"
-                  )}
-                >
-                  Next
-                  <ChevronRight size={16} />
-                </Link>
-              )}
-            </div>
-          </nav>
-        )}
-      </>
-    ) : (
-      <p class="text-muted-foreground text-center py-8">
-        No projects to display yet.
-      </p>
-    )}
+              <div class="flex-1 flex justify-end">
+                {hasNext && nextUrl && (
+                  <Link
+                    href={nextUrl}
+                    class:list={cn(
+                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                      "text-sm font-medium text-foreground",
+                      "border border-border hover:bg-muted/50",
+                      "transition-colors"
+                    )}
+                  >
+                    Next
+                    <ChevronRight size={16} />
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
+        </>
+      ) : (
+        <p class="text-muted-foreground text-center py-8">No projects to display yet.</p>
+      )
+    }
   </main>
 </Layout>

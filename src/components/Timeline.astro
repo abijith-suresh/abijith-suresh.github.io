@@ -18,37 +18,39 @@ interface Props {
 const { items, class: className } = Astro.props;
 ---
 
-<div class={cn("relative space-y-8", className)}>
-  {items.map((item, index) => (
-    <div class="relative pl-8 pb-8 border-l-2 border-border last:pb-0">
-      {/* Timeline dot */}
-      <div class="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-primary border-2 border-background" />
+<div class:list={cn("relative space-y-8", className)}>
+  {
+    items.map((item) => (
+      <div class="relative pl-8 pb-8 border-l-2 border-border last:pb-0">
+        {/* Timeline dot */}
+        <div class="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-primary border-2 border-background" />
 
-      <div class="flex flex-col gap-2">
-        {/* Header */}
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
-          <div>
-            <h3 class="text-lg font-semibold text-foreground">{item.title}</h3>
-            <p class="text-sm text-muted-foreground">
-              {item.organization}
-              {item.location && <span class="text-muted-foreground/60"> • {item.location}</span>}
-            </p>
+        <div class="flex flex-col gap-2">
+          {/* Header */}
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+            <div>
+              <h3 class="text-lg font-semibold text-foreground">{item.title}</h3>
+              <p class="text-sm text-muted-foreground">
+                {item.organization}
+                {item.location && <span class="text-muted-foreground/60"> • {item.location}</span>}
+              </p>
+            </div>
+            <div class="text-sm text-muted-foreground/80 shrink-0">
+              {item.startDate} - {item.endDate || "Present"}
+            </div>
           </div>
-          <div class="text-sm text-muted-foreground/80 shrink-0">
-            {item.startDate} - {item.endDate || "Present"}
-          </div>
+
+          {/* Description */}
+          <ul class="space-y-1.5 text-sm text-muted-foreground">
+            {item.description.map((point) => (
+              <li class="flex gap-2">
+                <span class="text-muted-foreground/60 shrink-0">•</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        {/* Description */}
-        <ul class="space-y-1.5 text-sm text-muted-foreground">
-          {item.description.map((point) => (
-            <li class="flex gap-2">
-              <span class="text-muted-foreground/60 shrink-0">•</span>
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
       </div>
-    </div>
-  ))}
+    ))
+  }
 </div>

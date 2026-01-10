@@ -15,7 +15,7 @@ const recentProjects = sortedProjects.slice(0, 3);
     <h2 class="text-2xl font-medium text-foreground">Latest Projects</h2>
     <Link
       href="/projects"
-      class={cn(
+      class:list={cn(
         "inline-flex items-center gap-1.5 text-sm",
         "text-foreground/60 hover:text-foreground",
         "transition-colors group"
@@ -27,8 +27,6 @@ const recentProjects = sortedProjects.slice(0, 3);
   </div>
 
   <div class="flex flex-col gap-6">
-    {recentProjects.map((project) => (
-      <ProjectCard project={project} />
-    ))}
+    {recentProjects.map((project) => <ProjectCard project={project} />)}
   </div>
 </section>

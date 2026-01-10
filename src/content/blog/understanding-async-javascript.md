@@ -27,8 +27,8 @@ A cleaner approach to async code:
 
 ```javascript
 fetchData()
-  .then(data => console.log(data))
-  .catch(error => console.error(error));
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
 ```
 
 ## Async/Await
@@ -54,7 +54,7 @@ Always handle errors in async code:
 try {
   const result = await riskyOperation();
 } catch (error) {
-  console.error('Operation failed:', error);
+  console.error("Operation failed:", error);
 }
 ```
 

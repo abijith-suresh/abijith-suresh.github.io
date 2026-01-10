@@ -15,16 +15,18 @@ const formattedDate = formatBlogDate(publishDate);
 const postImage = image || "/placeholder-blog.jpg";
 ---
 
-<article class={cn("group", className)}>
+<article class:list={cn("group", className)}>
   <Link
     href={postUrl}
-    class={cn(
+    class:list={cn(
       "flex flex-col sm:flex-row gap-4 overflow-hidden border border-border rounded-lg",
       "hover:bg-muted/50 transition-all duration-300 ease-in-out",
       "hover:shadow-md"
     )}
   >
-    <div class="aspect-video sm:aspect-auto w-full sm:max-w-[256px] sm:shrink-0 overflow-hidden bg-muted">
+    <div
+      class="aspect-video sm:aspect-auto w-full sm:max-w-[256px] sm:shrink-0 overflow-hidden bg-muted"
+    >
       <img
         src={postImage}
         alt={title}
@@ -44,11 +46,11 @@ const postImage = image || "/placeholder-blog.jpg";
         {description}
       </p>
       <div class="flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">
-            {tag}
-          </span>
-        ))}
+        {
+          tags.map((tag) => (
+            <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">{tag}</span>
+          ))
+        }
       </div>
     </div>
   </Link>

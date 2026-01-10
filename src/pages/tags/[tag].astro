@@ -6,6 +6,7 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogPosts, getAllBlogTags } from "@/lib/data-utils";
 import "@/styles/global.css";
+import type { CollectionEntry } from "astro:content";
 import { Tag as TagIcon } from "lucide-astro";
 
 export async function getStaticPaths() {
@@ -24,7 +25,7 @@ export async function getStaticPaths() {
 
 interface Props {
   tag: string;
-  posts: any[];
+  posts: CollectionEntry<"blog">[];
 }
 
 const { tag, posts } = Astro.props;
@@ -56,23 +57,24 @@ const postCount = posts.length;
         <div>
           <h1 class="text-3xl font-bold text-foreground">{tag}</h1>
           <p class="text-sm text-muted-foreground">
-            {postCount} {postCount === 1 ? "post" : "posts"}
+            {postCount}
+            {postCount === 1 ? "post" : "posts"}
           </p>
         </div>
       </div>
     </div>
 
-    {posts.length > 0 ? (
-      <div class="flex flex-col gap-6">
-        {posts.map((post) => (
-          <BlogCard post={post} />
-        ))}
-      </div>
-    ) : (
-      <p class="text-muted-foreground text-center py-8">
-        No posts found with this tag.
-      </p>
-    )}
+    {
+      posts.length > 0 ? (
+        <div class="flex flex-col gap-6">
+          {posts.map((post) => (
+            <BlogCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-muted-foreground text-center py-8">No posts found with this tag.</p>
+      )
+    }
 
     <!-- Back to Blog -->
     <div class="pt-6 border-t border-border">
@@ -80,8 +82,19 @@ const postCount = posts.length;
         href="/blog"
         class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
         Back to Blog
       </Link>

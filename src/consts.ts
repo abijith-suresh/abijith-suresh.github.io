@@ -39,5 +39,5 @@ export const AUTHOR = {
 } as const;
 
 // Type exports for better TypeScript support
-export type NavLink = typeof NAV_LINKS[number];
+export type NavLink = (typeof NAV_LINKS)[number];
 export type SocialLink = keyof typeof SOCIAL_LINKS;

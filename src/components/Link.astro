@@ -16,7 +16,7 @@ const isExternal = external || href.startsWith("http");
   href={href}
   target={isExternal ? "_blank" : undefined}
   rel={isExternal ? "noopener noreferrer" : undefined}
-  class={cn(
+  class:list={cn(
     "inline-block transition-colors duration-300 ease-in-out",
     underline &&
       "underline decoration-muted-foreground underline-offset-[3px] hover:decoration-foreground",
