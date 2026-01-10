@@ -14,6 +14,7 @@ This file contains guidelines and commands for AI agents working on this portfol
 ## Available Commands
 
 ### Development
+
 ```bash
 bun run dev          # Start development server
 bun run build        # Build for production
@@ -22,24 +23,41 @@ bun run astro        # Direct Astro CLI access
 ```
 
 ### Testing & Quality
-⚠️ **No linting, formatting, or testing commands currently configured**
-- Consider adding: `bun run lint`, `bun run format`, `bun run test`
-- Recommend setting up ESLint, Prettier, and Vitest
+
+```bash
+bun run lint          # Run ESLint to check for code issues
+bun run lint:fix      # Run ESLint and auto-fix issues
+bun run format        # Format all code with Prettier
+bun run format:check  # Check if code is formatted correctly
+```
+
+**Linting & Formatting Setup:**
+
+- ESLint v9 with flat config format
+- TypeScript ESLint for strict type checking
+- Astro plugin for .astro file linting
+- JSX A11Y plugin for accessibility checks
+- Prettier with Astro plugin for consistent formatting
+- Integration between ESLint and Prettier to avoid conflicts
+
+⚠️ **Testing not yet configured** - Consider adding Vitest for unit tests
 
 ## Code Style Guidelines
 
 ### TypeScript
+
 - Use strict TypeScript configuration
 - Define interfaces for component props before implementation
 - Use JSDoc comments with examples for complex functions
 - Leverage path aliases (`@/*` → `src/*`)
 
 ### Astro Components
+
 ```astro
 ---
 // Frontmatter: imports and interfaces first
-import type { ComponentProps } from 'astro/types';
-import { SomeComponent } from '@/components/SomeComponent';
+import type { ComponentProps } from "astro/types";
+import { SomeComponent } from "@/components/SomeComponent";
 
 interface Props {
   title: string;
@@ -61,12 +79,14 @@ const { title, description } = Astro.props;
 ```
 
 ### CSS & Styling
+
 - Use Tailwind CSS v4 with inline theme configuration
 - Leverage CSS custom properties for theming (light/dark mode)
 - Follow OKLCH color space conventions
 - Use shadcn/ui-inspired design patterns
 
 ### File Organization
+
 ```
 src/
 ├── components/          # Reusable Astro components
@@ -82,12 +102,14 @@ src/
 ```
 
 ### Naming Conventions
+
 - **Components**: PascalCase (e.g., `BlogCard`, `ProjectGrid`)
 - **Functions**: camelCase (e.g., `formatDate`, `filterByTag`)
 - **Files**: kebab-case for utilities, PascalCase for components
 - **Constants**: UPPER_SNAKE_CASE in `/src/consts.ts`
 
 ### Content Management
+
 - Use Astro Content Collections for type-safe content
 - Define Zod schemas in `/src/content/config.ts`
 - Store blog posts in `/src/content/blog/`
@@ -95,18 +117,21 @@ src/
 - Use frontmatter validation for all content
 
 ### Error Handling
+
 - Use TypeScript's strict type checking
 - Validate content with Zod schemas
 - Provide fallback values for optional props
 - Use semantic HTML for accessibility
 
 ### Performance Guidelines
+
 - Leverage Astro's static site generation
 - Minimize client-side JavaScript
 - Use proper image optimization
 - Implement lazy loading where appropriate
 
 ### Accessibility
+
 - Use semantic HTML5 elements
 - Provide ARIA labels where needed
 - Ensure keyboard navigation support
@@ -118,12 +143,14 @@ src/
 2. **Content updates**: Edit markdown files in `/src/content/`
 3. **Component changes**: Update Astro components in `/src/components/`
 4. **Style changes**: Modify Tailwind classes or theme configuration
-5. **Build verification**: Run `bun run build` before committing
+5. **Code quality**: Run `bun run lint:fix` and `bun run format` before committing
+6. **Build verification**: Run `bun run build` before committing
 
 ## Important Notes
 
-- No current linting/formatting setup - consider adding ESLint and Prettier
-- No testing framework - consider adding Vitest
+- ✅ ESLint v9 with Astro, TypeScript, and accessibility support configured
+- ✅ Prettier with Astro plugin for consistent code formatting
+- ❌ No testing framework - consider adding Vitest
 - Content is type-safe through Zod validation
 - Theme system supports light/dark modes via CSS custom properties
 - Uses Bun as package manager (see bun.lock file)
@@ -133,6 +160,9 @@ src/
 - `astro.config.mjs` - Astro configuration with Tailwind
 - `tsconfig.json` - TypeScript strict configuration
 - `package.json` - Dependencies and scripts
+- `eslint.config.js` - ESLint v9 flat config with Astro + TypeScript support
+- `.prettierrc` - Prettier configuration with Astro plugin
+- `.prettierignore` - Files to exclude from Prettier formatting
 - `.vscode/extensions.json` - Recommended VSCode extensions
 
 ## When Adding Features
