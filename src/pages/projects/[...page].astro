@@ -1,0 +1,114 @@
+---
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { getAllProjects, paginate, sortProjects } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
+import "@/styles/global.css";
+import { ChevronLeft, ChevronRight } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const allProjects = await getAllProjects();
+  const sortedProjects = sortProjects(allProjects, "date");
+  const totalProjects = sortedProjects.length;
+  const totalPages = Math.ceil(totalProjects / SITE.projectsPerPage);
+
+  // Generate paths for all pages
+  return Array.from({ length: totalPages }, (_, i) => {
+    const page = i + 1;
+    const paginatedProjects = paginate(sortedProjects, page, SITE.projectsPerPage);
+
+    return {
+      params: { page: page === 1 ? undefined : String(page) },
+      props: { ...paginatedProjects },
+    };
+  });
+}
+
+interface Props {
+  items: any[];
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+const { items: projects, currentPage, totalPages, hasNext, hasPrev } = Astro.props;
+
+const prevUrl = hasPrev ? (currentPage === 2 ? "/projects" : `/projects/${currentPage - 1}`) : null;
+const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
+---
+
+<Layout
+  title={`Projects${currentPage > 1 ? ` - Page ${currentPage}` : ""} - ${SITE.title}`}
+  description="A collection of projects I've built, including web applications, tools, and experiments."
+>
+  <Header />
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+    <div class="flex flex-col gap-y-2">
+      <h1 class="text-3xl font-bold text-foreground">Projects</h1>
+      <p class="text-muted-foreground">
+        A collection of projects I've built, ranging from web applications to CLI tools.
+      </p>
+    </div>
+
+    {projects.length > 0 ? (
+      <>
+        <div class="flex flex-col gap-6">
+          {projects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <nav class="flex items-center justify-between pt-6 border-t border-border">
+            <div class="flex-1">
+              {hasPrev && prevUrl && (
+                <Link
+                  href={prevUrl}
+                  class={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "text-sm font-medium text-foreground",
+                    "border border-border hover:bg-muted/50",
+                    "transition-colors"
+                  )}
+                >
+                  <ChevronLeft size={16} />
+                  Previous
+                </Link>
+              )}
+            </div>
+
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>Page {currentPage} of {totalPages}</span>
+            </div>
+
+            <div class="flex-1 flex justify-end">
+              {hasNext && nextUrl && (
+                <Link
+                  href={nextUrl}
+                  class={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "text-sm font-medium text-foreground",
+                    "border border-border hover:bg-muted/50",
+                    "transition-colors"
+                  )}
+                >
+                  Next
+                  <ChevronRight size={16} />
+                </Link>
+              )}
+            </div>
+          </nav>
+        )}
+      </>
+    ) : (
+      <p class="text-muted-foreground text-center py-8">
+        No projects to display yet.
+      </p>
+    )}
+  </main>
+</Layout>
