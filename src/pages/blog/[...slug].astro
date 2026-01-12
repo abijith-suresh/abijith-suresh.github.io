@@ -28,7 +28,30 @@ const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const postImage = image || "/placeholder-blog.jpg";
 ---
 
-<Layout title={`${title} - Blog - ${SITE.title}`} description={description}>
+<Layout
+  title={`${title} - Blog - ${SITE.title}`}
+  description={description}
+  image={postImage}
+  imageAlt={title}
+  type="article"
+  article={{
+    publishedTime: publishDate,
+    modifiedTime: updatedDate,
+    authors: [SITE.author],
+    tags: tags,
+  }}
+  jsonLd={{
+    type: "article",
+    article: {
+      headline: title,
+      description: description,
+      image: postImage,
+      datePublished: publishDate,
+      dateModified: updatedDate,
+      keywords: tags,
+    },
+  }}
+>
   <Header />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->

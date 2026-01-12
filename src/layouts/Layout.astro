@@ -1,14 +1,27 @@
 ---
 import Footer from "@/components/Footer.astro";
+import SEO from "@/components/seo/SEO.astro";
+import JsonLd from "@/components/seo/JsonLd.astro";
+import { SITE } from "@/consts";
+import type { SEOProps } from "@/components/seo/SEO.astro";
+import type { JsonLdProps } from "@/components/seo/JsonLd.astro";
 
-interface Props {
+interface Props extends SEOProps {
   title?: string;
   description?: string;
+  jsonLd?: JsonLdProps;
 }
 
 const {
-  title = "Your Blog Name",
-  description = "A brief description of your blog. This will be used in meta tags and social sharing.",
+  title = SITE.title,
+  description = SITE.description,
+  image,
+  imageAlt,
+  canonicalURL,
+  noindex,
+  article,
+  type,
+  jsonLd,
 } = Astro.props;
 ---
 
@@ -16,11 +29,27 @@ const {
 <html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <title>{title}</title>
+
+    <!-- SEO Meta Tags -->
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      imageAlt={imageAlt}
+      canonicalURL={canonicalURL}
+      noindex={noindex}
+      article={article}
+      type={type}
+    />
+
+    <!-- Structured Data -->
+    {jsonLd && <JsonLd {...jsonLd} />}
+
     <slot name="head" />
   </head>
   <body class="flex h-fit min-h-screen flex-col gap-y-6">
