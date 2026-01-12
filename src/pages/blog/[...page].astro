@@ -6,7 +6,6 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogPosts, paginate } from "@/lib/data-utils";
 import { cn } from "@/lib/utils";
-import "@/styles/global.css";
 import type { CollectionEntry } from "astro:content";
 import { ChevronLeft, ChevronRight } from "lucide-astro";
 
@@ -76,6 +75,7 @@ const nextUrl = hasNext ? `/blog/${currentPage + 1}` : null;
                       "border border-border hover:bg-muted/50",
                       "transition-colors"
                     )}
+                    data-astro-prefetch="hover"
                   >
                     <ChevronLeft size={16} />
                     Previous
@@ -99,6 +99,7 @@ const nextUrl = hasNext ? `/blog/${currentPage + 1}` : null;
                       "border border-border hover:bg-muted/50",
                       "transition-colors"
                     )}
+                    data-astro-prefetch="hover"
                   >
                     Next
                     <ChevronRight size={16} />

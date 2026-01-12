@@ -8,7 +8,11 @@ import Link from "@/components/Link.astro";
 <header class="sticky top-0 z-50 bg-background/50 backdrop-blur-sm border-b border-border">
   <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+    <a
+      href="/"
+      class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+      data-astro-prefetch="tap"
+    >
       <div
         class:list={cn(
           "size-10 bg-muted rounded-lg",
@@ -28,6 +32,7 @@ import Link from "@/components/Link.astro";
             <Link
               href={link.href}
               class="text-foreground/60 hover:text-foreground transition-colors capitalize"
+              prefetch="hover"
             >
               {link.label}
             </Link>
