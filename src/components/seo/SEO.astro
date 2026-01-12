@@ -55,10 +55,10 @@ const ogType = article ? "article" : type;
       {article.modifiedTime && (
         <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />
       )}
-      {article.authors?.map((author) => (
+      {article.authors?.map((author: string) => (
         <meta property="article:author" content={author} />
       ))}
-      {article.tags?.map((tag) => (
+      {article.tags?.map((tag: string) => (
         <meta property="article:tag" content={tag} />
       ))}
     </>
