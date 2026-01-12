@@ -69,4 +69,7 @@ import Link from "@/components/Link.astro";
   }
 
   initThemeToggle();
+
+  // Reinitialize on view transitions
+  document.addEventListener("astro:after-swap", initThemeToggle);
 </script>

@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 import Footer from "@/components/Footer.astro";
 import SEO from "@/components/seo/SEO.astro";
 import JsonLd from "@/components/seo/JsonLd.astro";
@@ -49,6 +50,9 @@ const {
 
     <!-- Structured Data -->
     {jsonLd && <JsonLd {...jsonLd} />}
+
+    <!-- View Transitions -->
+    <ViewTransitions />
 
     <slot name="head" />
   </head>
