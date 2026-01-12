@@ -67,9 +67,7 @@ export interface JsonLdProps {
   };
 }
 
-interface Props extends JsonLdProps {}
-
-const { type, article, person } = Astro.props;
+const { type, article, person } = Astro.props as JsonLdProps;
 const currentUrl = new URL(Astro.url.pathname, Astro.site).href;
 
 let schema: WebSiteSchema | ArticleSchema | PersonSchema;
@@ -121,11 +119,7 @@ if (type === "website") {
     url: SITE.url,
     jobTitle: person?.jobTitle || AUTHOR.tagline,
     description: person?.description || AUTHOR.bio,
-    sameAs: [
-      SOCIAL_LINKS.github,
-      SOCIAL_LINKS.twitter,
-      SOCIAL_LINKS.linkedin,
-    ].filter(Boolean),
+    sameAs: [SOCIAL_LINKS.github, SOCIAL_LINKS.twitter, SOCIAL_LINKS.linkedin].filter(Boolean),
     image: AUTHOR.avatar ? new URL(AUTHOR.avatar, Astro.site).href : undefined,
   };
 }

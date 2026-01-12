@@ -8,23 +8,24 @@ This is a personal portfolio and blog website built with **Astro 5** and **TypeS
 
 ## Tech Stack
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Framework | Astro | ^5.16.6 |
-| Language | TypeScript | Strict mode |
-| Styling | Tailwind CSS | ^4.1.18 |
-| Validation | Zod | ^4.3.5 |
-| Icons | lucide-astro | ^0.556.0 |
-| Utilities | clsx, tailwind-merge | Latest |
-| Package Manager | Bun | - |
-| Linting | ESLint v9 (flat config) | ^9.39.2 |
-| Formatting | Prettier | ^3.7.4 |
+| Category        | Technology              | Version     |
+| --------------- | ----------------------- | ----------- |
+| Framework       | Astro                   | ^5.16.6     |
+| Language        | TypeScript              | Strict mode |
+| Styling         | Tailwind CSS            | ^4.1.18     |
+| Validation      | Zod                     | ^4.3.5      |
+| Icons           | lucide-astro            | ^0.556.0    |
+| Utilities       | clsx, tailwind-merge    | Latest      |
+| Package Manager | Bun                     | -           |
+| Linting         | ESLint v9 (flat config) | ^9.39.2     |
+| Formatting      | Prettier                | ^3.7.4      |
 
 ---
 
 ## Architecture
 
 ### Overview
+
 - **Type**: Static Site (SSG)
 - **Pattern**: Component-based with Content Collections
 - **Routing**: File-based routing via Astro Pages
@@ -54,6 +55,7 @@ src/
 ```
 
 ### Key Architectural Decisions
+
 1. **Zero client-side JavaScript by default** - Only add scripts when necessary
 2. **Content-first design** - Markdown for all content, validated with Zod
 3. **Type-safe throughout** - Full TypeScript with strict mode
@@ -65,23 +67,26 @@ src/
 ## Naming Conventions
 
 ### Files & Directories
-| Type | Convention | Example |
-|------|------------|---------|
-| Astro Components | PascalCase | `BlogCard.astro`, `RecentPosts.astro` |
-| TypeScript utilities | kebab-case | `data-utils.ts`, `utils.ts` |
-| Content files | kebab-case | `getting-started-typescript.md` |
-| Pages | kebab-case or [...params] | `about.astro`, `[...slug].astro` |
+
+| Type                 | Convention                | Example                               |
+| -------------------- | ------------------------- | ------------------------------------- |
+| Astro Components     | PascalCase                | `BlogCard.astro`, `RecentPosts.astro` |
+| TypeScript utilities | kebab-case                | `data-utils.ts`, `utils.ts`           |
+| Content files        | kebab-case                | `getting-started-typescript.md`       |
+| Pages                | kebab-case or [...params] | `about.astro`, `[...slug].astro`      |
 
 ### Code Identifiers
-| Type | Convention | Example |
-|------|------------|---------|
-| Interfaces/Types | PascalCase | `Props`, `TimelineItem`, `SkillCategory` |
-| Functions | camelCase | `getAllBlogPosts()`, `formatBlogDate()` |
-| Constants | UPPER_SNAKE_CASE | `SITE`, `NAV_LINKS`, `SOCIAL_LINKS` |
-| Variables | camelCase | `recentPosts`, `sortedProjects` |
-| CSS custom properties | kebab-case | `--muted-foreground`, `--border` |
+
+| Type                  | Convention       | Example                                  |
+| --------------------- | ---------------- | ---------------------------------------- |
+| Interfaces/Types      | PascalCase       | `Props`, `TimelineItem`, `SkillCategory` |
+| Functions             | camelCase        | `getAllBlogPosts()`, `formatBlogDate()`  |
+| Constants             | UPPER_SNAKE_CASE | `SITE`, `NAV_LINKS`, `SOCIAL_LINKS`      |
+| Variables             | camelCase        | `recentPosts`, `sortedProjects`          |
+| CSS custom properties | kebab-case       | `--muted-foreground`, `--border`         |
 
 ### Component Props
+
 - Always define `interface Props` in frontmatter
 - Use `class?: string` for optional className passthrough
 - Destructure with defaults: `const { title, class: className } = Astro.props;`
@@ -91,6 +96,7 @@ src/
 ## Astro Component Patterns
 
 ### Standard Component Structure
+
 ```astro
 ---
 // 1. Imports (types first, then components, then utilities)
@@ -120,7 +126,9 @@ const formattedDate = formatBlogDate(post.data.publishDate);
 ```
 
 ### Export Types for Reuse
+
 When a component defines types that other files need:
+
 ```astro
 ---
 // In Skills.astro
@@ -136,6 +144,7 @@ interface Props {
 ```
 
 ### Client-Side Scripts
+
 ```astro
 <!-- Inline script that reruns on navigation -->
 <script is:inline data-astro-rerun>
@@ -153,7 +162,9 @@ interface Props {
 ## Tailwind CSS Patterns
 
 ### Class Merging with cn()
+
 Always use the `cn()` utility for conditional or merged classes:
+
 ```typescript
 import { cn } from "@/lib/utils";
 
@@ -168,39 +179,42 @@ cn("p-4", isActive && "bg-muted", className)
 ```
 
 ### Theming System
+
 Use semantic color tokens, not raw colors:
+
 ```typescript
 // ✅ Correct - uses theme tokens
-"text-foreground"
-"bg-background"
-"text-muted-foreground"
-"border-border"
-"bg-muted"
-"text-primary"
+"text-foreground";
+"bg-background";
+"text-muted-foreground";
+"border-border";
+"bg-muted";
+"text-primary";
 
 // ❌ Avoid - raw colors
-"text-gray-900"
-"bg-white"
-"border-gray-200"
+"text-gray-900";
+"bg-white";
+"border-gray-200";
 ```
 
 ### Common Tailwind Patterns
+
 ```typescript
 // Card/container styling
-"border border-border rounded-lg"
+"border border-border rounded-lg";
 
 // Interactive hover states
-"hover:bg-muted/50 transition-all duration-300 ease-in-out"
-"hover:text-foreground transition-colors"
+"hover:bg-muted/50 transition-all duration-300 ease-in-out";
+"hover:text-foreground transition-colors";
 
 // Responsive flex layouts
-"flex flex-col sm:flex-row gap-4"
+"flex flex-col sm:flex-row gap-4";
 
 // Typography hierarchy
-"text-3xl font-bold text-foreground"    // H1
-"text-2xl font-semibold text-foreground" // H2
-"text-lg font-medium text-foreground"    // H3
-"text-sm text-muted-foreground"          // Body/meta
+"text-3xl font-bold text-foreground"; // H1
+"text-2xl font-semibold text-foreground"; // H2
+"text-lg font-medium text-foreground"; // H3
+"text-sm text-muted-foreground"; // Body/meta
 
 // Icon button pattern
 cn(
@@ -209,16 +223,19 @@ cn(
   "border border-border bg-background",
   "text-foreground/60 hover:text-foreground",
   "hover:bg-muted transition-colors"
-)
+);
 ```
 
 ### Dark Mode
+
 Dark mode is handled via `data-theme="dark"` attribute on `<html>`:
+
 ```css
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 ```
 
 Toggle classes with the dark variant selector:
+
 ```astro
 <Sun class="[html[data-theme='dark']_&]:hidden" />
 <Moon class="hidden [html[data-theme='dark']_&]:block" />
@@ -229,6 +246,7 @@ Toggle classes with the dark variant selector:
 ## Content Collections
 
 ### Schema Definition (src/content/config.ts)
+
 ```typescript
 import { defineCollection, z } from "astro:content";
 
@@ -267,6 +285,7 @@ export const collections = { projects, blog };
 ### Frontmatter Examples
 
 **Blog Post:**
+
 ```markdown
 ---
 title: "Welcome to My Portfolio"
@@ -280,6 +299,7 @@ draft: false
 ```
 
 **Project:**
+
 ```markdown
 ---
 title: "Personal Portfolio Website"
@@ -294,7 +314,9 @@ endDate: 2026-01-01
 ```
 
 ### Fetching Content
+
 Use helpers from `@/lib/data-utils`:
+
 ```typescript
 import { getAllBlogPosts, getAllProjects, sortProjects } from "@/lib/data-utils";
 
@@ -314,6 +336,7 @@ const sortedProjects = sortProjects(projects, "date"); // "date" | "title" | "or
 ## Page Patterns
 
 ### Static Page
+
 ```astro
 ---
 import Header from "@/components/Header.astro";
@@ -331,6 +354,7 @@ import "@/styles/global.css";
 ```
 
 ### Dynamic Routes with getStaticPaths
+
 ```astro
 ---
 import { getCollection } from "astro:content";
@@ -353,6 +377,7 @@ const { Content } = await post.render();
 ```
 
 ### Paginated Routes
+
 ```astro
 ---
 export async function getStaticPaths() {
@@ -363,7 +388,9 @@ export async function getStaticPaths() {
     const page = i + 1;
     return {
       params: { page: page === 1 ? undefined : String(page) },
-      props: { /* pagination data */ },
+      props: {
+        /* pagination data */
+      },
     };
   });
 }
@@ -375,22 +402,25 @@ export async function getStaticPaths() {
 ## Utility Functions
 
 ### cn() - Class Merging
+
 ```typescript
 import { cn } from "@/lib/utils";
 
-cn("base", condition && "conditional", props.class)
+cn("base", condition && "conditional", props.class);
 ```
 
 ### Date Formatting
+
 ```typescript
 import { formatBlogDate } from "@/lib/utils";
 import { formatProjectDate } from "@/lib/data-utils";
 
-formatBlogDate(new Date("2026-01-08")) // "January 8th, 2026"
-formatProjectDate(startDate, endDate)  // "Dec 2025 - Jan 2026" or "Dec 2025 - Present"
+formatBlogDate(new Date("2026-01-08")); // "January 8th, 2026"
+formatProjectDate(startDate, endDate); // "Dec 2025 - Jan 2026" or "Dec 2025 - Present"
 ```
 
 ### Pagination
+
 ```typescript
 import { paginate } from "@/lib/data-utils";
 
@@ -402,6 +432,7 @@ const { items, currentPage, totalPages, hasNext, hasPrev } = paginate(allPosts, 
 ## Configuration
 
 ### Site Constants (src/consts.ts)
+
 ```typescript
 export const SITE = {
   title: "Site Name",
@@ -424,7 +455,9 @@ export const SOCIAL_LINKS = {
 ```
 
 ### Path Aliases
+
 Use `@/*` to reference `src/*`:
+
 ```typescript
 import { cn } from "@/lib/utils";
 import BlogCard from "@/components/BlogCard.astro";
@@ -436,6 +469,7 @@ import { SITE } from "@/consts";
 ## Icons
 
 Use **lucide-astro** for all icons:
+
 ```astro
 ---
 import { Github, ArrowRight, Calendar, Tag } from "lucide-astro";
@@ -450,7 +484,9 @@ import { Github, ArrowRight, Calendar, Tag } from "lucide-astro";
 ## Common UI Components
 
 ### Link Component
+
 Always use the custom Link component for proper external link handling:
+
 ```astro
 import Link from "@/components/Link.astro";
 
@@ -460,6 +496,7 @@ import Link from "@/components/Link.astro";
 ```
 
 ### Card Pattern
+
 ```astro
 <article class:list={cn("group", className)}>
   <Link
@@ -472,7 +509,9 @@ import Link from "@/components/Link.astro";
   >
     <!-- Image -->
     <div class="aspect-video sm:aspect-auto w-full sm:max-w-[256px] overflow-hidden bg-muted">
-      <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+      <img
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
     </div>
     <!-- Content -->
     <div class="p-4 grow">
@@ -484,6 +523,7 @@ import Link from "@/components/Link.astro";
 ```
 
 ### Tag Badge
+
 ```astro
 <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">
   {tag}
@@ -491,6 +531,7 @@ import Link from "@/components/Link.astro";
 ```
 
 ### Section with "View All" Link
+
 ```astro
 <section class="flex flex-col gap-y-4">
   <div class="flex items-center justify-between">
@@ -542,6 +583,7 @@ import Link from "@/components/Link.astro";
 ## Code Quality
 
 ### Before Committing
+
 ```bash
 bun run lint:fix    # Fix ESLint issues
 bun run format      # Format with Prettier
@@ -549,12 +591,14 @@ bun run build       # Verify production build
 ```
 
 ### ESLint Rules
+
 - Unused variables must be prefixed with `_`
 - No `console.log` (only `warn`/`error` allowed)
 - Prefer `const` over `let`
 - No `var` declarations
 
 ### Import Organization
+
 1. Type imports first
 2. External packages
 3. Internal components (`@/components/*`)
@@ -566,7 +610,9 @@ bun run build       # Verify production build
 ## Quick Reference Examples
 
 ### Adding a New Blog Post
+
 Create `src/content/blog/my-new-post.md`:
+
 ```markdown
 ---
 title: "My New Post"
@@ -579,7 +625,9 @@ Post content in Markdown...
 ```
 
 ### Adding a New Component
+
 Create `src/components/MyComponent.astro`:
+
 ```astro
 ---
 import { cn } from "@/lib/utils";
@@ -607,7 +655,9 @@ const { title, variant = "default", class: className } = Astro.props;
 ```
 
 ### Adding a New Data Utility Function
+
 Add to `src/lib/data-utils.ts`:
+
 ```typescript
 /**
  * Description of what this function does
@@ -624,7 +674,9 @@ export function myFunction(param: string): string {
 ```
 
 ### Adding a New Page
+
 Create `src/pages/my-page.astro`:
+
 ```astro
 ---
 import Header from "@/components/Header.astro";
@@ -647,15 +699,19 @@ import "@/styles/global.css";
 ## Integration Points
 
 ### RSS Feed
+
 The RSS feed is generated at `/rss.xml` via `src/pages/rss.xml.js`. It automatically includes all non-draft blog posts.
 
 ### External Links
+
 External links automatically get `target="_blank"` and `rel="noopener noreferrer"` via the Link component.
 
 ### Theme Persistence
+
 Theme preference is stored in `localStorage` and applied on page load via inline script in Layout.astro.
 
 ### Content Validation
+
 All content is validated at build time via Zod schemas in `src/content/config.ts`. Invalid frontmatter will cause build failures.
 
 ---
@@ -700,16 +756,16 @@ Update this file whenever you make changes that affect:
 
 When making codebase changes, also update the relevant sections:
 
-| Change Type | Sections to Update |
-|-------------|-------------------|
-| New dependency | Tech Stack |
-| New directory | Architecture > Directory Structure |
-| New component pattern | Astro Component Patterns, Common UI Components |
-| New utility function | Utility Functions |
-| New content schema | Content Collections |
-| New page pattern | Page Patterns |
-| Style/theming changes | Tailwind CSS Patterns |
-| New anti-pattern discovered | Critical Don'ts |
+| Change Type                 | Sections to Update                             |
+| --------------------------- | ---------------------------------------------- |
+| New dependency              | Tech Stack                                     |
+| New directory               | Architecture > Directory Structure             |
+| New component pattern       | Astro Component Patterns, Common UI Components |
+| New utility function        | Utility Functions                              |
+| New content schema          | Content Collections                            |
+| New page pattern            | Page Patterns                                  |
+| Style/theming changes       | Tailwind CSS Patterns                          |
+| New anti-pattern discovered | Critical Don'ts                                |
 
 ### Sync Checklist
 

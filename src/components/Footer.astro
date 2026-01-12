@@ -24,10 +24,7 @@ const currentYear = new Date().getFullYear();
               </Link>
             ))
           }
-          <Link
-            href="/rss.xml"
-            class="text-foreground/60 hover:text-foreground transition-colors"
-          >
+          <Link href="/rss.xml" class="text-foreground/60 hover:text-foreground transition-colors">
             RSS
           </Link>
         </nav>
@@ -85,9 +82,12 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <!-- Bottom Section: Copyright and Credits -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-6 border-t border-border text-sm text-muted-foreground">
+      <div
+        class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-6 border-t border-border text-sm text-muted-foreground"
+      >
         <p>
-          © {currentYear} {SITE.author}. All rights reserved.
+          © {currentYear}
+          {SITE.author}. All rights reserved.
         </p>
         <p class="flex items-center gap-1">
           Built with

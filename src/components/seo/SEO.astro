@@ -17,8 +17,6 @@ export interface SEOProps {
   type?: "website" | "article" | "profile";
 }
 
-interface Props extends SEOProps {}
-
 const {
   title = SITE.title,
   description = SITE.description,
@@ -57,8 +55,12 @@ const ogType = article ? "article" : type;
       {article.modifiedTime && (
         <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />
       )}
-      {article.authors?.map((author) => <meta property="article:author" content={author} />)}
-      {article.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+      {article.authors?.map((author) => (
+        <meta property="article:author" content={author} />
+      ))}
+      {article.tags?.map((tag) => (
+        <meta property="article:tag" content={tag} />
+      ))}
     </>
   )
 }
