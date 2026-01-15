@@ -3,9 +3,9 @@ import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { cn, formatBlogDate } from "@/lib/utils";
+import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Calendar } from "lucide-astro";
+import { Calendar, Clock } from "lucide-astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -25,6 +25,7 @@ const { Content } = await post.render();
 const formattedDate = formatBlogDate(publishDate);
 const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const postImage = image || "/placeholder-blog.jpg";
+const readingTime = calculateReadingTime(post.body ?? "");
 ---
 
 <Layout
@@ -73,6 +74,10 @@ const postImage = image || "/placeholder-blog.jpg";
             <time datetime={publishDate.toISOString()}>
               {formattedDate}
             </time>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <Clock size={16} />
+            <span>{formatReadingTime(readingTime)}</span>
           </div>
           {
             formattedUpdatedDate && (

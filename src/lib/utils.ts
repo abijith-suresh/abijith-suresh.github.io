@@ -52,3 +52,29 @@ export function formatBlogDate(date: Date): string {
 
   return `${month} ${day}${suffix}, ${year}`;
 }
+
+/**
+ * Calculate estimated reading time for content
+ *
+ * @param content - The text content to analyze
+ * @param wordsPerMinute - Reading speed (default: 200 wpm)
+ * @returns Number of minutes to read
+ *
+ * @example
+ * calculateReadingTime("Hello world") // 1
+ * calculateReadingTime(longArticle) // 5
+ */
+export function calculateReadingTime(content: string, wordsPerMinute = 200): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / wordsPerMinute));
+}
+
+/**
+ * Format reading time for display
+ *
+ * @param minutes - Number of minutes
+ * @returns Formatted string (e.g., "5 min read")
+ */
+export function formatReadingTime(minutes: number): string {
+  return `${minutes} min read`;
+}

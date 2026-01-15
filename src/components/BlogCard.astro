@@ -1,6 +1,6 @@
 ---
 import Link from "@/components/Link.astro";
-import { cn, formatBlogDate } from "@/lib/utils";
+import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -12,6 +12,7 @@ const { post, class: className } = Astro.props;
 const { title, description, tags, publishDate } = post.data;
 const postUrl = `/blog/${post.slug}`;
 const formattedDate = formatBlogDate(publishDate);
+const readingTime = calculateReadingTime(post.body ?? "");
 ---
 
 <article class:list={cn("group", className)}>
@@ -28,7 +29,7 @@ const formattedDate = formatBlogDate(publishDate);
         {title}
       </h3>
       <p class="text-sm text-muted-foreground">
-        {formattedDate}
+        {formattedDate} · {formatReadingTime(readingTime)}
       </p>
       <p class="text-sm text-muted-foreground line-clamp-2">
         {description}
