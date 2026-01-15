@@ -59,7 +59,13 @@ const {
     <slot name="head" />
   </head>
   <body class="flex h-fit min-h-screen flex-col gap-y-6">
-    <slot />
+    <header class="bg-background/50 sticky top-0 z-50 backdrop-blur-sm">
+      <slot name="header" />
+      <slot name="table-of-contents" />
+    </header>
+    <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4">
+      <slot />
+    </main>
     <Footer />
 
     <script is:inline data-astro-rerun>

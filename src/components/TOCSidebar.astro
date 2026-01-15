@@ -1,0 +1,162 @@
+---
+/**
+ * Desktop Table of Contents - Sticky sidebar
+ * Shows all headings with active state highlighting
+ */
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// Filter to h2 and h3 headings
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+
+function getIndent(depth: number): string {
+  return depth === 3 ? "ml-4" : "";
+}
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <div
+      id="toc-sidebar-container"
+      class="sticky top-20 col-start-1 row-span-1 mr-8 ml-auto hidden h-[calc(100vh-5rem)] max-w-64 xl:block"
+    >
+      <div class="flex max-h-[calc(100vh-8rem)] flex-col overflow-y-auto pr-4">
+        <span class="text-sm font-medium mb-3">On this page</span>
+        <ul class="flex list-none flex-col gap-y-2" id="toc-sidebar-list">
+          {filteredHeadings.map((heading) => (
+            <li class:list={["text-sm text-foreground/60", getIndent(heading.depth)]}>
+              <a
+                href={`#${heading.slug}`}
+                class="toc-sidebar-link underline decoration-transparent underline-offset-[3px] transition-colors duration-200 hover:decoration-inherit hover:text-foreground"
+                data-heading-link={heading.slug}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const HEADER_OFFSET = 100;
+
+  class TOCState {
+    links: NodeListOf<Element> = document.querySelectorAll("[data-heading-link]");
+    activeIds: string[] = [];
+    headings: HTMLElement[] = [];
+
+    reset() {
+      this.links = document.querySelectorAll("#toc-sidebar-container [data-heading-link]");
+      this.activeIds = [];
+      this.headings = [];
+    }
+  }
+
+  const state = new TOCState();
+
+  class HeadingRegions {
+    static build() {
+      state.headings = Array.from(
+        document.querySelectorAll<HTMLElement>(".prose h2[id], .prose h3[id]")
+      );
+    }
+
+    static getVisibleIds(): string[] {
+      if (state.headings.length === 0) return [];
+
+      const viewportTop = window.scrollY + HEADER_OFFSET;
+      const visibleIds: string[] = [];
+
+      for (let i = state.headings.length - 1; i >= 0; i--) {
+        const heading = state.headings[i];
+        if (heading.offsetTop <= viewportTop) {
+          visibleIds.push(heading.id);
+          break;
+        }
+      }
+
+      // If nothing found and we have headings, use the first one
+      if (visibleIds.length === 0 && state.headings.length > 0) {
+        visibleIds.push(state.headings[0].id);
+      }
+
+      return visibleIds;
+    }
+  }
+
+  class TOCLinks {
+    static update(headingIds: string[]) {
+      state.links.forEach((link) => {
+        link.classList.remove("text-foreground");
+      });
+
+      headingIds.forEach((id) => {
+        if (id) {
+          const activeLink = document.querySelector(
+            `#toc-sidebar-container [data-heading-link="${id}"]`
+          );
+          if (activeLink) {
+            activeLink.classList.add("text-foreground");
+          }
+        }
+      });
+    }
+  }
+
+  class TOCController {
+    static handleScroll() {
+      const newActiveIds = HeadingRegions.getVisibleIds();
+
+      if (JSON.stringify(newActiveIds) !== JSON.stringify(state.activeIds)) {
+        state.activeIds = newActiveIds;
+        TOCLinks.update(state.activeIds);
+      }
+    }
+
+    static handleResize() {
+      HeadingRegions.build();
+      const newActiveIds = HeadingRegions.getVisibleIds();
+      if (JSON.stringify(newActiveIds) !== JSON.stringify(state.activeIds)) {
+        state.activeIds = newActiveIds;
+        TOCLinks.update(state.activeIds);
+      }
+    }
+
+    static init() {
+      state.reset();
+      HeadingRegions.build();
+
+      if (state.headings.length === 0) {
+        TOCLinks.update([]);
+        return;
+      }
+
+      this.handleScroll();
+
+      window.addEventListener("scroll", this.handleScroll, { passive: true });
+      window.addEventListener("resize", this.handleResize, { passive: true });
+    }
+
+    static cleanup() {
+      window.removeEventListener("scroll", this.handleScroll);
+      window.removeEventListener("resize", this.handleResize);
+      state.activeIds = [];
+      state.headings = [];
+    }
+  }
+
+  document.addEventListener("astro:page-load", () => TOCController.init());
+  document.addEventListener("astro:after-swap", () => {
+    TOCController.cleanup();
+    TOCController.init();
+  });
+  document.addEventListener("astro:before-swap", () => TOCController.cleanup());
+</script>

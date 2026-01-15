@@ -1,7 +1,8 @@
 ---
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
-import TableOfContents from "@/components/TableOfContents.astro";
+import TOCHeader from "@/components/TOCHeader.astro";
+import TOCSidebar from "@/components/TOCSidebar.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
@@ -27,6 +28,9 @@ const formattedDate = formatBlogDate(publishDate);
 const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const postImage = image || "/placeholder-blog.jpg";
 const readingTime = calculateReadingTime(post.body ?? "");
+
+// Filter headings for TOC (h2 and h3 only)
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
 <Layout
@@ -53,85 +57,85 @@ const readingTime = calculateReadingTime(post.body ?? "");
     },
   }}
 >
-  <Header />
-  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
-    <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
+  <Header slot="header" />
+  {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
+
+  <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
+    {/* Breadcrumb */}
+    <nav class="col-start-2 flex items-center gap-2 text-sm text-muted-foreground px-4">
       <Link href="/" class="hover:text-foreground transition-colors">Home</Link>
       <span>/</span>
       <Link href="/blog" class="hover:text-foreground transition-colors">Blog</Link>
       <span>/</span>
-      <span class="text-foreground">{title}</span>
+      <span class="text-foreground truncate">{title}</span>
     </nav>
 
-    <!-- Blog Post Header -->
-    <article class="flex flex-col gap-y-6">
-      <header class="flex flex-col gap-y-4">
-        <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+    {/* Post Header */}
+    <header class="col-start-2 flex flex-col gap-y-4 px-4">
+      <h1 class="text-3xl font-bold text-foreground">{title}</h1>
 
-        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <div class="flex items-center gap-1.5">
-            <Calendar size={16} />
-            <time datetime={publishDate.toISOString()}>
-              {formattedDate}
-            </time>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <Clock size={16} />
-            <span>{formatReadingTime(readingTime)}</span>
-          </div>
-          {
-            formattedUpdatedDate && (
-              <div class="flex items-center gap-1.5">
-                <span class="text-xs">Updated:</span>
-                <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
-              </div>
-            )
-          }
+      <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-1.5">
+          <Calendar size={16} />
+          <time datetime={publishDate.toISOString()}>
+            {formattedDate}
+          </time>
         </div>
-
-        <p class="text-lg text-muted-foreground">{description}</p>
-
-        <!-- Tags -->
+        <div class="flex items-center gap-1.5">
+          <Clock size={16} />
+          <span>{formatReadingTime(readingTime)}</span>
+        </div>
         {
-          tags.length > 0 && (
-            <div class="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Link
-                  href={`/tags/${tag}`}
-                  class:list={cn(
-                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                    "hover:bg-muted/80 transition-colors"
-                  )}
-                >
-                  {tag}
-                </Link>
-              ))}
+          formattedUpdatedDate && (
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs">Updated:</span>
+              <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
             </div>
           )
         }
-      </header>
+      </div>
 
-      <!-- Post Image -->
+      <p class="text-lg text-muted-foreground">{description}</p>
+
+      {/* Tags */}
       {
-        image && (
-          <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
-            <img src={postImage} alt={title} class="w-full h-full object-cover" />
+        tags.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link
+                href={`/tags/${tag}`}
+                class:list={cn(
+                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                  "hover:bg-muted/80 transition-colors"
+                )}
+              >
+                {tag}
+              </Link>
+            ))}
           </div>
         )
       }
+    </header>
 
-      <!-- Table of Contents -->
-      <TableOfContents headings={headings} />
+    {/* Post Image */}
+    {
+      image && (
+        <div class="col-start-2 aspect-video w-full overflow-hidden rounded-lg border border-border px-4">
+          <img src={postImage} alt={title} class="w-full h-full object-cover rounded-lg" />
+        </div>
+      )
+    }
 
-      <!-- Post Content -->
-      <article class="prose max-w-none">
-        <Content />
-      </article>
+    {/* Desktop TOC Sidebar */}
+    {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
+
+    {/* Post Content */}
+    <article class="prose col-start-2 max-w-none px-4">
+      <Content />
     </article>
 
-    <!-- Back to Blog -->
-    <div class="pt-6 border-t border-border">
+    {/* Back to Blog */}
+    <div class="col-start-2 pt-6 border-t border-border px-4">
       <Link
         href="/blog"
         class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -153,7 +157,7 @@ const readingTime = calculateReadingTime(post.body ?? "");
         Back to Blog
       </Link>
     </div>
-  </main>
+  </section>
 </Layout>
 
 <style>
