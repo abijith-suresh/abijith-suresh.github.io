@@ -1,6 +1,7 @@
 ---
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
@@ -21,7 +22,7 @@ interface Props {
 
 const { post } = Astro.props;
 const { title, description, tags, image, publishDate, updatedDate } = post.data;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 const formattedDate = formatBlogDate(publishDate);
 const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const postImage = image || "/placeholder-blog.jpg";
@@ -119,6 +120,9 @@ const readingTime = calculateReadingTime(post.body ?? "");
           </div>
         )
       }
+
+      <!-- Table of Contents -->
+      <TableOfContents headings={headings} />
 
       <!-- Post Content -->
       <article class="prose max-w-none">
