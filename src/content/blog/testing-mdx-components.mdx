@@ -1,11 +1,14 @@
 ---
 title: "Testing MDX Components"
-description: "A demonstration of custom MDX components including callouts and code blocks."
+description: "A demonstration of custom MDX components including callouts, images, videos, and link cards."
 publishDate: 2026-01-15
 tags: ["MDX", "Astro", "Components"]
 ---
 
 import Callout from "@/components/mdx/Callout.astro";
+import Image from "@/components/mdx/Image.astro";
+import Video from "@/components/mdx/Video.astro";
+import LinkCard from "@/components/mdx/LinkCard.astro";
 
 This is a test post to demonstrate MDX components in action.
 
@@ -92,3 +95,35 @@ app.listen(3000, () => {
 ## Conclusion
 
 MDX allows you to use React/Astro components directly in your Markdown content, making it much more powerful and flexible than plain Markdown.
+
+## Link Cards
+
+Link cards provide rich previews for external links:
+
+<LinkCard
+  href="https://astro.build"
+  title="Astro"
+  description="The web framework for content-driven websites. Astro powers the world's fastest websites."
+/>
+
+<LinkCard
+  href="https://github.com/meroxdotdev/merox-erudite"
+  title="merox-erudite"
+  description="A beautiful, minimal Astro theme for blogs and portfolios."
+/>
+
+## Video Embeds
+
+You can embed YouTube videos easily:
+
+<Video id="dsTXcSeAZq8" title="Astro in 100 Seconds" />
+
+## Images with Captions
+
+Images can include captions for better context:
+
+<Image
+  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
+  alt="Code on a screen"
+  caption="Photo by Florian Olivo on Unsplash"
+/>

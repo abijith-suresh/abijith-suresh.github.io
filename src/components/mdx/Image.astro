@@ -1,0 +1,29 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  class?: string;
+}
+
+const { src, alt, caption, class: className } = Astro.props;
+---
+
+<figure class={cn("my-6", className)}>
+  <img
+    src={src}
+    alt={alt}
+    class="w-full rounded-lg border border-border"
+    loading="lazy"
+    decoding="async"
+  />
+  {
+    caption && (
+      <figcaption class="mt-2 text-center text-sm text-muted-foreground">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

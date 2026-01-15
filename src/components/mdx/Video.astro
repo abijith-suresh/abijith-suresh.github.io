@@ -1,0 +1,58 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  id: string;
+  title?: string;
+  class?: string;
+}
+
+const { id, title, class: className } = Astro.props;
+
+// Extract video ID from various YouTube URL formats
+function extractVideoId(input: string): string {
+  // If it's already just an ID (11 characters, alphanumeric with - and _)
+  if (/^[\w-]{11}$/.test(input)) {
+    return input;
+  }
+
+  // Try to extract from URL
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+    /youtube\.com\/v\/([^&\n?#]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = input.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return input;
+}
+
+const videoId = extractVideoId(id);
+const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+---
+
+<figure class={cn("my-6", className)}>
+  <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-border">
+    <iframe
+      src={embedUrl}
+      title={title || "YouTube video"}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+      class="absolute inset-0 h-full w-full"
+    />
+  </div>
+  {
+    title && (
+      <figcaption class="mt-2 text-center text-sm text-muted-foreground">
+        {title}
+      </figcaption>
+    )
+  }
+</figure>
