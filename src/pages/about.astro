@@ -1,0 +1,102 @@
+---
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import Skills from "@/components/Skills.astro";
+import Timeline from "@/components/Timeline.astro";
+import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
+import { EDUCATION, EXPERIENCE, SKILLS } from "@/data/about";
+import Layout from "@/layouts/Layout.astro";
+import { Github, Linkedin, Twitter } from "lucide-astro";
+---
+
+<Layout
+  title={`About - ${SITE.title}`}
+  description={`Learn more about ${AUTHOR.name} - ${AUTHOR.tagline}`}
+  type="profile"
+  jsonLd={{ type: "person" }}
+>
+  <Header slot="header" />
+  <main class="w-full mx-auto flex grow flex-col gap-y-12 px-4 max-w-3xl pb-12">
+    <!-- Page Header -->
+    <div class="flex flex-col gap-y-3">
+      <h1 class="text-3xl font-bold text-foreground">About Me</h1>
+      <p class="text-lg text-muted-foreground">
+        {AUTHOR.tagline}
+      </p>
+    </div>
+
+    <!-- Biography -->
+    <section class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-semibold text-foreground">Biography</h2>
+      <div class="prose prose-neutral dark:prose-invert max-w-none">
+        <p class="text-muted-foreground leading-relaxed">
+          Hi, I'm {AUTHOR.name}! I'm a passionate developer who loves building things for the web.
+          With several years of experience in full-stack development, I specialize in creating
+          performant, user-friendly applications using modern web technologies.
+        </p>
+        <p class="text-muted-foreground leading-relaxed">
+          I enjoy working on challenging problems and learning new technologies. When I'm not
+          coding, you can find me contributing to open source, writing technical articles, or
+          exploring new frameworks and tools.
+        </p>
+        <p class="text-muted-foreground leading-relaxed">
+          I believe in writing clean, maintainable code and following best practices. I'm always
+          excited to collaborate on interesting projects and connect with fellow developers.
+        </p>
+      </div>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-semibold text-foreground">Work Experience</h2>
+      <Timeline items={EXPERIENCE} />
+    </section>
+
+    <!-- Education -->
+    <section class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-semibold text-foreground">Education</h2>
+      <Timeline items={EDUCATION} />
+    </section>
+
+    <!-- Skills -->
+    <section class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-semibold text-foreground">Skills & Technologies</h2>
+      <Skills categories={SKILLS} />
+    </section>
+
+    <!-- Contact -->
+    <section class="flex flex-col gap-y-4">
+      <h2 class="text-2xl font-semibold text-foreground">Get in Touch</h2>
+      <p class="text-muted-foreground">
+        I'm always open to discussing new projects, creative ideas, or opportunities to be part of
+        your vision. Feel free to reach out through any of the following channels:
+      </p>
+      <div class="flex flex-wrap gap-4 pt-2">
+        <Link
+          href={SOCIAL_LINKS.github}
+          external
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border hover:bg-muted/50 transition-colors"
+        >
+          <Github size={18} />
+          <span class="text-sm font-medium">GitHub</span>
+        </Link>
+        <Link
+          href={SOCIAL_LINKS.twitter}
+          external
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border hover:bg-muted/50 transition-colors"
+        >
+          <Twitter size={18} />
+          <span class="text-sm font-medium">Twitter</span>
+        </Link>
+        <Link
+          href={SOCIAL_LINKS.linkedin}
+          external
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border hover:bg-muted/50 transition-colors"
+        >
+          <Linkedin size={18} />
+          <span class="text-sm font-medium">LinkedIn</span>
+        </Link>
+      </div>
+    </section>
+  </main>
+</Layout>

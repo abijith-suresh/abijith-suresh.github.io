@@ -1,0 +1,117 @@
+---
+import BlogCard from "@/components/BlogCard.astro";
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { getAllBlogPosts, paginate } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
+import { ChevronLeft, ChevronRight } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getAllBlogPosts();
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / SITE.postsPerPage);
+
+  // Generate paths for all pages
+  return Array.from({ length: totalPages }, (_, i) => {
+    const page = i + 1;
+    const paginatedPosts = paginate(allPosts, page);
+
+    return {
+      params: { page: page === 1 ? undefined : String(page) },
+      props: { ...paginatedPosts },
+    };
+  });
+}
+
+interface Props {
+  items: CollectionEntry<"blog">[];
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+const { items: posts, currentPage, totalPages, hasNext, hasPrev } = Astro.props;
+
+const prevUrl = hasPrev ? (currentPage === 2 ? "/blog" : `/blog/${currentPage - 1}`) : null;
+const nextUrl = hasNext ? `/blog/${currentPage + 1}` : null;
+---
+
+<Layout
+  title={`Blog${currentPage > 1 ? ` - Page ${currentPage}` : ""} - ${SITE.title}`}
+  description="Articles, tutorials, and thoughts on web development, design, and technology."
+>
+  <Header slot="header" />
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+    <div class="flex flex-col gap-y-2">
+      <h1 class="text-3xl font-bold text-foreground">Blog</h1>
+      <p class="text-muted-foreground">
+        Articles, tutorials, and thoughts on web development, design, and technology.
+      </p>
+    </div>
+
+    {
+      posts.length > 0 ? (
+        <>
+          <div class="flex flex-col gap-6">
+            {posts.map((post) => (
+              <BlogCard post={post} />
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <nav class="flex items-center justify-between pt-6 border-t border-border">
+              <div class="flex-1">
+                {hasPrev && prevUrl && (
+                  <Link
+                    href={prevUrl}
+                    class:list={cn(
+                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                      "text-sm font-medium text-foreground",
+                      "border border-border hover:bg-muted/50",
+                      "transition-colors"
+                    )}
+                    data-astro-prefetch="hover"
+                  >
+                    <ChevronLeft size={16} />
+                    Previous
+                  </Link>
+                )}
+              </div>
+
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+              </div>
+
+              <div class="flex-1 flex justify-end">
+                {hasNext && nextUrl && (
+                  <Link
+                    href={nextUrl}
+                    class:list={cn(
+                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                      "text-sm font-medium text-foreground",
+                      "border border-border hover:bg-muted/50",
+                      "transition-colors"
+                    )}
+                    data-astro-prefetch="hover"
+                  >
+                    Next
+                    <ChevronRight size={16} />
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
+        </>
+      ) : (
+        <p class="text-muted-foreground text-center py-8">No blog posts to display yet.</p>
+      )
+    }
+  </main>
+</Layout>

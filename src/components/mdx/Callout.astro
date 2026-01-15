@@ -1,0 +1,94 @@
+---
+import { cn } from "@/lib/utils";
+import { AlertTriangle, ChevronDown, Info, Lightbulb, ShieldAlert } from "lucide-astro";
+
+const calloutConfig = {
+  note: {
+    style: "border-blue-500 bg-blue-500/5",
+    textColor: "text-blue-600 dark:text-blue-400",
+    icon: Info,
+  },
+  tip: {
+    style: "border-green-500 bg-green-500/5",
+    textColor: "text-green-600 dark:text-green-400",
+    icon: Lightbulb,
+  },
+  warning: {
+    style: "border-amber-500 bg-amber-500/5",
+    textColor: "text-amber-600 dark:text-amber-400",
+    icon: AlertTriangle,
+  },
+  danger: {
+    style: "border-red-500 bg-red-500/5",
+    textColor: "text-red-600 dark:text-red-400",
+    icon: ShieldAlert,
+  },
+} as const;
+
+type CalloutVariant = keyof typeof calloutConfig;
+
+interface Props {
+  variant?: CalloutVariant;
+  title?: string;
+  class?: string;
+  collapsible?: boolean;
+  defaultOpen?: boolean;
+}
+
+const {
+  variant = "note",
+  title,
+  class: className,
+  collapsible = false,
+  defaultOpen = true,
+} = Astro.props;
+
+const config = calloutConfig[variant];
+const Icon = config.icon;
+const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1);
+---
+
+{
+  collapsible ? (
+    <details
+      class:list={cn(
+        "relative px-4 py-3 my-6 border-l-4 rounded-r-lg text-sm",
+        config.style,
+        "[&[open]>summary_.chevron]:rotate-180 [&[open]>summary]:mb-3",
+        className
+      )}
+      open={defaultOpen}
+    >
+      <summary class="flex cursor-pointer items-center font-medium list-none [&::-webkit-details-marker]:hidden">
+        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
+        <ChevronDown
+          size={16}
+          class:list={cn(
+            "chevron ml-auto shrink-0 transition-transform duration-200",
+            config.textColor
+          )}
+        />
+      </summary>
+      <div class="text-foreground/80">
+        <slot />
+      </div>
+    </details>
+  ) : (
+    <div
+      class:list={cn(
+        "relative px-4 py-3 my-6 border-l-4 rounded-r-lg text-sm",
+        config.style,
+        className
+      )}
+    >
+      <div class="flex items-center font-medium mb-2">
+        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
+      </div>
+      <div class="text-foreground/80">
+        <slot />
+      </div>
+    </div>
+  )
+}

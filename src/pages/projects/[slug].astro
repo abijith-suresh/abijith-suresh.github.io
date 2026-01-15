@@ -1,0 +1,196 @@
+---
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { formatProjectDate } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
+import { type CollectionEntry, getCollection } from "astro:content";
+import { Calendar, ExternalLink, Github } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { title, description, tags, github, demo, image, startDate, endDate } = project.data;
+const { Content } = await project.render();
+const formattedDate = formatProjectDate(startDate, endDate);
+const projectImage = image || "/placeholder-project.jpg";
+---
+
+<Layout title={`${title} - Projects - ${SITE.title}`} description={description}>
+  <Header slot="header" />
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
+      <Link href="/" class="hover:text-foreground transition-colors">Home</Link>
+      <span>/</span>
+      <Link href="/projects" class="hover:text-foreground transition-colors">Projects</Link>
+      <span>/</span>
+      <span class="text-foreground">{title}</span>
+    </nav>
+
+    <!-- Project Header -->
+    <article class="flex flex-col gap-y-6">
+      <header class="flex flex-col gap-y-4">
+        <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+          <div class="flex items-center gap-1.5">
+            <Calendar size={16} />
+            <time>{formattedDate}</time>
+          </div>
+        </div>
+
+        <p class="text-lg text-muted-foreground">{description}</p>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2">
+          {
+            tags.map((tag) => (
+              <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+
+        <!-- Links -->
+        {
+          (github || demo) && (
+            <div class="flex flex-wrap gap-3">
+              {github && (
+                <Link
+                  href={github}
+                  external
+                  class:list={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "bg-muted hover:bg-muted/80 text-foreground",
+                    "transition-colors text-sm font-medium"
+                  )}
+                >
+                  <Github size={16} />
+                  View Source
+                </Link>
+              )}
+              {demo && (
+                <Link
+                  href={demo}
+                  external
+                  class:list={cn(
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
+                    "bg-primary text-primary-foreground hover:bg-primary/90",
+                    "transition-colors text-sm font-medium"
+                  )}
+                >
+                  <ExternalLink size={16} />
+                  Live Demo
+                </Link>
+              )}
+            </div>
+          )
+        }
+      </header>
+
+      <!-- Project Image -->
+      {
+        image && (
+          <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
+            <img src={projectImage} alt={title} class="w-full h-full object-cover" />
+          </div>
+        )
+      }
+
+      <!-- Project Content -->
+      <div class="prose prose-neutral dark:prose-invert max-w-none">
+        <Content />
+      </div>
+    </article>
+
+    <!-- Back to Projects -->
+    <div class="pt-6 border-t border-border">
+      <Link
+        href="/projects"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+        Back to Projects
+      </Link>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  @reference "../../styles/global.css";
+
+  .prose {
+    @apply text-foreground;
+  }
+
+  .prose :global(h2) {
+    @apply text-2xl font-bold text-foreground mt-8 mb-4;
+  }
+
+  .prose :global(h3) {
+    @apply text-xl font-semibold text-foreground mt-6 mb-3;
+  }
+
+  .prose :global(p) {
+    @apply text-muted-foreground mb-4 leading-relaxed;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    @apply text-muted-foreground mb-4 ml-6;
+  }
+
+  .prose :global(li) {
+    @apply mb-2;
+  }
+
+  .prose :global(a) {
+    @apply text-foreground underline hover:opacity-80 transition-colors;
+  }
+
+  .prose :global(code) {
+    @apply text-sm bg-muted px-1.5 py-0.5 rounded text-foreground;
+  }
+
+  .prose :global(pre) {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .prose :global(pre code) {
+    @apply bg-transparent p-0;
+  }
+
+  .prose :global(blockquote) {
+    @apply border-l-4 border-border pl-4 italic text-muted-foreground my-4;
+  }
+
+  .prose :global(strong) {
+    @apply font-semibold text-foreground;
+  }
+</style>

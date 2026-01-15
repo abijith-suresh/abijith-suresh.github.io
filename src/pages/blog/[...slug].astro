@@ -1,0 +1,214 @@
+---
+import Header from "@/components/Header.astro";
+import Link from "@/components/Link.astro";
+import TOCHeader from "@/components/TOCHeader.astro";
+import TOCSidebar from "@/components/TOCSidebar.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
+import { type CollectionEntry, getCollection } from "astro:content";
+import { Calendar, Clock } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, tags, image, publishDate, updatedDate } = post.data;
+const { Content, headings } = await post.render();
+const formattedDate = formatBlogDate(publishDate);
+const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
+const postImage = image || "/placeholder-blog.jpg";
+const readingTime = calculateReadingTime(post.body ?? "");
+
+// Filter headings for TOC (h2 and h3 only)
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+<Layout
+  title={`${title} - Blog - ${SITE.title}`}
+  description={description}
+  image={postImage}
+  imageAlt={title}
+  type="article"
+  article={{
+    publishedTime: publishDate,
+    modifiedTime: updatedDate,
+    authors: [SITE.author],
+    tags: tags,
+  }}
+  jsonLd={{
+    type: "article",
+    article: {
+      headline: title,
+      description: description,
+      image: postImage,
+      datePublished: publishDate,
+      dateModified: updatedDate,
+      keywords: tags,
+    },
+  }}
+>
+  <Header slot="header" />
+  {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
+
+  <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
+    {/* Breadcrumb */}
+    <nav class="col-start-2 flex items-center gap-2 text-sm text-muted-foreground px-4">
+      <Link href="/" class="hover:text-foreground transition-colors">Home</Link>
+      <span>/</span>
+      <Link href="/blog" class="hover:text-foreground transition-colors">Blog</Link>
+      <span>/</span>
+      <span class="text-foreground truncate">{title}</span>
+    </nav>
+
+    {/* Post Header */}
+    <header class="col-start-2 flex flex-col gap-y-4 px-4">
+      <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+
+      <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-1.5">
+          <Calendar size={16} />
+          <time datetime={publishDate.toISOString()}>
+            {formattedDate}
+          </time>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <Clock size={16} />
+          <span>{formatReadingTime(readingTime)}</span>
+        </div>
+        {
+          formattedUpdatedDate && (
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs">Updated:</span>
+              <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
+            </div>
+          )
+        }
+      </div>
+
+      <p class="text-lg text-muted-foreground">{description}</p>
+
+      {/* Tags */}
+      {
+        tags.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link
+                href={`/tags/${tag}`}
+                class:list={cn(
+                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                  "hover:bg-muted/80 transition-colors"
+                )}
+              >
+                {tag}
+              </Link>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {/* Post Image */}
+    {
+      image && (
+        <div class="col-start-2 aspect-video w-full overflow-hidden rounded-lg border border-border px-4">
+          <img src={postImage} alt={title} class="w-full h-full object-cover rounded-lg" />
+        </div>
+      )
+    }
+
+    {/* Desktop TOC Sidebar */}
+    {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
+
+    {/* Post Content */}
+    <article class="prose col-start-2 max-w-none px-4">
+      <Content />
+    </article>
+
+    {/* Back to Blog */}
+    <div class="col-start-2 pt-6 border-t border-border px-4">
+      <Link
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+        Back to Blog
+      </Link>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  @reference "../../styles/global.css";
+
+  .prose {
+    @apply text-foreground;
+  }
+
+  .prose :global(h2) {
+    @apply text-2xl font-bold text-foreground mt-8 mb-4;
+  }
+
+  .prose :global(h3) {
+    @apply text-xl font-semibold text-foreground mt-6 mb-3;
+  }
+
+  .prose :global(p) {
+    @apply text-muted-foreground mb-4 leading-relaxed;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    @apply text-muted-foreground mb-4 ml-6;
+  }
+
+  .prose :global(li) {
+    @apply mb-2;
+  }
+
+  .prose :global(a) {
+    @apply text-foreground underline hover:opacity-80 transition-colors;
+  }
+
+  .prose :global(code) {
+    @apply text-sm bg-muted px-1.5 py-0.5 rounded text-foreground;
+  }
+
+  .prose :global(pre) {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .prose :global(pre code) {
+    @apply bg-transparent p-0;
+  }
+
+  .prose :global(blockquote) {
+    @apply border-l-4 border-border pl-4 italic text-muted-foreground my-4;
+  }
+
+  .prose :global(strong) {
+    @apply font-semibold text-foreground;
+  }
+</style>

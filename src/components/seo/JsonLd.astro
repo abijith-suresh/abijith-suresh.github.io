@@ -1,0 +1,128 @@
+---
+import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
+
+interface WebSiteSchema {
+  "@context": "https://schema.org";
+  "@type": "WebSite";
+  name: string;
+  description: string;
+  url: string;
+  author: {
+    "@type": "Person";
+    name: string;
+    url: string;
+  };
+  inLanguage: string;
+}
+
+interface ArticleSchema {
+  "@context": "https://schema.org";
+  "@type": "BlogPosting";
+  headline: string;
+  description: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+  author: {
+    "@type": "Person";
+    name: string;
+    url: string;
+  };
+  publisher: {
+    "@type": "Organization";
+    name: string;
+    url: string;
+  };
+  mainEntityOfPage: {
+    "@type": "WebPage";
+    "@id": string;
+  };
+  keywords?: string;
+}
+
+interface PersonSchema {
+  "@context": "https://schema.org";
+  "@type": "Person";
+  name: string;
+  url: string;
+  jobTitle?: string;
+  description?: string;
+  sameAs: string[];
+  image?: string;
+}
+
+export interface JsonLdProps {
+  type: "website" | "article" | "person";
+  article?: {
+    headline: string;
+    description: string;
+    image?: string;
+    datePublished: Date;
+    dateModified?: Date;
+    keywords?: string[];
+  };
+  person?: {
+    jobTitle?: string;
+    description?: string;
+  };
+}
+
+const { type, article, person } = Astro.props as JsonLdProps;
+const currentUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+let schema: WebSiteSchema | ArticleSchema | PersonSchema;
+
+if (type === "website") {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    author: {
+      "@type": "Person",
+      name: AUTHOR.name,
+      url: SITE.url,
+    },
+    inLanguage: SITE.locale,
+  };
+} else if (type === "article" && article) {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.headline,
+    description: article.description,
+    image: article.image ? new URL(article.image, Astro.site).href : undefined,
+    datePublished: article.datePublished.toISOString(),
+    dateModified: article.dateModified?.toISOString() || article.datePublished.toISOString(),
+    author: {
+      "@type": "Person",
+      name: AUTHOR.name,
+      url: SITE.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.title,
+      url: SITE.url,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": currentUrl,
+    },
+    keywords: article.keywords?.join(", "),
+  };
+} else {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: AUTHOR.fullName,
+    url: SITE.url,
+    jobTitle: person?.jobTitle || AUTHOR.tagline,
+    description: person?.description || AUTHOR.bio,
+    sameAs: [SOCIAL_LINKS.github, SOCIAL_LINKS.twitter, SOCIAL_LINKS.linkedin].filter(Boolean),
+    image: AUTHOR.avatar ? new URL(AUTHOR.avatar, Astro.site).href : undefined,
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

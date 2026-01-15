@@ -1,0 +1,32 @@
+---
+import BlogCard from "@/components/BlogCard.astro";
+import Link from "@/components/Link.astro";
+import { getAllBlogPosts } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-astro";
+
+const allPosts = await getAllBlogPosts();
+const recentPosts = allPosts.slice(0, 3);
+---
+
+<section class="flex flex-col gap-y-4">
+  <div class="flex items-center justify-between">
+    <h2 class="text-2xl font-medium text-foreground">Latest Posts</h2>
+    <Link
+      href="/blog"
+      class:list={cn(
+        "inline-flex items-center gap-1.5 text-sm",
+        "text-foreground/60 hover:text-foreground",
+        "transition-colors group"
+      )}
+      data-astro-prefetch="hover"
+    >
+      View all
+      <ArrowRight size={14} class="transition-transform group-hover:translate-x-1" />
+    </Link>
+  </div>
+
+  <div class="flex flex-col gap-6">
+    {recentPosts.map((post) => <BlogCard post={post} />)}
+  </div>
+</section>

@@ -1,0 +1,46 @@
+---
+import Link from "@/components/Link.astro";
+import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  class?: string;
+}
+
+const { post, class: className } = Astro.props;
+const { title, description, tags, publishDate } = post.data;
+const postUrl = `/blog/${post.slug}`;
+const formattedDate = formatBlogDate(publishDate);
+const readingTime = calculateReadingTime(post.body ?? "");
+---
+
+<article class:list={cn("group", className)}>
+  <Link
+    href={postUrl}
+    class:list={cn(
+      "block p-4 border border-border rounded-lg",
+      "hover:bg-muted/50 transition-all duration-300 ease-in-out"
+    )}
+    prefetch="hover"
+  >
+    <div class="flex flex-col gap-2">
+      <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+        {title}
+      </h3>
+      <p class="text-sm text-muted-foreground">
+        {formattedDate} · {formatReadingTime(readingTime)}
+      </p>
+      <p class="text-sm text-muted-foreground line-clamp-2">
+        {description}
+      </p>
+      <div class="flex flex-wrap gap-2 mt-2">
+        {
+          tags.map((tag: string) => (
+            <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">{tag}</span>
+          ))
+        }
+      </div>
+    </div>
+  </Link>
+</article>

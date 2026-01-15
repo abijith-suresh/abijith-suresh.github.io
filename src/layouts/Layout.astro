@@ -1,0 +1,84 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Footer from "@/components/Footer.astro";
+import SEO from "@/components/seo/SEO.astro";
+import JsonLd from "@/components/seo/JsonLd.astro";
+import { SITE } from "@/consts";
+import type { SEOProps } from "@/components/seo/SEO.astro";
+import type { JsonLdProps } from "@/components/seo/JsonLd.astro";
+import "@/styles/global.css";
+import "@/styles/typography.css";
+
+interface Props extends SEOProps {
+  title?: string;
+  description?: string;
+  jsonLd?: JsonLdProps;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image,
+  imageAlt,
+  canonicalURL,
+  noindex,
+  article,
+  type,
+  jsonLd,
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+
+    <!-- SEO Meta Tags -->
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      imageAlt={imageAlt}
+      canonicalURL={canonicalURL}
+      noindex={noindex}
+      article={article}
+      type={type}
+    />
+
+    <!-- Structured Data -->
+    {jsonLd && <JsonLd {...jsonLd} />}
+
+    <!-- View Transitions -->
+    <ViewTransitions fallback="swap" />
+
+    <slot name="head" />
+  </head>
+  <body class="flex h-fit min-h-screen flex-col gap-y-6">
+    <header class="bg-background/50 sticky top-0 z-50 backdrop-blur-sm">
+      <slot name="header" />
+      <slot name="table-of-contents" />
+    </header>
+    <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline data-astro-rerun>
+      (() => {
+        const theme = (() => {
+          const stored = localStorage?.getItem("theme") ?? "";
+          if (["dark", "light"].includes(stored)) return stored;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        })();
+
+        document.documentElement.setAttribute("data-theme", theme);
+        window.localStorage.setItem("theme", theme);
+      })();
+    </script>
+  </body>
+</html>

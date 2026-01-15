@@ -1,0 +1,80 @@
+---
+import { Moon, Sun } from "lucide-astro";
+import { AUTHOR, NAV_LINKS } from "@/consts";
+import { cn } from "@/lib/utils";
+import Link from "@/components/Link.astro";
+---
+
+<header class="sticky top-0 z-50 bg-background/50 backdrop-blur-sm border-b border-border">
+  <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
+    <!-- Logo -->
+    <a
+      href="/"
+      class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+      data-astro-prefetch="tap"
+    >
+      <div
+        class:list={cn(
+          "size-10 bg-muted rounded-lg",
+          "flex items-center justify-center",
+          "border border-border"
+        )}
+      >
+        <span class="text-xl font-bold text-foreground leading-none">{AUTHOR.name[0]}</span>
+      </div>
+    </a>
+
+    <!-- Navigation Links and Icons -->
+    <div class="flex items-center gap-4">
+      <nav class="flex items-center gap-4 text-sm sm:gap-6">
+        {
+          NAV_LINKS.map((link) => (
+            <Link
+              href={link.href}
+              class="text-foreground/60 hover:text-foreground transition-colors capitalize"
+              prefetch="hover"
+            >
+              {link.label}
+            </Link>
+          ))
+        }
+      </nav>
+
+      <button
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        class="p-2 text-foreground/60 hover:text-foreground hover:bg-muted rounded-md transition-all cursor-pointer -my-2 -me-2"
+      >
+        <Sun size={16} class="[html[data-theme='dark']_&]:hidden" />
+        <Moon size={16} class="hidden [html[data-theme='dark']_&]:block" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  function handleToggleClick() {
+    const element = document.documentElement;
+    const currentTheme = element.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    element.classList.add("[&_*]:transition-none");
+    element.setAttribute("data-theme", newTheme);
+    window.getComputedStyle(element).getPropertyValue("opacity");
+
+    requestAnimationFrame(() => {
+      element.classList.remove("[&_*]:transition-none");
+    });
+
+    localStorage.setItem("theme", newTheme);
+  }
+
+  function initThemeToggle() {
+    document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
+  }
+
+  initThemeToggle();
+
+  // Reinitialize on view transitions
+  document.addEventListener("astro:after-swap", initThemeToggle);
+</script>
