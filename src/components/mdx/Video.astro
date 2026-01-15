@@ -34,10 +34,9 @@ function extractVideoId(input: string): string {
 
 const videoId = extractVideoId(id);
 const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 ---
 
-<figure class={cn("my-6", className)}>
+<figure class:list={cn("my-6", className)}>
   <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-border">
     <iframe
       src={embedUrl}
@@ -45,14 +44,7 @@ const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
       loading="lazy"
-      class="absolute inset-0 h-full w-full"
-    />
+      class="absolute inset-0 h-full w-full"></iframe>
   </div>
-  {
-    title && (
-      <figcaption class="mt-2 text-center text-sm text-muted-foreground">
-        {title}
-      </figcaption>
-    )
-  }
+  {title && <figcaption class="mt-2 text-center text-sm text-muted-foreground">{title}</figcaption>}
 </figure>

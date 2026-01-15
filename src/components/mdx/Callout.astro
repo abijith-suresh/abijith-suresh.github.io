@@ -51,7 +51,7 @@ const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1)
 {
   collapsible ? (
     <details
-      class={cn(
+      class:list={cn(
         "relative px-4 py-3 my-6 border-l-4 rounded-r-lg text-sm",
         config.style,
         "[&[open]>summary_.chevron]:rotate-180 [&[open]>summary]:mb-3",
@@ -60,11 +60,14 @@ const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1)
       open={defaultOpen}
     >
       <summary class="flex cursor-pointer items-center font-medium list-none [&::-webkit-details-marker]:hidden">
-        <Icon size={16} class={cn("mr-2 shrink-0", config.textColor)} />
-        <span class={cn("font-medium", config.textColor)}>{displayTitle}</span>
+        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
         <ChevronDown
           size={16}
-          class={cn("chevron ml-auto shrink-0 transition-transform duration-200", config.textColor)}
+          class:list={cn(
+            "chevron ml-auto shrink-0 transition-transform duration-200",
+            config.textColor
+          )}
         />
       </summary>
       <div class="text-foreground/80">
@@ -73,15 +76,15 @@ const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1)
     </details>
   ) : (
     <div
-      class={cn(
+      class:list={cn(
         "relative px-4 py-3 my-6 border-l-4 rounded-r-lg text-sm",
         config.style,
         className
       )}
     >
       <div class="flex items-center font-medium mb-2">
-        <Icon size={16} class={cn("mr-2 shrink-0", config.textColor)} />
-        <span class={cn("font-medium", config.textColor)}>{displayTitle}</span>
+        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
       </div>
       <div class="text-foreground/80">
         <slot />

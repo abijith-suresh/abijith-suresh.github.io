@@ -11,7 +11,7 @@ interface Props {
 const { src, alt, caption, class: className } = Astro.props;
 ---
 
-<figure class={cn("my-6", className)}>
+<figure class:list={cn("my-6", className)}>
   <img
     src={src}
     alt={alt}
@@ -21,9 +21,7 @@ const { src, alt, caption, class: className } = Astro.props;
   />
   {
     caption && (
-      <figcaption class="mt-2 text-center text-sm text-muted-foreground">
-        {caption}
-      </figcaption>
+      <figcaption class="mt-2 text-center text-sm text-muted-foreground">{caption}</figcaption>
     )
   }
 </figure>

@@ -39,7 +39,7 @@ const faviconUrl = getFaviconUrl(href);
   href={href}
   target="_blank"
   rel="noopener noreferrer"
-  class={cn(
+  class:list={cn(
     "not-prose group my-6 flex items-center gap-4 rounded-xl border border-border p-4",
     "bg-muted/30 hover:bg-muted/60 hover:border-muted-foreground/30",
     "transition-all duration-300 ease-out",
@@ -48,25 +48,24 @@ const faviconUrl = getFaviconUrl(href);
   )}
 >
   {/* Favicon */}
-  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white border border-border">
-    {faviconUrl ? (
-      <img
-        src={faviconUrl}
-        alt=""
-        width={24}
-        height={24}
-        class="h-6 w-6"
-        loading="lazy"
-      />
-    ) : (
-      <ArrowUpRight size={20} class="text-muted-foreground" />
-    )}
+  <div
+    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white border border-border"
+  >
+    {
+      faviconUrl ? (
+        <img src={faviconUrl} alt="" width={24} height={24} class="h-6 w-6" loading="lazy" />
+      ) : (
+        <ArrowUpRight size={20} class="text-muted-foreground" />
+      )
+    }
   </div>
 
   {/* Content */}
   <div class="flex-1 min-w-0">
     <div class="flex items-center gap-2">
-      <span class="font-medium text-foreground group-hover:text-primary transition-colors truncate no-underline">
+      <span
+        class="font-medium text-foreground group-hover:text-primary transition-colors truncate no-underline"
+      >
         {title}
       </span>
       <ArrowUpRight
@@ -74,9 +73,11 @@ const faviconUrl = getFaviconUrl(href);
         class="shrink-0 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
       />
     </div>
-    {description && (
-      <p class="mt-1 text-sm text-muted-foreground line-clamp-2 no-underline">{description}</p>
-    )}
+    {
+      description && (
+        <p class="mt-1 text-sm text-muted-foreground line-clamp-2 no-underline">{description}</p>
+      )
+    }
     <span class="mt-1.5 block text-xs text-muted-foreground/70 no-underline">{domain}</span>
   </div>
 </a>
