@@ -1,0 +1,94 @@
+---
+title: "Testing MDX Components"
+description: "A demonstration of custom MDX components including callouts and code blocks."
+publishDate: 2026-01-15
+tags: ["MDX", "Astro", "Components"]
+---
+
+import Callout from "@/components/mdx/Callout.astro";
+
+This is a test post to demonstrate MDX components in action.
+
+## Callout Components
+
+Here are the different callout variants available:
+
+<Callout variant="note">
+  This is a **note** callout. Use it for general information that you want to highlight.
+</Callout>
+
+<Callout variant="tip">
+  This is a **tip** callout. Use it for helpful suggestions and best practices.
+</Callout>
+
+<Callout variant="warning">
+  This is a **warning** callout. Use it for important cautions that users should be aware of.
+</Callout>
+
+<Callout variant="danger">
+  This is a **danger** callout. Use it for critical warnings about potential issues.
+</Callout>
+
+## Custom Titles
+
+You can also provide custom titles:
+
+<Callout variant="tip" title="Pro Tip">
+  You can customize the title of any callout by passing a `title` prop.
+</Callout>
+
+## Collapsible Callouts
+
+Callouts can be made collapsible:
+
+<Callout variant="note" title="Click to expand" collapsible>
+  This callout is collapsible! Click the header to toggle visibility.
+
+  You can include any content here, including:
+  - Lists
+  - **Bold text**
+  - `inline code`
+</Callout>
+
+## Code Blocks
+
+Here's a TypeScript code example with syntax highlighting:
+
+```typescript title="example.ts"
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+function greetUser(user: User): string {
+  return `Hello, ${user.name}!`;
+}
+
+const user: User = {
+  id: "1",
+  name: "Abijith",
+  email: "hello@abijith.sh",
+};
+
+console.log(greetUser(user));
+```
+
+And here's a JavaScript example:
+
+```javascript title="app.js"
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello, World!" });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+```
+
+## Conclusion
+
+MDX allows you to use React/Astro components directly in your Markdown content, making it much more powerful and flexible than plain Markdown.
