@@ -70,14 +70,24 @@ const {
 
     <script is:inline data-astro-rerun>
       (() => {
-        const theme = (() => {
-          const stored = localStorage?.getItem("theme") ?? "";
-          if (["dark", "light"].includes(stored)) return stored;
+        function getSystemTheme() {
           return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        })();
+        }
 
-        document.documentElement.setAttribute("data-theme", theme);
-        window.localStorage.setItem("theme", theme);
+        const storedTheme = localStorage?.getItem("theme") ?? "system";
+        const effectiveTheme =
+          storedTheme === "system"
+            ? getSystemTheme()
+            : ["dark", "light"].includes(storedTheme)
+              ? storedTheme
+              : "dark";
+
+        document.documentElement.setAttribute("data-theme", effectiveTheme);
+
+        // Store the preference (which might be "system")
+        if (!localStorage.getItem("theme")) {
+          localStorage.setItem("theme", "system");
+        }
       })();
     </script>
   </body>

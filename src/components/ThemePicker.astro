@@ -1,0 +1,157 @@
+---
+import { Monitor, Moon, Sun } from "lucide-astro";
+---
+
+<div class="relative" id="theme-picker">
+  <button
+    id="theme-button"
+    aria-label="Select theme"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    class="p-2 text-foreground/60 hover:text-foreground hover:bg-muted rounded-md transition-all cursor-pointer -my-2 -me-2"
+  >
+    <Sun size={16} id="theme-icon-light" class="hidden" />
+    <Moon size={16} id="theme-icon-dark" class="hidden" />
+    <Monitor size={16} id="theme-icon-system" class="hidden" />
+  </button>
+
+  <div
+    id="theme-menu"
+    role="menu"
+    class="absolute right-0 mt-2 w-36 bg-popover border border-border rounded-md shadow-lg py-1 hidden z-50"
+  >
+    <button
+      role="menuitem"
+      data-theme-option="light"
+      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted transition-colors"
+    >
+      <Sun size={14} />
+      <span>Light</span>
+    </button>
+    <button
+      role="menuitem"
+      data-theme-option="dark"
+      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted transition-colors"
+    >
+      <Moon size={14} />
+      <span>Dark</span>
+    </button>
+    <button
+      role="menuitem"
+      data-theme-option="system"
+      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted transition-colors"
+    >
+      <Monitor size={14} />
+      <span>System</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  type Theme = "light" | "dark" | "system";
+
+  function getSystemTheme(): "light" | "dark" {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function getEffectiveTheme(theme: Theme): "light" | "dark" {
+    return theme === "system" ? getSystemTheme() : theme;
+  }
+
+  function applyTheme(theme: Theme) {
+    const effectiveTheme = getEffectiveTheme(theme);
+    document.documentElement.setAttribute("data-theme", effectiveTheme);
+    localStorage.setItem("theme", theme);
+    updateThemeIcon(theme);
+    updateMenuSelection(theme);
+  }
+
+  function updateThemeIcon(theme: Theme) {
+    const icons = {
+      light: document.getElementById("theme-icon-light"),
+      dark: document.getElementById("theme-icon-dark"),
+      system: document.getElementById("theme-icon-system"),
+    };
+
+    Object.values(icons).forEach((icon) => icon?.classList.add("hidden"));
+    icons[theme]?.classList.remove("hidden");
+  }
+
+  function updateMenuSelection(theme: Theme) {
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+    buttons.forEach((button) => {
+      const isSelected = button.dataset.themeOption === theme;
+      button.classList.toggle("font-semibold", isSelected);
+      button.classList.toggle("text-foreground", isSelected);
+      button.classList.toggle("text-foreground/80", !isSelected);
+    });
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById("theme-menu");
+    const button = document.getElementById("theme-button");
+    const isHidden = menu?.classList.contains("hidden");
+
+    if (isHidden) {
+      menu?.classList.remove("hidden");
+      button?.setAttribute("aria-expanded", "true");
+    } else {
+      menu?.classList.add("hidden");
+      button?.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  function closeMenu() {
+    const menu = document.getElementById("theme-menu");
+    const button = document.getElementById("theme-button");
+    menu?.classList.add("hidden");
+    button?.setAttribute("aria-expanded", "false");
+  }
+
+  function initThemePicker() {
+    const button = document.getElementById("theme-button");
+    const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+
+    // Get current theme preference
+    const storedTheme = (localStorage.getItem("theme") as Theme) || "system";
+    applyTheme(storedTheme);
+
+    // Toggle menu on button click
+    button?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Handle theme selection
+    themeButtons.forEach((themeButton) => {
+      themeButton.addEventListener("click", () => {
+        const theme = themeButton.dataset.themeOption as Theme;
+        applyTheme(theme);
+        closeMenu();
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      const picker = document.getElementById("theme-picker");
+      if (picker && !picker.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    // Listen for system theme changes when in system mode
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", () => {
+      const currentTheme = localStorage.getItem("theme") as Theme;
+      if (currentTheme === "system") {
+        applyTheme("system");
+      }
+    });
+  }
+
+  // Initialize on page load
+  initThemePicker();
+
+  // Reinitialize on view transitions
+  document.addEventListener("astro:after-swap", initThemePicker);
+</script>
