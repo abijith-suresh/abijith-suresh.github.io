@@ -20,7 +20,7 @@ export interface SEOProps {
 const {
   title = SITE.title,
   description = SITE.description,
-  image = "/og-default.jpg",
+  image = "/og-default.png",
   imageAlt = `${SITE.title} - ${SITE.description}`,
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   noindex = false,

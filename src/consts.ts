@@ -34,7 +34,7 @@ export const AUTHOR = {
   fullName: "Abijith Suresh",
   tagline: "Developer, builder, writer.",
   bio: "I build things and write about them.",
-  avatar: "/avatar.jpg", // Update with actual avatar path
+  avatar: "/avatar.jpg",
   location: "India",
 } as const;
 
