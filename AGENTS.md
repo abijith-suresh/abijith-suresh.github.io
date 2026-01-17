@@ -4,9 +4,10 @@ This document provides essential information for AI coding agents working in thi
 
 ## Project Overview
 
-**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX
-**Package Manager:** Bun 1.3+ (preferred) or npm
-**Node Version:** v24+ (ES Module project)
+**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX  
+**Package Manager:** Bun 1.3+ (preferred) or npm  
+**Node Version:** v24+ (ES Module project)  
+**Site URL:** https://abijith.sh  
 **Description:** Personal portfolio and blog built with Astro, featuring content collections for blog posts and projects.
 
 ## Build & Development Commands
@@ -55,118 +56,6 @@ This project does not have automated tests configured yet (see Issue #26). Valid
 4. **Successful build** - Run `bun run build` (must complete without errors)
 
 **Note:** To run a "single test", validate one specific file/component by building the project, as Astro validates all dependencies during build.
-
-## CI/CD Workflows
-
-This project uses GitHub Actions for continuous integration and Vercel for deployments.
-
-### GitHub Actions
-
-**CI Workflow** (`.github/workflows/ci.yml`)
-
-- **Triggers:** All pull requests targeting the `main` branch
-- **Runtime:** Bun 1.3.5 on Node.js 24.x (ubuntu-latest)
-- **Quality Checks:**
-  1. ESLint (`bun run lint`)
-  2. Prettier formatting (`bun run format:check`)
-  3. TypeScript validation + build (`bun run build`)
-- **Duration:** ~2-4 minutes (with dependency caching)
-- **Status:** Required check - PRs cannot be merged if CI fails
-
-**Key Features:**
-
-- Frozen lockfile installation for reproducible builds
-- Dependency caching for faster subsequent runs
-- Fail-fast behavior - stops on first error
-- Clear step-by-step output for debugging
-
-### Vercel Deployments
-
-**Preview Deployments:**
-
-- Automatically created for every pull request
-- Each PR gets a unique preview URL
-- Updated on every push to the PR branch
-- Accessible via Vercel bot comment on PR
-
-**Production Deployments:**
-
-- Automatically deployed when PRs are merged to `main`
-- Deploys to https://abijith.sh
-- Includes automatic invalidation and edge caching
-
-**Note:** Vercel is configured directly in the Vercel dashboard. No workflow files needed.
-
-### Dependabot
-
-**Configuration** (`.github/dependabot.yml`)
-
-- **Schedule:** Weekly on Mondays at 09:00 UTC
-- **Monitors:**
-  - npm packages (grouped minor/patch updates)
-  - GitHub Actions versions
-- **Behavior:**
-  - Creates PRs automatically
-  - Labels with "dependencies" tag
-  - Each PR triggers CI workflow
-  - Limited to 10 npm PRs and 5 Actions PRs at once
-
-**Commit Prefixes:**
-
-- `chore:` for npm package updates
-- `ci:` for GitHub Actions updates
-
-### Workflow Diagram
-
-```
-PR Created
-    ↓
-GitHub Actions CI (lint, format, build)
-    ↓
-Vercel Preview Deployment
-    ↓
-Review & Approval
-    ↓
-Merge to main
-    ↓
-Vercel Production Deployment
-```
-
-### Debugging CI Failures
-
-**ESLint Failures:**
-
-- Run locally: `bun run lint`
-- Auto-fix: `bun run lint:fix`
-- Check for unused imports, missing types, or a11y issues
-
-**Prettier Failures:**
-
-- Run locally: `bun run format:check`
-- Auto-fix: `bun run format`
-- Ensure double quotes, semicolons, 2-space indentation
-
-**Build Failures:**
-
-- Run locally: `bun run build`
-- Check for TypeScript errors, missing dependencies, or invalid imports
-- Verify content frontmatter matches Zod schemas
-- Clear cache if needed: `rm -rf .astro dist && bun run build`
-
-**Viewing CI Logs:**
-
-- Go to the PR's "Checks" tab on GitHub
-- Click on "CI" → "Quality Checks" to see detailed logs
-- Each step shows command output and error messages
-
-### Branch Protection (Recommended)
-
-Once CI is stable, configure these rules in GitHub Settings → Branches:
-
-- ✅ Require status checks to pass before merging
-- ✅ Require branches to be up to date before merging
-- ✅ Required checks: `Quality Checks` (from CI workflow)
-- ✅ Require pull request reviews (optional)
 
 ## Code Style Guidelines
 
