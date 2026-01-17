@@ -1,0 +1,75 @@
+---
+/**
+ * Reading Progress Indicator
+ * Displays a horizontal progress bar at the top of the page
+ * that fills as the user scrolls through the content
+ */
+---
+
+<div id="reading-progress-container" class="fixed top-0 left-0 right-0 z-50 h-[3px]">
+  <div
+    id="reading-progress-bar"
+    class="h-full bg-primary origin-left transition-transform duration-150 ease-out shadow-sm"
+    style="transform: scaleX(0);"
+  >
+  </div>
+</div>
+
+<script>
+  class ReadingProgressState {
+    progressBar: HTMLElement | null = null;
+
+    reset() {
+      this.progressBar = document.getElementById("reading-progress-bar");
+      if (this.progressBar) {
+        this.progressBar.style.transform = "scaleX(0)";
+      }
+    }
+  }
+
+  const state = new ReadingProgressState();
+
+  class ReadingProgressController {
+    static updateProgress() {
+      if (!state.progressBar) return;
+
+      const scrollableDistance = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress =
+        scrollableDistance > 0 ? Math.min(Math.max(window.scrollY / scrollableDistance, 0), 1) : 0;
+
+      state.progressBar.style.transform = `scaleX(${scrollProgress})`;
+    }
+
+    static init() {
+      state.reset();
+
+      if (!state.progressBar) return;
+
+      // Update on scroll
+      window.addEventListener("scroll", this.updateProgress, { passive: true });
+
+      // Update on resize (content height might change)
+      window.addEventListener("resize", this.updateProgress, { passive: true });
+
+      // Initial update
+      this.updateProgress();
+    }
+
+    static cleanup() {
+      window.removeEventListener("scroll", this.updateProgress);
+      window.removeEventListener("resize", this.updateProgress);
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener("astro:page-load", () => ReadingProgressController.init());
+
+  // Re-initialize after view transitions
+  document.addEventListener("astro:after-swap", () => {
+    ReadingProgressController.cleanup();
+    ReadingProgressController.init();
+  });
+
+  // Cleanup before view transitions
+  document.addEventListener("astro:before-swap", () => ReadingProgressController.cleanup());
+</script>
