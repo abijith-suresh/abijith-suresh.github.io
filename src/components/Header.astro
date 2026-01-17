@@ -1,8 +1,8 @@
 ---
-import { Moon, Sun } from "lucide-astro";
 import { AUTHOR, NAV_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 import Link from "@/components/Link.astro";
+import ThemePicker from "@/components/ThemePicker.astro";
 ---
 
 <header class="sticky top-0 z-50 bg-background/50 backdrop-blur-sm border-b border-border">
@@ -40,41 +40,7 @@ import Link from "@/components/Link.astro";
         }
       </nav>
 
-      <button
-        id="theme-toggle"
-        aria-label="Toggle theme"
-        class="p-2 text-foreground/60 hover:text-foreground hover:bg-muted rounded-md transition-all cursor-pointer -my-2 -me-2"
-      >
-        <Sun size={16} class="[html[data-theme='dark']_&]:hidden" />
-        <Moon size={16} class="hidden [html[data-theme='dark']_&]:block" />
-      </button>
+      <ThemePicker />
     </div>
   </div>
 </header>
-
-<script>
-  function handleToggleClick() {
-    const element = document.documentElement;
-    const currentTheme = element.getAttribute("data-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-    element.classList.add("[&_*]:transition-none");
-    element.setAttribute("data-theme", newTheme);
-    window.getComputedStyle(element).getPropertyValue("opacity");
-
-    requestAnimationFrame(() => {
-      element.classList.remove("[&_*]:transition-none");
-    });
-
-    localStorage.setItem("theme", newTheme);
-  }
-
-  function initThemeToggle() {
-    document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
-  }
-
-  initThemeToggle();
-
-  // Reinitialize on view transitions
-  document.addEventListener("astro:after-swap", initThemeToggle);
-</script>
