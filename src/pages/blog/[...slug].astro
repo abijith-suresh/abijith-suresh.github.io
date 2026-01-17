@@ -1,6 +1,7 @@
 ---
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
+import ReadingProgress from "@/components/ReadingProgress.astro";
 import TOCHeader from "@/components/TOCHeader.astro";
 import TOCSidebar from "@/components/TOCSidebar.astro";
 import { SITE } from "@/consts";
@@ -57,6 +58,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     },
   }}
 >
+  <ReadingProgress />
   <Header slot="header" />
   {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
 
