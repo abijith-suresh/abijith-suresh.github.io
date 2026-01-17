@@ -14,7 +14,7 @@ This document provides essential information for AI coding agents working in thi
 ### Essential Commands
 
 ```bash
-# Install dependencies (required first)
+# Install dependencies (ALWAYS run first, especially after git pull)
 bun install
 
 # Development server (http://localhost:4321)
@@ -23,7 +23,7 @@ bun run dev
 # Production build (~4s, outputs to dist/)
 bun run build
 
-# Preview production build
+# Preview production build locally
 bun run preview
 
 # Linting
@@ -37,19 +37,24 @@ bun run format:check   # Check formatting only
 
 ### Pre-commit Validation
 
-Always run before committing:
+**CRITICAL:** Always run before committing to avoid CI/deployment failures:
 
 ```bash
 bun install && bun run lint && bun run format:check && bun run build
 ```
 
+If any command fails, fix the issues before committing.
+
 ### Running Tests
 
-This project does not have automated tests configured. Validation is done through:
+This project does not have automated tests configured yet (see Issue #26). Validation is done through:
 
-1. TypeScript type checking (during build)
-2. ESLint checks (bun run lint)
-3. Successful build (bun run build)
+1. **TypeScript type checking** - Runs during `bun run build`
+2. **ESLint checks** - Run `bun run lint`
+3. **Prettier formatting** - Run `bun run format:check`
+4. **Successful build** - Run `bun run build` (must complete without errors)
+
+**Note:** To run a "single test", validate one specific file/component by building the project, as Astro validates all dependencies during build.
 
 ## Code Style Guidelines
 
@@ -259,3 +264,24 @@ await getAllBlogPosts({ limit: 5 });
 
 Site URL: `https://abijith.sh` (configured in `astro.config.mjs`)
 Features: RSS feed at `/rss.xml`, auto-generated sitemap
+
+## Recent Important Changes
+
+- **2026-01-17:** Added `@astrojs/rss` dependency (PR #29) - Required for RSS feed generation
+- **2026-01-17:** Created 18 GitHub issues for feature tracking (#11-#28)
+- **2026-01-17:** Added AGENTS.md documentation (PR #10)
+
+## Troubleshooting
+
+### Build Failures
+
+- Ensure all dependencies are installed: `bun install`
+- Check for missing packages in `package.json`
+- Verify content frontmatter matches Zod schemas in `src/content/config.ts`
+- Clear cache: `rm -rf .astro dist node_modules && bun install`
+
+### Deployment Issues
+
+- Vercel/Netlify builds require all imports to have corresponding dependencies
+- Check that RSS generation works: look for `dist/rss.xml` after build
+- Ensure `site` is configured in `astro.config.mjs` for absolute URLs
