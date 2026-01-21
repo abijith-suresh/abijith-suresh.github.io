@@ -92,6 +92,27 @@ export async function getAllBlogTags(): Promise<string[]> {
 }
 
 /**
+ * Get all unique tags from blog posts with counts
+ */
+export async function getAllBlogTagsWithCount(): Promise<Array<{ tag: string; count: number }>> {
+  const posts = await getCollection("blog");
+  const tagCounts = new Map<string, number>();
+
+  // Filter out drafts
+  const publishedPosts = posts.filter((post) => !post.data.draft);
+
+  publishedPosts.forEach((post) => {
+    post.data.tags.forEach((tag) => {
+      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+    });
+  });
+
+  return Array.from(tagCounts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => a.tag.localeCompare(b.tag));
+}
+
+/**
  * Format project date range
  */
 export function formatProjectDate(startDate: Date, endDate?: Date): string {
