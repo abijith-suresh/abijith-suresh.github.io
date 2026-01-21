@@ -8,9 +8,8 @@ export const SITE = {
   locale: "en-US",
 
   // Hero Section
-  headline: "Building scalable web applications",
-  subheadline:
-    "Full Stack Developer with expertise in modern web technologies, cloud infrastructure, and creating performant user experiences.",
+  headline: "Full Stack Developer",
+  subheadline: "Working on scalable web applications and open source projects from Kochi, India.",
 
   // Feature Configuration
   postsPerPage: 10,
@@ -40,10 +39,10 @@ export const AUTHOR = {
   username: "abijith",
   tagline: "Developer, builder, writer.",
   role: "Full Stack Developer",
-  currentWork: "building scalable web applications and open source tools",
-  bio: "I'm a passionate developer who loves building things for the web. With several years of experience in full-stack development, I specialize in creating performant, user-friendly applications using modern web technologies.",
+  currentWork: "working on web applications and exploring modern technologies",
+  bio: "I build web applications and write about technology. I enjoy working with modern frameworks, learning new tools, and contributing to open source.",
   longBio:
-    "I enjoy working on challenging problems and learning new technologies. When I'm not coding, you can find me contributing to open source, writing technical articles, or exploring new frameworks and tools.",
+    "When I'm not coding, I spend time exploring new technologies, writing technical articles, and working on side projects. I'm always interested in connecting with other developers and collaborating on interesting ideas.",
   avatar: "/avatar.jpg",
   location: "Kochi, Kerala, India",
   usernameOrigin:
