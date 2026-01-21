@@ -82,8 +82,16 @@ const postCount = posts.length;
       )
     }
 
-    <!-- Back to Blog -->
-    <div class="pt-6 border-t border-border">
+    <!-- Navigation Links -->
+    <div class="flex items-center gap-4 pt-6 border-t border-border">
+      <Link
+        href="/tags"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <TagIcon size={16} />
+        View all tags
+      </Link>
+      <span class="text-muted-foreground">•</span>
       <Link
         href="/blog"
         class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
