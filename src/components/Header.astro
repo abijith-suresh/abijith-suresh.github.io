@@ -2,6 +2,7 @@
 import { NAV_LINKS } from "@/consts";
 import Link from "@/components/Link.astro";
 import ThemePicker from "@/components/ThemePicker.astro";
+import { Search } from "lucide-astro";
 ---
 
 <header class="sticky top-0 z-50 bg-background/50 backdrop-blur-sm border-b border-border">
@@ -30,6 +31,15 @@ import ThemePicker from "@/components/ThemePicker.astro";
           ))
         }
       </nav>
+
+      <!-- Search Icon -->
+      <button
+        id="open-search-modal"
+        aria-label="Open search"
+        class="p-2 text-foreground/60 hover:text-foreground hover:bg-muted rounded-md transition-colors"
+      >
+        <Search size={16} />
+      </button>
 
       <ThemePicker />
     </div>
