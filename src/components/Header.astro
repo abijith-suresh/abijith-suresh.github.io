@@ -1,6 +1,5 @@
 ---
-import { AUTHOR, NAV_LINKS } from "@/consts";
-import { cn } from "@/lib/utils";
+import { NAV_LINKS } from "@/consts";
 import Link from "@/components/Link.astro";
 import ThemePicker from "@/components/ThemePicker.astro";
 ---
@@ -10,18 +9,10 @@ import ThemePicker from "@/components/ThemePicker.astro";
     <!-- Logo -->
     <a
       href="/"
-      class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+      class="flex items-center hover:opacity-80 transition-opacity"
       data-astro-prefetch="tap"
     >
-      <div
-        class:list={cn(
-          "size-10 bg-muted rounded-lg",
-          "flex items-center justify-center",
-          "border border-border"
-        )}
-      >
-        <span class="text-xl font-bold text-foreground leading-none">{AUTHOR.name[0]}</span>
-      </div>
+      <span class="text-xl font-bold text-foreground tracking-tight">AS</span>
     </a>
 
     <!-- Navigation Links and Icons -->
