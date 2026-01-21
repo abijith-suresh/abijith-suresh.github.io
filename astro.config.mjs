@@ -54,5 +54,14 @@ export default defineConfig({
       // Pre-bundle these dependencies
       include: ["clsx", "tailwind-merge"],
     },
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          // Suppress warnings about unused imports from Astro internals
+          if (warning.code === "UNUSED_EXTERNAL_IMPORT") return;
+          warn(warning);
+        },
+      },
+    },
   },
 });
