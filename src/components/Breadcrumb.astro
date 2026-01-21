@@ -1,0 +1,32 @@
+---
+import Link from "@/components/Link.astro";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<nav class:list={["flex items-center gap-2 text-sm text-muted-foreground", className]}>
+  {
+    items.map((item, index) => (
+      <>
+        {item.href ? (
+          <Link href={item.href} class="hover:text-foreground transition-colors">
+            {item.label}
+          </Link>
+        ) : (
+          <span class="text-foreground truncate">{item.label}</span>
+        )}
+        {index < items.length - 1 && <span>/</span>}
+      </>
+    ))
+  }
+</nav>
