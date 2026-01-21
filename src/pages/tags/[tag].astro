@@ -6,7 +6,7 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogPosts, getAllBlogTags } from "@/lib/data-utils";
 import type { CollectionEntry } from "astro:content";
-import { BookOpen, ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
+import { ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
 
 export async function getStaticPaths() {
   const allTags = await getAllBlogTags();
@@ -42,11 +42,6 @@ const postCount = posts.length;
       <Link href="/" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
         <Home size={14} />
         <span>Home</span>
-      </Link>
-      <ChevronRight size={14} />
-      <Link href="/blog" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
-        <BookOpen size={14} />
-        <span>Blog</span>
       </Link>
       <ChevronRight size={14} />
       <Link href="/tags" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
