@@ -2,10 +2,12 @@
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import ReadingProgress from "@/components/ReadingProgress.astro";
+import RelatedPosts from "@/components/RelatedPosts.astro";
 import TOCHeader from "@/components/TOCHeader.astro";
 import TOCSidebar from "@/components/TOCSidebar.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
+import { getRelatedPosts } from "@/lib/recommendations";
 import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar, Clock } from "lucide-astro";
@@ -32,6 +34,9 @@ const readingTime = calculateReadingTime(post.body ?? "");
 
 // Filter headings for TOC (h2 and h3 only)
 const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+
+// Get related posts
+const relatedPosts = await getRelatedPosts(post.slug, 3);
 ---
 
 <Layout
@@ -135,6 +140,11 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
     <article class="prose col-start-2 max-w-none px-4">
       <Content />
     </article>
+
+    {/* Related Posts */}
+    <div class="col-start-2 px-4">
+      <RelatedPosts posts={relatedPosts} />
+    </div>
 
     {/* Back to Blog */}
     <div class="col-start-2 pt-6 border-t border-border px-4">
