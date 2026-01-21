@@ -4,7 +4,7 @@ import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogTagsWithCount } from "@/lib/data-utils";
-import { BookOpen, ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
+import { ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
 
 const tags = await getAllBlogTagsWithCount();
 ---
@@ -20,11 +20,6 @@ const tags = await getAllBlogTagsWithCount();
       <Link href="/" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
         <Home size={14} />
         <span>Home</span>
-      </Link>
-      <ChevronRight size={14} />
-      <Link href="/blog" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
-        <BookOpen size={14} />
-        <span>Blog</span>
       </Link>
       <ChevronRight size={14} />
       <span class="flex items-center gap-1.5 text-foreground">
