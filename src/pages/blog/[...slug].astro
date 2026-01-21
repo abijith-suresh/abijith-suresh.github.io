@@ -25,11 +25,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, tags, image, publishDate, updatedDate } = post.data;
+const { title, description, tags, publishDate, updatedDate } = post.data;
 const { Content, headings } = await post.render();
 const formattedDate = formatBlogDate(publishDate);
 const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
-const postImage = image || "/placeholder-blog.jpg";
 const readingTime = calculateReadingTime(post.body ?? "");
 
 // Filter headings for TOC (h2 and h3 only)
@@ -42,8 +41,6 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
 <Layout
   title={`${title} - Blog - ${SITE.title}`}
   description={description}
-  image={postImage}
-  imageAlt={title}
   type="article"
   article={{
     publishedTime: publishDate,
@@ -56,7 +53,6 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
     article: {
       headline: title,
       description: description,
-      image: postImage,
       datePublished: publishDate,
       dateModified: updatedDate,
       keywords: tags,
@@ -123,15 +119,6 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
         )
       }
     </header>
-
-    {/* Post Image */}
-    {
-      image && (
-        <div class="col-start-2 aspect-video w-full overflow-hidden rounded-lg border border-border px-4">
-          <img src={postImage} alt={title} class="w-full h-full object-cover rounded-lg" />
-        </div>
-      )
-    }
 
     {/* Desktop TOC Sidebar */}
     {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
