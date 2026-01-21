@@ -21,10 +21,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, tags, github, demo, image, startDate, endDate } = project.data;
+const { title, description, tags, github, demo, startDate, endDate } = project.data;
 const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
-const projectImage = image || "/placeholder-project.jpg";
 ---
 
 <Layout title={`${title} - Projects - ${SITE.title}`} description={description}>
@@ -100,15 +99,6 @@ const projectImage = image || "/placeholder-project.jpg";
           )
         }
       </header>
-
-      <!-- Project Image -->
-      {
-        image && (
-          <div class="aspect-video w-full overflow-hidden rounded-lg border border-border">
-            <img src={projectImage} alt={title} class="w-full h-full object-cover" />
-          </div>
-        )
-      }
 
       <!-- Project Content -->
       <div class="prose prose-neutral dark:prose-invert max-w-none">

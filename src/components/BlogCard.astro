@@ -9,11 +9,10 @@ interface Props {
 }
 
 const { post, class: className } = Astro.props;
-const { title, description, tags, publishDate, image, imageAlt } = post.data;
+const { title, description, tags, publishDate } = post.data;
 const postUrl = `/blog/${post.slug}`;
 const formattedDate = formatBlogDate(publishDate);
 const readingTime = calculateReadingTime(post.body ?? "");
-const postImage = image || "/placeholder-blog.jpg";
 ---
 
 <article class:list={cn("group", className)}>
@@ -25,19 +24,6 @@ const postImage = image || "/placeholder-blog.jpg";
     )}
     prefetch="hover"
   >
-    {
-      postImage && (
-        <div class="aspect-video w-full overflow-hidden bg-muted">
-          <img
-            src={postImage}
-            alt={imageAlt || title}
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      )
-    }
     <div class="flex flex-col gap-2 p-4">
       <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
         {title}
