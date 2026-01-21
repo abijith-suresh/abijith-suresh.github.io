@@ -7,6 +7,11 @@ export const SITE = {
   url: "https://abijith.sh",
   locale: "en-US",
 
+  // Hero Section
+  headline: "Building scalable web applications",
+  subheadline:
+    "Full Stack Developer with expertise in modern web technologies, cloud infrastructure, and creating performant user experiences.",
+
   // Feature Configuration
   postsPerPage: 10,
   projectsPerPage: 12,
