@@ -32,10 +32,17 @@ export const SOCIAL_LINKS = {
 export const AUTHOR = {
   name: "Abijith S",
   fullName: "Abijith Suresh",
+  username: "abijith",
   tagline: "Developer, builder, writer.",
-  bio: "I build things and write about them.",
+  role: "Full Stack Developer",
+  currentWork: "building scalable web applications and open source tools",
+  bio: "I'm a passionate developer who loves building things for the web. With several years of experience in full-stack development, I specialize in creating performant, user-friendly applications using modern web technologies.",
+  longBio:
+    "I enjoy working on challenging problems and learning new technologies. When I'm not coding, you can find me contributing to open source, writing technical articles, or exploring new frameworks and tools.",
   avatar: "/avatar.jpg",
   location: "India",
+  usernameOrigin:
+    "My username 'abijith' is simply my first name. I prefer to keep things simple and authentic in the digital world.",
 } as const;
 
 // Type exports for better TypeScript support
