@@ -13,7 +13,9 @@ export default defineConfig({
       themeCssSelector: (theme) => `[data-theme="${theme.name.split("-")[1]}"]`,
       defaultProps: {
         wrap: true,
+        showLineNumbers: false,
       },
+      plugins: [],
       styleOverrides: {
         codeFontSize: "0.875rem",
         borderColor: "var(--border)",
