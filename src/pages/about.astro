@@ -1,4 +1,5 @@
 ---
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
@@ -14,12 +15,7 @@ import { Github, Linkedin, MapPin } from "lucide-astro";
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-12 px-4 max-w-3xl pb-12">
-    <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
-      <Link href="/">Home</Link>
-      <span>/</span>
-      <span class="text-foreground">About</span>
-    </nav>
+    <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
 
     <!-- Profile Header -->
     <section class="flex flex-col md:flex-row gap-6 items-center md:items-center">
