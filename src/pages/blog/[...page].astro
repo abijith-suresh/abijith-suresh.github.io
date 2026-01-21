@@ -1,5 +1,6 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
@@ -46,6 +47,8 @@ const nextUrl = hasNext ? `/blog/${currentPage + 1}` : null;
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+    <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
+
     <div class="flex flex-col gap-y-2">
       <h1 class="text-3xl font-bold text-foreground">Blog</h1>
       <p class="text-muted-foreground">
