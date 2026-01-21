@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@pagefind/default-ui": "^1.4.0",
     "@tailwindcss/vite": "^4.1.18",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -34,6 +35,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.10",
+    "pagefind": "^1.4.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.1.18",
