@@ -23,7 +23,6 @@ export const NAV_LINKS = [
   { href: "/blog", label: "Blog" },
   { href: "/tags", label: "Tags" },
   { href: "/about", label: "About" },
-  { href: "/search", label: "Search" },
 ] as const;
 
 // Social Links

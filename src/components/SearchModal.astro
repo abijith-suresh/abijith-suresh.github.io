@@ -1,0 +1,181 @@
+---
+import { X } from "lucide-astro";
+---
+
+<div
+  id="search-modal"
+  class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm"
+  aria-hidden="true"
+>
+  <div class="flex min-h-screen items-start justify-center p-4 pt-16 sm:pt-24">
+    <div
+      class="relative w-full max-w-2xl bg-background rounded-lg shadow-xl border border-border"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="search-title"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+        <h2 id="search-title" class="text-lg font-semibold text-foreground">Search</h2>
+        <button
+          id="close-search-modal"
+          aria-label="Close search"
+          class="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      <!-- Search Content -->
+      <div class="p-4">
+        <div id="search-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  :root {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--primary);
+    --pagefind-ui-text: var(--foreground);
+    --pagefind-ui-background: var(--background);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--muted);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0.5rem;
+    --pagefind-ui-image-border-radius: 0.5rem;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: inherit;
+  }
+
+  .pagefind-ui__search-input {
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+  }
+
+  .pagefind-ui__search-input:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  .pagefind-ui__result {
+    border: 1px solid var(--border);
+    background-color: var(--card);
+  }
+
+  .pagefind-ui__result:hover {
+    background-color: var(--muted);
+  }
+
+  .pagefind-ui__result-title {
+    color: var(--foreground);
+  }
+
+  .pagefind-ui__result-excerpt {
+    color: var(--muted-foreground);
+  }
+
+  .pagefind-ui__message {
+    color: var(--muted-foreground);
+  }
+
+  .pagefind-ui__button {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+  }
+
+  .pagefind-ui__button:hover {
+    opacity: 0.9;
+  }
+
+  /* Prevent body scroll when modal is open */
+  body.search-modal-open {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  import { PagefindUI } from "@pagefind/default-ui";
+
+  let pagefindInstance: PagefindUI | null = null;
+
+  function openSearchModal() {
+    const modal = document.getElementById("search-modal");
+    if (!modal) return;
+
+    modal.classList.remove("hidden");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("search-modal-open");
+
+    // Initialize Pagefind UI if not already initialized
+    if (!pagefindInstance) {
+      pagefindInstance = new PagefindUI({
+        element: "#search-container",
+        showImages: false,
+        highlightParam: "highlight",
+        excerptLength: 30,
+      });
+    }
+
+    // Focus the search input
+    setTimeout(() => {
+      const searchInput = document.querySelector<HTMLInputElement>(".pagefind-ui__search-input");
+      searchInput?.focus();
+    }, 100);
+  }
+
+  function closeSearchModal() {
+    const modal = document.getElementById("search-modal");
+    if (!modal) return;
+
+    modal.classList.add("hidden");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("search-modal-open");
+  }
+
+  function initSearchModal() {
+    const openButton = document.getElementById("open-search-modal");
+    const closeButton = document.getElementById("close-search-modal");
+    const modal = document.getElementById("search-modal");
+
+    // Open modal
+    openButton?.addEventListener("click", openSearchModal);
+
+    // Close modal button
+    closeButton?.addEventListener("click", closeSearchModal);
+
+    // Close on backdrop click
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeSearchModal();
+      }
+    });
+
+    // Close on ESC key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        const modal = document.getElementById("search-modal");
+        if (modal && !modal.classList.contains("hidden")) {
+          closeSearchModal();
+        }
+      }
+    });
+
+    // Open search modal with Cmd/Ctrl+K
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        openSearchModal();
+      }
+    });
+  }
+
+  // Initialize on page load
+  initSearchModal();
+
+  // Reinitialize on view transitions
+  document.addEventListener("astro:after-swap", initSearchModal);
+</script>
