@@ -1,9 +1,11 @@
 ---
 import Link from "@/components/Link.astro";
+import { BookOpen, ChevronRight, FileText, Folder, Home, Package, Tag, User } from "lucide-astro";
 
 interface BreadcrumbItem {
   label: string;
   href?: string;
+  icon?: "home" | "blog" | "blogpost" | "projects" | "project" | "about" | "tags" | "tag";
 }
 
 interface Props {
@@ -12,21 +14,42 @@ interface Props {
 }
 
 const { items, class: className } = Astro.props;
+
+const iconMap = {
+  home: Home,
+  blog: BookOpen,
+  blogpost: FileText,
+  projects: Folder,
+  project: Package,
+  about: User,
+  tags: Tag,
+  tag: Tag,
+};
 ---
 
 <nav class:list={["flex items-center gap-2 text-sm text-muted-foreground", className]}>
   {
-    items.map((item, index) => (
-      <>
-        {item.href ? (
-          <Link href={item.href} class="hover:text-foreground transition-colors">
-            {item.label}
-          </Link>
-        ) : (
-          <span class="text-foreground truncate">{item.label}</span>
-        )}
-        {index < items.length - 1 && <span>/</span>}
-      </>
-    ))
+    items.map((item, index) => {
+      const Icon = item.icon ? iconMap[item.icon] : null;
+      return (
+        <>
+          {item.href ? (
+            <Link
+              href={item.href}
+              class="flex items-center gap-1.5 hover:text-foreground transition-colors"
+            >
+              {Icon && <Icon size={14} />}
+              <span>{item.label}</span>
+            </Link>
+          ) : (
+            <span class="flex items-center gap-1.5 text-foreground truncate">
+              {Icon && <Icon size={14} />}
+              <span class="truncate">{item.label}</span>
+            </span>
+          )}
+          {index < items.length - 1 && <ChevronRight size={14} />}
+        </>
+      );
+    })
   }
 </nav>

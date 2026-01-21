@@ -10,7 +10,7 @@ import Layout from "@/layouts/Layout.astro";
 import { getRelatedPosts } from "@/lib/recommendations";
 import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Calendar, Clock } from "lucide-astro";
+import { BookOpen, Calendar, ChevronRight, Clock, FileText, Home } from "lucide-astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -66,11 +66,20 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
   <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
     {/* Breadcrumb */}
     <nav class="col-start-2 flex items-center gap-2 text-sm text-muted-foreground px-4">
-      <Link href="/" class="hover:text-foreground transition-colors">Home</Link>
-      <span>/</span>
-      <Link href="/blog" class="hover:text-foreground transition-colors">Blog</Link>
-      <span>/</span>
-      <span class="text-foreground truncate">{title}</span>
+      <Link href="/" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
+        <Home size={14} />
+        <span>Home</span>
+      </Link>
+      <ChevronRight size={14} />
+      <Link href="/blog" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
+        <BookOpen size={14} />
+        <span>Blog</span>
+      </Link>
+      <ChevronRight size={14} />
+      <span class="flex items-center gap-1.5 text-foreground truncate">
+        <FileText size={14} />
+        <span class="truncate">{title}</span>
+      </span>
     </nav>
 
     {/* Post Header */}
