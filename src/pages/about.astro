@@ -1,10 +1,9 @@
 ---
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
-import Skills from "@/components/Skills.astro";
 import Timeline from "@/components/Timeline.astro";
 import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
-import { EDUCATION, EXPERIENCE, SKILLS } from "@/data/about";
+import { EDUCATION } from "@/data/about";
 import Layout from "@/layouts/Layout.astro";
 import { Github, Linkedin, MapPin } from "lucide-astro";
 ---
@@ -39,28 +38,12 @@ import { Github, Linkedin, MapPin } from "lucide-astro";
       <div class="flex-1 space-y-3">
         <h1 class="text-3xl font-bold">{AUTHOR.name}</h1>
 
-        <div class="flex flex-col gap-1 text-muted-foreground">
-          <span>@{AUTHOR.username}</span>
-
-          {
-            AUTHOR.location && (
-              <span class="flex items-center gap-1">
-                <MapPin size={14} />
-                {AUTHOR.location}
-              </span>
-            )
-          }
-        </div>
-
-        <!-- Username origin -->
         {
-          AUTHOR.usernameOrigin && (
-            <details class="text-sm">
-              <summary class="cursor-pointer text-muted-foreground hover:text-foreground">
-                Username origin
-              </summary>
-              <p class="mt-2 text-muted-foreground">{AUTHOR.usernameOrigin}</p>
-            </details>
+          AUTHOR.location && (
+            <span class="flex items-center gap-1 text-muted-foreground">
+              <MapPin size={14} />
+              {AUTHOR.location}
+            </span>
           )
         }
       </div>
@@ -102,22 +85,10 @@ import { Github, Linkedin, MapPin } from "lucide-astro";
       </Link>
     </section>
 
-    <!-- Work Experience -->
-    <section class="flex flex-col gap-y-4">
-      <h2 class="text-2xl font-bold">Experience</h2>
-      <Timeline items={EXPERIENCE} />
-    </section>
-
     <!-- Education -->
     <section class="flex flex-col gap-y-4">
       <h2 class="text-2xl font-bold">Education</h2>
       <Timeline items={EDUCATION} />
-    </section>
-
-    <!-- Skills -->
-    <section class="flex flex-col gap-y-4">
-      <h2 class="text-2xl font-bold">Skills & Technologies</h2>
-      <Skills categories={SKILLS} />
     </section>
   </main>
 </Layout>
