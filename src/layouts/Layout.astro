@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import Analytics from "@vercel/analytics/astro";
 import Footer from "@/components/Footer.astro";
 import SEO from "@/components/seo/SEO.astro";
 import JsonLd from "@/components/seo/JsonLd.astro";
@@ -67,6 +68,7 @@ const {
       <slot />
     </main>
     <Footer />
+    <Analytics />
 
     <script is:inline data-astro-rerun>
       (() => {
