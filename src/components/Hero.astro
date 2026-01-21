@@ -1,74 +1,76 @@
 ---
 import Link from "@/components/Link.astro";
-import { AUTHOR, SOCIAL_LINKS } from "@/consts";
-import { cn } from "@/lib/utils";
-import { Cloud, Github, Linkedin, Twitter } from "lucide-astro";
+import { SITE, SOCIAL_LINKS } from "@/consts";
+import { Cloud, Github, Linkedin, Rss, Twitter } from "lucide-astro";
 ---
 
-<section class:list={cn("border border-border rounded-lg")}>
-  <div class="flex flex-col space-y-1.5 p-6">
-    <h1 class="text-3xl leading-none font-medium text-foreground">{AUTHOR.name}</h1>
-    <p class="text-muted-foreground text-sm">
-      {AUTHOR.tagline}
-    </p>
-  </div>
-  <div class="p-6 pt-0">
-    <p class="text-muted-foreground mb-6 text-sm">
-      {AUTHOR.bio}
+<section class="py-16 md:py-24">
+  <div class="space-y-6">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+      {SITE.headline}
+    </h1>
+
+    <p class="text-lg text-muted-foreground max-w-2xl">
+      {SITE.subheadline}
     </p>
 
-    <div class="flex gap-3">
+    <!-- CTA Buttons -->
+    <div class="flex flex-wrap gap-3">
+      <Link
+        href="/blog"
+        class="inline-flex items-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+      >
+        Read the blog
+      </Link>
+      <Link
+        href="/about"
+        class="inline-flex items-center px-6 py-3 rounded-md border border-border hover:bg-muted transition-colors font-medium"
+      >
+        About me
+      </Link>
+    </div>
+
+    <!-- Social Links -->
+    <div class="flex gap-4 pt-4">
       <Link
         href={SOCIAL_LINKS.github}
         external
-        class:list={cn(
-          "inline-flex items-center justify-center",
-          "size-9 rounded-md",
-          "border border-border bg-background",
-          "text-foreground/60 hover:text-foreground",
-          "hover:bg-muted transition-colors"
-        )}
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="GitHub"
       >
-        <Github size={18} />
-      </Link>
-      <Link
-        href={SOCIAL_LINKS.twitter}
-        external
-        class:list={cn(
-          "inline-flex items-center justify-center",
-          "size-9 rounded-md",
-          "border border-border bg-background",
-          "text-foreground/60 hover:text-foreground",
-          "hover:bg-muted transition-colors"
-        )}
-      >
-        <Twitter size={18} />
-      </Link>
-      <Link
-        href={SOCIAL_LINKS.bluesky}
-        external
-        class:list={cn(
-          "inline-flex items-center justify-center",
-          "size-9 rounded-md",
-          "border border-border bg-background",
-          "text-foreground/60 hover:text-foreground",
-          "hover:bg-muted transition-colors"
-        )}
-      >
-        <Cloud size={18} />
+        <Github size={20} />
       </Link>
       <Link
         href={SOCIAL_LINKS.linkedin}
         external
-        class:list={cn(
-          "inline-flex items-center justify-center",
-          "size-9 rounded-md",
-          "border border-border bg-background",
-          "text-foreground/60 hover:text-foreground",
-          "hover:bg-muted transition-colors"
-        )}
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="LinkedIn"
       >
-        <Linkedin size={18} />
+        <Linkedin size={20} />
+      </Link>
+      <Link
+        href={SOCIAL_LINKS.twitter}
+        external
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="Twitter"
+      >
+        <Twitter size={20} />
+      </Link>
+      <Link
+        href={SOCIAL_LINKS.bluesky}
+        external
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="Bluesky"
+      >
+        <Cloud size={20} />
+      </Link>
+      <Link
+        href="/rss.xml"
+        external
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="RSS Feed"
+      >
+        <Rss size={20} />
       </Link>
     </div>
   </div>
