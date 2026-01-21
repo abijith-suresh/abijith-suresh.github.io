@@ -41,17 +41,17 @@ const tags = await getAllBlogTagsWithCount();
       </div>
     </div>
 
-    <!-- Tags Grid -->
+    <!-- Tags -->
     {
       tags.length > 0 ? (
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div class="flex flex-wrap gap-2">
           {tags.map(({ tag, count }) => (
             <Link
               href={`/tags/${tag}`}
-              class="flex items-center justify-between px-3 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-md transition-colors group"
+              class="inline-flex items-center gap-2 px-3 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-md transition-colors group"
             >
-              <span class="text-sm truncate group-hover:text-primary transition-colors">{tag}</span>
-              <span class="text-xs text-muted-foreground ml-2 flex-shrink-0">({count})</span>
+              <span class="text-sm group-hover:text-primary transition-colors">{tag}</span>
+              <span class="text-xs text-muted-foreground">({count})</span>
             </Link>
           ))}
         </div>
