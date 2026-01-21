@@ -40,7 +40,7 @@ export const AUTHOR = {
   longBio:
     "I enjoy working on challenging problems and learning new technologies. When I'm not coding, you can find me contributing to open source, writing technical articles, or exploring new frameworks and tools.",
   avatar: "/avatar.jpg",
-  location: "India",
+  location: "Kochi, Kerala, India",
   usernameOrigin:
     "My username 'abijith' is simply my first name. I prefer to keep things simple and authentic in the digital world.",
 } as const;
