@@ -1,7 +1,6 @@
 ---
 import Link from "@/components/Link.astro";
 import { NAV_LINKS, SITE, SOCIAL_LINKS } from "@/consts";
-import { cn } from "@/lib/utils";
 import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
 
 const currentYear = new Date().getFullYear();
@@ -16,43 +15,24 @@ const currentYear = new Date().getFullYear();
         <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
           {
             NAV_LINKS.map((link) => (
-              <Link
-                href={link.href}
-                class="text-foreground/60 hover:text-foreground transition-colors"
-                data-astro-prefetch="hover"
-              >
+              <Link href={link.href} class="nav-link" data-astro-prefetch="hover">
                 {link.label}
               </Link>
             ))
           }
-          <Link href="/rss.xml" class="text-foreground/60 hover:text-foreground transition-colors">
-            RSS
-          </Link>
+          <Link href="/rss.xml" class="nav-link"> RSS </Link>
         </nav>
 
         <!-- Social Links -->
         <div class="flex items-center gap-3">
-          <Link
-            href={SOCIAL_LINKS.github}
-            external
-            aria-label="GitHub"
-            class:list={cn(
-              "inline-flex items-center justify-center size-9 rounded-md",
-              "text-foreground/60 hover:text-foreground hover:bg-muted",
-              "transition-colors"
-            )}
-          >
+          <Link href={SOCIAL_LINKS.github} external aria-label="GitHub" class="icon-button size-9">
             <Github size={18} />
           </Link>
           <Link
             href={SOCIAL_LINKS.twitter}
             external
             aria-label="Twitter"
-            class:list={cn(
-              "inline-flex items-center justify-center size-9 rounded-md",
-              "text-foreground/60 hover:text-foreground hover:bg-muted",
-              "transition-colors"
-            )}
+            class="icon-button size-9"
           >
             <Twitter size={18} />
           </Link>
@@ -60,23 +40,11 @@ const currentYear = new Date().getFullYear();
             href={SOCIAL_LINKS.linkedin}
             external
             aria-label="LinkedIn"
-            class:list={cn(
-              "inline-flex items-center justify-center size-9 rounded-md",
-              "text-foreground/60 hover:text-foreground hover:bg-muted",
-              "transition-colors"
-            )}
+            class="icon-button size-9"
           >
             <Linkedin size={18} />
           </Link>
-          <Link
-            href="/rss.xml"
-            aria-label="RSS Feed"
-            class:list={cn(
-              "inline-flex items-center justify-center size-9 rounded-md",
-              "text-foreground/60 hover:text-foreground hover:bg-muted",
-              "transition-colors"
-            )}
-          >
+          <Link href="/rss.xml" aria-label="RSS Feed" class="icon-button size-9">
             <Rss size={18} />
           </Link>
         </div>

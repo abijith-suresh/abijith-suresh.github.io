@@ -16,14 +16,7 @@ const formattedDate = formatProjectDate(startDate, endDate);
 ---
 
 <article class:list={cn("group", className)}>
-  <Link
-    href={projectUrl}
-    class:list={cn(
-      "block border border-border rounded-lg overflow-hidden",
-      "hover:bg-muted/50 transition-all duration-300 ease-in-out"
-    )}
-    prefetch="hover"
-  >
+  <Link href={projectUrl} class:list={cn("block card-hover")} prefetch="hover">
     <div class="flex flex-col gap-2 p-4">
       <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
         {title}
@@ -35,11 +28,7 @@ const formattedDate = formatProjectDate(startDate, endDate);
         {description}
       </p>
       <div class="flex flex-wrap gap-2 mt-2">
-        {
-          tags.map((tag: string) => (
-            <span class="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md">{tag}</span>
-          ))
-        }
+        {tags.map((tag: string) => <span class="tag-pill">{tag}</span>)}
       </div>
     </div>
   </Link>
