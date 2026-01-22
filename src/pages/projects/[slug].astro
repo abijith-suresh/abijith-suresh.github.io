@@ -4,9 +4,8 @@ import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { formatProjectDate } from "@/lib/data-utils";
-import { cn } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Calendar, ChevronRight, ExternalLink, Folder, Github, Home, Package } from "lucide-astro";
+import { Calendar, ChevronRight, Folder, Home, Package } from "lucide-astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -21,7 +20,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, tags, github, demo, startDate, endDate } = project.data;
+const { title, description, tags, startDate, endDate } = project.data;
 const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
 ---
@@ -52,20 +51,22 @@ const formattedDate = formatProjectDate(startDate, endDate);
 
     <!-- Project Header -->
     <article class="flex flex-col gap-y-6">
-      <header class="flex flex-col gap-y-4">
-        <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+      <header class="flex flex-col gap-y-4 text-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
 
-        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <div
+          class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
+        >
           <div class="flex items-center gap-1.5">
             <Calendar size={16} />
             <time>{formattedDate}</time>
           </div>
         </div>
 
-        <p class="text-lg text-muted-foreground">{description}</p>
+        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
 
         <!-- Tags -->
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-center gap-2">
           {
             tags.map((tag) => (
               <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
@@ -74,42 +75,6 @@ const formattedDate = formatProjectDate(startDate, endDate);
             ))
           }
         </div>
-
-        <!-- Links -->
-        {
-          (github || demo) && (
-            <div class="flex flex-wrap gap-3">
-              {github && (
-                <Link
-                  href={github}
-                  external
-                  class:list={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                    "bg-muted hover:bg-muted/80 text-foreground",
-                    "transition-colors text-sm font-medium"
-                  )}
-                >
-                  <Github size={16} />
-                  View Source
-                </Link>
-              )}
-              {demo && (
-                <Link
-                  href={demo}
-                  external
-                  class:list={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                    "bg-primary text-primary-foreground hover:bg-primary/90",
-                    "transition-colors text-sm font-medium"
-                  )}
-                >
-                  <ExternalLink size={16} />
-                  Live Demo
-                </Link>
-              )}
-            </div>
-          )
-        }
       </header>
 
       <!-- Project Content -->
