@@ -18,7 +18,7 @@ import { Monitor, Moon, Sun } from "lucide-astro";
   <div
     id="theme-menu"
     role="menu"
-    class="absolute right-0 mt-2 w-36 bg-popover border border-border rounded-md shadow-lg py-1 hidden z-50"
+    class="absolute right-0 mt-2 w-36 bg-popover border border-border rounded-md shadow-lg py-1 z-50 opacity-0 scale-95 pointer-events-none transition-all duration-200 ease-out origin-top-right"
   >
     <button
       role="menuitem"
@@ -87,25 +87,33 @@ import { Monitor, Moon, Sun } from "lucide-astro";
     });
   }
 
-  function toggleMenu() {
+  function openMenu() {
     const menu = document.getElementById("theme-menu");
     const button = document.getElementById("theme-button");
-    const isHidden = menu?.classList.contains("hidden");
 
-    if (isHidden) {
-      menu?.classList.remove("hidden");
-      button?.setAttribute("aria-expanded", "true");
-    } else {
-      menu?.classList.add("hidden");
-      button?.setAttribute("aria-expanded", "false");
-    }
+    menu?.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+    menu?.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+    button?.setAttribute("aria-expanded", "true");
   }
 
   function closeMenu() {
     const menu = document.getElementById("theme-menu");
     const button = document.getElementById("theme-button");
-    menu?.classList.add("hidden");
+
+    menu?.classList.remove("opacity-100", "scale-100", "pointer-events-auto");
+    menu?.classList.add("opacity-0", "scale-95", "pointer-events-none");
     button?.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById("theme-menu");
+    const isHidden = menu?.classList.contains("opacity-0");
+
+    if (isHidden) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
   }
 
   function initThemePicker() {
@@ -135,6 +143,13 @@ import { Monitor, Moon, Sun } from "lucide-astro";
     document.addEventListener("click", (e) => {
       const picker = document.getElementById("theme-picker");
       if (picker && !picker.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    // Close menu on escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
         closeMenu();
       }
     });
