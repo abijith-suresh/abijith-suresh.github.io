@@ -28,11 +28,17 @@ import { Search } from "lucide-astro";
         }
       </nav>
 
-      <button id="open-search-modal" aria-label="Open search" class="icon-button p-2">
-        <Search size={16} />
-      </button>
+      <!-- Separator -->
+      <span class="text-border">|</span>
 
-      <ThemePicker />
+      <!-- Icons -->
+      <div class="flex items-center gap-1">
+        <button id="open-search-modal" aria-label="Open search" class="icon-button p-2">
+          <Search size={16} />
+        </button>
+
+        <ThemePicker />
+      </div>
     </div>
   </div>
 </header>

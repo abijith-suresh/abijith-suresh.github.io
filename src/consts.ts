@@ -8,8 +8,12 @@ export const SITE = {
   locale: "en-US",
 
   // Hero Section
-  headline: "Full Stack Developer",
-  subheadline: "Working on scalable web applications and open source projects from Kochi, India.",
+  greeting: "Hey, I'm Abijith",
+  role: "Software Developer",
+  heroIntro:
+    "I'm a backend-focused developer who enjoys building things that work well. Currently crafting web applications with Java and Spring Boot, while exploring the broader world of software development.",
+  whatIDo:
+    "I spend most of my time working on backend systems, but I'm comfortable across the stack. I like solving problems, writing clean code, and learning new technologies. When I'm not coding, I'm probably gaming, watching anime, or reading something interesting.",
 
   // Feature Configuration
   postsPerPage: 10,
@@ -38,15 +42,18 @@ export const AUTHOR = {
   fullName: "Abijith Suresh",
   username: "abijith",
   tagline: "Developer, builder, writer.",
-  role: "Full Stack Developer",
-  currentWork: "working on web applications and exploring modern technologies",
-  bio: "I build web applications and write about technology. I enjoy working with modern frameworks, learning new tools, and contributing to open source.",
-  longBio:
-    "When I'm not coding, I spend time exploring new technologies, writing technical articles, and working on side projects. I'm always interested in connecting with other developers and collaborating on interesting ideas.",
-  avatar: "/avatar.jpg",
+  role: "Software Developer",
   location: "Kochi, Kerala, India",
-  usernameOrigin:
-    "My username 'abijith' is simply my first name. I prefer to keep things simple and authentic in the digital world.",
+  avatar: "/avatar.jpg",
+  // About page content
+  aboutIntro:
+    "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things.",
+  aboutJourney:
+    "I got into programming because I liked the idea of building things from scratch. What started as curiosity turned into a career, and I'm still figuring things out as I go. I've worked with React, Python, and TypeScript along the way, though backend development is where I feel most at home.",
+  aboutBlog:
+    "This blog is where I document my journey—the things I learn, the problems I solve, and occasional thoughts on tech and life. It's mostly for my future self, but if you find something useful here, that's a bonus.",
+  aboutInterests:
+    "Outside of work, I'm usually gaming, watching anime or TV shows, reading, or catching up on movies. I like stories in all their forms.",
 } as const;
 
 // Type exports for better TypeScript support

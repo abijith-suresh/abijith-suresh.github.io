@@ -1,75 +1,54 @@
 ---
 import Link from "@/components/Link.astro";
-import { NAV_LINKS, SITE, SOCIAL_LINKS } from "@/consts";
+import { SITE, SOCIAL_LINKS } from "@/consts";
 import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-border bg-background">
+<footer class="border-t border-border">
   <div class="mx-auto max-w-3xl px-4 py-8">
-    <div class="flex flex-col gap-y-6">
-      <!-- Top Section: Navigation and Social Links -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-        <!-- Navigation Links -->
-        <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
-          {
-            NAV_LINKS.map((link) => (
-              <Link href={link.href} class="nav-link" data-astro-prefetch="hover">
-                {link.label}
-              </Link>
-            ))
-          }
-          <Link href="/rss.xml" class="nav-link"> RSS </Link>
-        </nav>
-
-        <!-- Social Links -->
-        <div class="flex items-center gap-3">
-          <Link href={SOCIAL_LINKS.github} external aria-label="GitHub" class="icon-button size-9">
-            <Github size={18} />
-          </Link>
-          <Link
-            href={SOCIAL_LINKS.twitter}
-            external
-            aria-label="Twitter"
-            class="icon-button size-9"
-          >
-            <Twitter size={18} />
-          </Link>
-          <Link
-            href={SOCIAL_LINKS.linkedin}
-            external
-            aria-label="LinkedIn"
-            class="icon-button size-9"
-          >
-            <Linkedin size={18} />
-          </Link>
-          <Link href="/rss.xml" aria-label="RSS Feed" class="icon-button size-9">
-            <Rss size={18} />
-          </Link>
-        </div>
+    <div class="flex flex-col items-center gap-6">
+      <!-- Social Links -->
+      <div class="flex items-center gap-4">
+        <Link
+          href={SOCIAL_LINKS.github}
+          external
+          aria-label="GitHub"
+          class="text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Github size={20} />
+        </Link>
+        <Link
+          href={SOCIAL_LINKS.twitter}
+          external
+          aria-label="Twitter"
+          class="text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Twitter size={20} />
+        </Link>
+        <Link
+          href={SOCIAL_LINKS.linkedin}
+          external
+          aria-label="LinkedIn"
+          class="text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Linkedin size={20} />
+        </Link>
+        <Link
+          href="/rss.xml"
+          aria-label="RSS Feed"
+          class="text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Rss size={20} />
+        </Link>
       </div>
 
-      <!-- Bottom Section: Copyright and Credits -->
-      <div
-        class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-6 border-t border-border text-sm text-muted-foreground"
-      >
-        <p>
-          © {currentYear}
-          {SITE.author}. All rights reserved.
-        </p>
-        <p class="flex items-center gap-1">
-          Built with
-          <Link
-            href="https://astro.build"
-            external
-            underline
-            class="text-muted-foreground hover:text-foreground"
-          >
-            Astro
-          </Link>
-        </p>
-      </div>
+      <!-- Copyright -->
+      <p class="text-sm text-muted-foreground">
+        © {currentYear}
+        {SITE.author}
+      </p>
     </div>
   </div>
 </footer>

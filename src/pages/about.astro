@@ -4,7 +4,7 @@ import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { Github, Linkedin, MapPin } from "lucide-astro";
+import { Github, Linkedin, Mail } from "lucide-astro";
 ---
 
 <Layout
@@ -14,7 +14,7 @@ import { Github, Linkedin, MapPin } from "lucide-astro";
   jsonLd={{ type: "person" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-12 px-4 max-w-3xl pb-12">
+  <main class="w-full mx-auto flex grow flex-col gap-y-10 px-4 max-w-3xl pb-12">
     <Breadcrumb
       items={[
         { label: "Home", href: "/", icon: "home" },
@@ -22,66 +22,79 @@ import { Github, Linkedin, MapPin } from "lucide-astro";
       ]}
     />
 
-    <!-- Profile Header -->
-    <section class="flex flex-col md:flex-row gap-6 items-center md:items-center">
-      <!-- Avatar -->
-      <div class="flex-shrink-0">
-        <img
-          src={AUTHOR.avatar}
-          alt={AUTHOR.name}
-          class="rounded-full w-32 h-32 object-cover border-2 border-border"
-        />
-      </div>
-
-      <!-- Info -->
-      <div class="flex-1 space-y-3">
-        <h1 class="text-3xl font-bold">{AUTHOR.name}</h1>
-
-        {
-          AUTHOR.location && (
-            <span class="flex items-center gap-1 text-muted-foreground">
-              <MapPin size={14} />
-              {AUTHOR.location}
-            </span>
-          )
-        }
-      </div>
-    </section>
-
-    <!-- Bio Section -->
-    <section class="prose prose-neutral dark:prose-invert max-w-none">
-      <p>
-        I'm a <strong>{AUTHOR.role}</strong>
-        {AUTHOR.currentWork}. {AUTHOR.bio}
-      </p>
-
-      {AUTHOR.longBio && <p>{AUTHOR.longBio}</p>}
-
-      <p>
-        I value clean code, good documentation, and building things that solve real problems. Feel
-        free to reach out if you'd like to collaborate or just chat about technology.
+    <!-- Photo + Caption -->
+    <section class="flex flex-col items-center gap-4 fade-in">
+      <img
+        src={AUTHOR.avatar}
+        alt={AUTHOR.name}
+        class="rounded-full w-36 h-36 object-cover border-2 border-border"
+      />
+      <p class="text-sm text-muted-foreground italic">
+        Just a developer trying to figure things out.
       </p>
     </section>
 
-    <!-- Quick Links -->
-    <section class="flex flex-wrap gap-3">
-      <Link
-        href={SOCIAL_LINKS.github}
-        external
-        class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
-      >
-        <Github size={16} />
-        GitHub
-      </Link>
+    <!-- Story Content -->
+    <article class="space-y-6 text-foreground/80 leading-relaxed fade-in fade-in-delay-1">
+      <!-- Intro -->
+      <p>
+        {AUTHOR.aboutIntro}
+      </p>
 
-      <Link
-        href={SOCIAL_LINKS.linkedin}
-        external
-        class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
-      >
-        <Linkedin size={16} />
-        LinkedIn
-      </Link>
-    </section>
+      <!-- Journey -->
+      <p>
+        {AUTHOR.aboutJourney}
+      </p>
+
+      <!-- Why I blog -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-semibold text-foreground">Why this blog?</h2>
+        <p>
+          {AUTHOR.aboutBlog}
+        </p>
+      </section>
+
+      <!-- Interests -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-semibold text-foreground">When I'm not coding</h2>
+        <p>
+          {AUTHOR.aboutInterests}
+        </p>
+      </section>
+
+      <!-- CTA -->
+      <section class="space-y-4 pt-4">
+        <p>
+          If you want to connect, feel free to reach out. I'm always happy to chat about code,
+          projects, or anything else.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <Link
+            href={SOCIAL_LINKS.github}
+            external
+            class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
+          >
+            <Github size={16} />
+            GitHub
+          </Link>
+          <Link
+            href={SOCIAL_LINKS.linkedin}
+            external
+            class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
+          >
+            <Linkedin size={16} />
+            LinkedIn
+          </Link>
+          <Link
+            href="/blog"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          >
+            <Mail size={16} />
+            Read the blog
+          </Link>
+        </div>
+      </section>
+    </article>
   </main>
 </Layout>
