@@ -16,8 +16,16 @@ import Layout from "@/layouts/Layout.astro";
   <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl">
     <Hero />
 
+    <!-- What I Do -->
+    <section class="py-12 border-t border-border">
+      <h2 class="text-xl font-semibold mb-4">What I do</h2>
+      <p class="text-muted-foreground leading-relaxed">
+        {SITE.whatIDo}
+      </p>
+    </section>
+
     <!-- Recent Posts -->
-    <section class="py-12">
+    <section class="py-12 border-t border-border">
       <RecentPosts />
     </section>
   </main>
