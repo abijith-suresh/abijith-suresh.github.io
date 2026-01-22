@@ -1,37 +1,44 @@
 ---
 import Link from "@/components/Link.astro";
 import { SITE, SOCIAL_LINKS } from "@/consts";
-import { Cloud, Github, Linkedin, Rss, Twitter } from "lucide-astro";
+import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
 ---
 
 <section class="py-16 md:py-24">
   <div class="space-y-6">
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-      {SITE.headline}
-    </h1>
+    <!-- Greeting -->
+    <div class="space-y-2 fade-in">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
+        {SITE.greeting}
+      </h1>
+      <p class="text-xl md:text-2xl text-primary font-medium">
+        {SITE.role}
+      </p>
+    </div>
 
-    <p class="text-lg text-muted-foreground max-w-2xl">
-      {SITE.subheadline}
+    <!-- Intro -->
+    <p class="text-lg text-muted-foreground max-w-2xl leading-relaxed fade-in fade-in-delay-1">
+      {SITE.heroIntro}
     </p>
 
     <!-- CTA Buttons -->
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3 pt-2 fade-in fade-in-delay-2">
       <Link
         href="/blog"
-        class="inline-flex items-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+        class="inline-flex items-center px-5 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
       >
         Read the blog
       </Link>
       <Link
         href="/about"
-        class="inline-flex items-center px-6 py-3 rounded-md border border-border hover:bg-muted transition-colors font-medium"
+        class="inline-flex items-center px-5 py-2.5 rounded-md border border-border hover:bg-muted transition-colors font-medium"
       >
         About me
       </Link>
     </div>
 
     <!-- Social Links -->
-    <div class="flex gap-4 pt-4">
+    <div class="flex gap-4 pt-2 fade-in fade-in-delay-3">
       <Link
         href={SOCIAL_LINKS.github}
         external
@@ -57,16 +64,7 @@ import { Cloud, Github, Linkedin, Rss, Twitter } from "lucide-astro";
         <Twitter size={20} />
       </Link>
       <Link
-        href={SOCIAL_LINKS.bluesky}
-        external
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="Bluesky"
-      >
-        <Cloud size={20} />
-      </Link>
-      <Link
         href="/rss.xml"
-        external
         class="text-muted-foreground hover:text-foreground transition-colors"
         aria-label="RSS Feed"
       >
