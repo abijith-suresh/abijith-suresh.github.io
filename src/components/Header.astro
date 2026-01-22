@@ -21,23 +21,14 @@ import { Search } from "lucide-astro";
       <nav class="flex items-center gap-4 text-sm sm:gap-6">
         {
           NAV_LINKS.map((link) => (
-            <Link
-              href={link.href}
-              class="text-foreground/60 hover:text-foreground transition-colors capitalize"
-              prefetch="hover"
-            >
+            <Link href={link.href} class="nav-link capitalize" prefetch="hover">
               {link.label}
             </Link>
           ))
         }
       </nav>
 
-      <!-- Search Icon -->
-      <button
-        id="open-search-modal"
-        aria-label="Open search"
-        class="p-2 text-foreground/60 hover:text-foreground hover:bg-muted rounded-md transition-colors"
-      >
+      <button id="open-search-modal" aria-label="Open search" class="icon-button p-2">
         <Search size={16} />
       </button>
 
