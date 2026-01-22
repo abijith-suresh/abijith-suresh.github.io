@@ -83,36 +83,42 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
     </nav>
 
     {/* Post Header */}
-    <header class="col-start-2 flex flex-col gap-y-4 px-4">
-      <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+    <header class="col-start-2 flex flex-col gap-y-4 px-4 text-center">
+      <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
 
-      <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+      <div
+        class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
+      >
         <div class="flex items-center gap-1.5">
           <Calendar size={16} />
           <time datetime={publishDate.toISOString()}>
             {formattedDate}
           </time>
         </div>
+        <span class="text-border">|</span>
         <div class="flex items-center gap-1.5">
           <Clock size={16} />
           <span>{formatReadingTime(readingTime)}</span>
         </div>
         {
           formattedUpdatedDate && (
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs">Updated:</span>
-              <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
-            </div>
+            <>
+              <span class="text-border">|</span>
+              <div class="flex items-center gap-1.5">
+                <span>Updated:</span>
+                <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
+              </div>
+            </>
           )
         }
       </div>
 
-      <p class="text-lg text-muted-foreground">{description}</p>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
 
       {/* Tags */}
       {
         tags.length > 0 && (
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap justify-center gap-2">
             {tags.map((tag) => (
               <Link
                 href={`/tags/${tag}`}
