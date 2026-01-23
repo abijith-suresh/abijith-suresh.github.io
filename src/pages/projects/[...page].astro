@@ -42,6 +42,7 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
 <Layout
   title={`Projects${currentPage > 1 ? ` - Page ${currentPage}` : ""} - ${SITE.title}`}
   description="A collection of projects I've built, including web applications, tools, and experiments."
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
@@ -76,6 +77,7 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
             nextUrl={nextUrl}
             hasPrev={hasPrev}
             hasNext={hasNext}
+            ariaLabel="Project pagination"
           />
         </>
       ) : (

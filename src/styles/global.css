@@ -118,15 +118,21 @@
   /* Borders and ring */
   --border: #403d52; /* Highlight Med */
   --ring: #ebbcba; /* Rose */
+
+  /* Transition durations */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+  --ease-default: ease-out;
 }
 
 /* Smooth theme transitions */
 :root,
 [data-theme="dark"] {
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
+    background-color var(--transition-slow) ease-in-out,
+    color var(--transition-slow) ease-in-out,
+    border-color var(--transition-slow) ease-in-out;
 }
 
 /* ==========================================================================
@@ -178,7 +184,8 @@
   /* Card hover effect - used by BlogCard, ProjectCard */
   .card-hover {
     @apply border border-border rounded-lg overflow-hidden;
-    @apply hover:bg-muted/50 transition-all duration-300 ease-in-out;
+    @apply hover:bg-muted/50 transition-all ease-in-out;
+    transition-duration: var(--transition-slow);
   }
 
   /* Tag pill styling - used for tags in cards and posts */
@@ -200,7 +207,7 @@
 
   /* Fade-in animation */
   .fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.6s var(--ease-default) forwards;
     opacity: 0;
   }
 
@@ -336,5 +343,20 @@
     :where(kbd):not(:where(.not-prose, .not-prose *)) {
       @apply text-foreground bg-muted rounded-md border px-2 py-1 text-xs font-medium;
     }
+  }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

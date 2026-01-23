@@ -10,14 +10,26 @@ interface Props {
   nextUrl: string | null;
   hasPrev: boolean;
   hasNext: boolean;
+  ariaLabel?: string;
 }
 
-const { currentPage, totalPages, prevUrl, nextUrl, hasPrev, hasNext } = Astro.props;
+const {
+  currentPage,
+  totalPages,
+  prevUrl,
+  nextUrl,
+  hasPrev,
+  hasNext,
+  ariaLabel = "Pagination",
+} = Astro.props;
 ---
 
 {
   totalPages > 1 && (
-    <nav class="flex items-center justify-between pt-6 border-t border-border">
+    <nav
+      aria-label={ariaLabel}
+      class="flex items-center justify-between pt-6 border-t border-border"
+    >
       <div class="flex-1">
         {hasPrev && prevUrl && (
           <Link

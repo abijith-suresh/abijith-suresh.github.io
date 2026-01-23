@@ -10,12 +10,15 @@ import { Home, Search } from "lucide-astro";
   title={`404 - Page Not Found | ${SITE.title}`}
   description="The page you're looking for doesn't exist."
   noindex={true}
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <div class="flex flex-col items-center justify-center gap-y-6 py-20">
       <!-- Large 404 -->
-      <div class="text-9xl font-bold text-muted-foreground/20 select-none">404</div>
+      <div class="text-9xl font-bold text-muted-foreground/20 select-none" aria-hidden="true">
+        404
+      </div>
 
       <!-- Error Message -->
       <div class="flex flex-col items-center gap-y-3 text-center">

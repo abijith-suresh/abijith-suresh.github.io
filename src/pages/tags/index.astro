@@ -1,11 +1,12 @@
 ---
 import BackLink from "@/components/BackLink.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogTagsWithCount } from "@/lib/data-utils";
-import { ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
+import { Tag as TagIcon } from "lucide-astro";
 
 const tags = await getAllBlogTagsWithCount();
 ---
@@ -13,21 +14,17 @@ const tags = await getAllBlogTagsWithCount();
 <Layout
   title={`All Tags - Blog - ${SITE.title}`}
   description="Browse all blog posts by topic. Explore tags and discover content that interests you."
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
-      <Link href="/" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
-        <Home size={14} />
-        <span>Home</span>
-      </Link>
-      <ChevronRight size={14} />
-      <span class="flex items-center gap-1.5 text-foreground">
-        <TagIcon size={14} />
-        <span>Tags</span>
-      </span>
-    </nav>
+    <Breadcrumb
+      items={[
+        { label: "Home", href: "/", icon: "home" },
+        { label: "Tags", icon: "tags" },
+      ]}
+    />
 
     <!-- Header -->
     <div class="flex flex-col gap-y-3">

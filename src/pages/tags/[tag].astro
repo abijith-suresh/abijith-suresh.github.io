@@ -1,13 +1,14 @@
 ---
 import BackLink from "@/components/BackLink.astro";
 import BlogCard from "@/components/BlogCard.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogPosts, getAllBlogTags } from "@/lib/data-utils";
 import type { CollectionEntry } from "astro:content";
-import { ChevronRight, Home, Tag as TagIcon } from "lucide-astro";
+import { Tag as TagIcon } from "lucide-astro";
 
 export async function getStaticPaths() {
   const allTags = await getAllBlogTags();
@@ -35,26 +36,18 @@ const postCount = posts.length;
 <Layout
   title={`Tag: ${tag} - Blog - ${SITE.title}`}
   description={`Blog posts tagged with "${tag}"`}
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-muted-foreground">
-      <Link href="/" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
-        <Home size={14} />
-        <span>Home</span>
-      </Link>
-      <ChevronRight size={14} />
-      <Link href="/tags" class="flex items-center gap-1.5 hover:text-foreground transition-colors">
-        <TagIcon size={14} />
-        <span>Tags</span>
-      </Link>
-      <ChevronRight size={14} />
-      <span class="flex items-center gap-1.5 text-foreground">
-        <TagIcon size={14} />
-        <span>{tag}</span>
-      </span>
-    </nav>
+    <Breadcrumb
+      items={[
+        { label: "Home", href: "/", icon: "home" },
+        { label: "Tags", href: "/tags", icon: "tags" },
+        { label: tag, icon: "tag" },
+      ]}
+    />
 
     <div class="flex flex-col gap-y-3">
       <div class="flex items-center gap-3">
