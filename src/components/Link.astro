@@ -19,11 +19,12 @@ const isExternal = external || href.startsWith("http");
   rel={isExternal ? "noopener noreferrer" : undefined}
   data-astro-prefetch={!isExternal && prefetch ? prefetch : undefined}
   class:list={cn(
-    "transition-colors duration-300 ease-in-out",
+    "transition-colors ease-in-out",
     underline &&
       "underline decoration-muted-foreground underline-offset-[3px] hover:decoration-foreground",
     className
   )}
+  style="transition-duration: var(--transition-slow);"
   {...rest}
 >
   <slot />
