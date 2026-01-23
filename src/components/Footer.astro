@@ -1,7 +1,6 @@
 ---
-import Link from "@/components/Link.astro";
-import { SITE, SOCIAL_LINKS } from "@/consts";
-import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
+import SocialLinks from "@/components/SocialLinks.astro";
+import { SITE } from "@/consts";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -10,39 +9,7 @@ const currentYear = new Date().getFullYear();
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="flex flex-col items-center gap-6">
       <!-- Social Links -->
-      <div class="flex items-center gap-4">
-        <Link
-          href={SOCIAL_LINKS.github}
-          external
-          aria-label="GitHub"
-          class="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Github size={20} />
-        </Link>
-        <Link
-          href={SOCIAL_LINKS.twitter}
-          external
-          aria-label="Twitter"
-          class="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Twitter size={20} />
-        </Link>
-        <Link
-          href={SOCIAL_LINKS.linkedin}
-          external
-          aria-label="LinkedIn"
-          class="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Linkedin size={20} />
-        </Link>
-        <Link
-          href="/rss.xml"
-          aria-label="RSS Feed"
-          class="text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Rss size={20} />
-        </Link>
-      </div>
+      <SocialLinks class="items-center" />
 
       <!-- Copyright -->
       <p class="text-sm text-muted-foreground">

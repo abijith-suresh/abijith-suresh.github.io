@@ -1,7 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
-import { SITE, SOCIAL_LINKS } from "@/consts";
-import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
+import SocialLinks from "@/components/SocialLinks.astro";
+import { SITE } from "@/consts";
 ---
 
 <section class="py-16 md:py-24">
@@ -38,38 +38,6 @@ import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
     </div>
 
     <!-- Social Links -->
-    <div class="flex gap-4 pt-2 fade-in fade-in-delay-3">
-      <Link
-        href={SOCIAL_LINKS.github}
-        external
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="GitHub"
-      >
-        <Github size={20} />
-      </Link>
-      <Link
-        href={SOCIAL_LINKS.linkedin}
-        external
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="LinkedIn"
-      >
-        <Linkedin size={20} />
-      </Link>
-      <Link
-        href={SOCIAL_LINKS.twitter}
-        external
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="Twitter"
-      >
-        <Twitter size={20} />
-      </Link>
-      <Link
-        href="/rss.xml"
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="RSS Feed"
-      >
-        <Rss size={20} />
-      </Link>
-    </div>
+    <SocialLinks class="pt-2 fade-in fade-in-delay-3" />
   </div>
 </section>

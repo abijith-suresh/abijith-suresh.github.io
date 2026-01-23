@@ -1,0 +1,46 @@
+---
+import Link from "@/components/Link.astro";
+import { SOCIAL_LINKS } from "@/consts";
+import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
+
+interface Props {
+  class?: string;
+  size?: number;
+}
+
+const { class: className, size = 20 } = Astro.props;
+---
+
+<div class:list={["flex gap-4", className]}>
+  <Link
+    href={SOCIAL_LINKS.github}
+    external
+    class="text-muted-foreground hover:text-foreground transition-colors"
+    aria-label="GitHub"
+  >
+    <Github size={size} />
+  </Link>
+  <Link
+    href={SOCIAL_LINKS.linkedin}
+    external
+    class="text-muted-foreground hover:text-foreground transition-colors"
+    aria-label="LinkedIn"
+  >
+    <Linkedin size={size} />
+  </Link>
+  <Link
+    href={SOCIAL_LINKS.twitter}
+    external
+    class="text-muted-foreground hover:text-foreground transition-colors"
+    aria-label="Twitter"
+  >
+    <Twitter size={size} />
+  </Link>
+  <Link
+    href="/rss.xml"
+    class="text-muted-foreground hover:text-foreground transition-colors"
+    aria-label="RSS Feed"
+  >
+    <Rss size={size} />
+  </Link>
+</div>
