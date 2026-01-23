@@ -13,14 +13,14 @@ import Header from "@/components/Header.astro";
 >
   <Header slot="header" />
 
-  <div class="mx-auto max-w-3xl">
-    <div class="mb-8">
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+    <div>
       <h1 class="text-3xl font-bold tracking-tight">Search</h1>
       <p class="mt-2 text-muted-foreground">Find blog posts and projects</p>
     </div>
 
     <div id="search"></div>
-  </div>
+  </main>
 </Layout>
 
 <style is:global>
