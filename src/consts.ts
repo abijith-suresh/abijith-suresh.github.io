@@ -44,6 +44,7 @@ export const AUTHOR = {
   role: "Software Developer",
   location: "Kochi, Kerala, India",
   avatar: "/avatar.jpg",
+  twitterHandle: "@abijith_sh",
   // About page content
   aboutIntro:
     "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things.",
