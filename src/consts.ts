@@ -32,7 +32,6 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = {
   github: "https://github.com/abijith-suresh",
   twitter: "https://x.com/abijith_sh",
-  bluesky: "https://bsky.app/profile/yourusername.bsky.social",
   linkedin: "https://linkedin.com/in/abijith-suresh",
 } as const;
 
@@ -45,6 +44,7 @@ export const AUTHOR = {
   role: "Software Developer",
   location: "Kochi, Kerala, India",
   avatar: "/avatar.jpg",
+  twitterHandle: "@abijith_sh",
   // About page content
   aboutIntro:
     "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things.",

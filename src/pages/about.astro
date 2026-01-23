@@ -4,7 +4,7 @@ import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { Github, Linkedin, Mail } from "lucide-astro";
+import { BookOpen, Github, Linkedin } from "lucide-astro";
 ---
 
 <Layout
@@ -90,7 +90,7 @@ import { Github, Linkedin, Mail } from "lucide-astro";
             href="/blog"
             class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
           >
-            <Mail size={16} />
+            <BookOpen size={16} />
             Read the blog
           </Link>
         </div>
