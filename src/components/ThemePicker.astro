@@ -116,6 +116,14 @@ import { Monitor, Moon, Sun } from "lucide-astro";
     }
   }
 
+  // Store event listeners for cleanup
+  let buttonClickHandler: ((e: Event) => void) | null = null;
+  const themeButtonHandlers: Map<HTMLButtonElement, () => void> = new Map();
+  let documentClickHandler: ((e: Event) => void) | null = null;
+  let documentKeydownHandler: ((e: KeyboardEvent) => void) | null = null;
+  let mediaQueryChangeHandler: (() => void) | null = null;
+  let mediaQuery: MediaQueryList | null = null;
+
   function initThemePicker() {
     const button = document.getElementById("theme-button");
     const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
@@ -125,48 +133,94 @@ import { Monitor, Moon, Sun } from "lucide-astro";
     applyTheme(storedTheme);
 
     // Toggle menu on button click
-    button?.addEventListener("click", (e) => {
+    buttonClickHandler = (e) => {
       e.stopPropagation();
       toggleMenu();
-    });
+    };
+    button?.addEventListener("click", buttonClickHandler);
 
     // Handle theme selection
     themeButtons.forEach((themeButton) => {
-      themeButton.addEventListener("click", () => {
+      const handler = () => {
         const theme = themeButton.dataset.themeOption as Theme;
         applyTheme(theme);
         closeMenu();
-      });
+      };
+      themeButtonHandlers.set(themeButton, handler);
+      themeButton.addEventListener("click", handler);
     });
 
     // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
+    documentClickHandler = (e) => {
       const picker = document.getElementById("theme-picker");
       if (picker && !picker.contains(e.target as Node)) {
         closeMenu();
       }
-    });
+    };
+    document.addEventListener("click", documentClickHandler);
 
     // Close menu on escape key
-    document.addEventListener("keydown", (e) => {
+    documentKeydownHandler = (e) => {
       if (e.key === "Escape") {
         closeMenu();
       }
-    });
+    };
+    document.addEventListener("keydown", documentKeydownHandler);
 
     // Listen for system theme changes when in system mode
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", () => {
+    mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQueryChangeHandler = () => {
       const currentTheme = localStorage.getItem("theme") as Theme;
       if (currentTheme === "system") {
         applyTheme("system");
       }
+    };
+    mediaQuery.addEventListener("change", mediaQueryChangeHandler);
+  }
+
+  function cleanupThemePicker() {
+    const button = document.getElementById("theme-button");
+    const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+
+    // Remove button click handler
+    if (buttonClickHandler && button) {
+      button.removeEventListener("click", buttonClickHandler);
+      buttonClickHandler = null;
+    }
+
+    // Remove theme button handlers
+    themeButtons.forEach((themeButton) => {
+      const handler = themeButtonHandlers.get(themeButton);
+      if (handler) {
+        themeButton.removeEventListener("click", handler);
+      }
     });
+    themeButtonHandlers.clear();
+
+    // Remove document click handler
+    if (documentClickHandler) {
+      document.removeEventListener("click", documentClickHandler);
+      documentClickHandler = null;
+    }
+
+    // Remove document keydown handler
+    if (documentKeydownHandler) {
+      document.removeEventListener("keydown", documentKeydownHandler);
+      documentKeydownHandler = null;
+    }
+
+    // Remove media query change handler
+    if (mediaQueryChangeHandler && mediaQuery) {
+      mediaQuery.removeEventListener("change", mediaQueryChangeHandler);
+      mediaQueryChangeHandler = null;
+      mediaQuery = null;
+    }
   }
 
   // Initialize on page load
   initThemePicker();
 
-  // Reinitialize on view transitions
+  // Cleanup and reinitialize on view transitions
+  document.addEventListener("astro:before-swap", cleanupThemePicker);
   document.addEventListener("astro:after-swap", initThemePicker);
 </script>
