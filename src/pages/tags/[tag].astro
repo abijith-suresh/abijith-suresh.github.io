@@ -1,5 +1,4 @@
 ---
-import BackLink from "@/components/BackLink.astro";
 import BlogCard from "@/components/BlogCard.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
@@ -124,17 +123,13 @@ const allContent: ContentItem[] = [
       )
     }
 
-    <!-- Navigation Links -->
-    <div class="flex items-center gap-4 pt-6 border-t border-border">
-      <Link
-        href="/tags"
-        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <TagIcon size={16} />
-        View all tags
-      </Link>
-      <span class="text-muted-foreground">•</span>
-      <BackLink href="/" label="Back to Home" />
-    </div>
+    <!-- Navigation -->
+    <Link
+      href="/tags"
+      class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors pt-6 border-t border-border"
+    >
+      <TagIcon size={16} />
+      View all tags
+    </Link>
   </main>
 </Layout>
