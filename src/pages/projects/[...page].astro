@@ -1,14 +1,12 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
-import Link from "@/components/Link.astro";
+import Pagination from "@/components/Pagination.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllProjects, paginate, sortProjects } from "@/lib/data-utils";
-import { cn } from "@/lib/utils";
 import type { CollectionEntry } from "astro:content";
-import { ChevronLeft, ChevronRight } from "lucide-astro";
 export async function getStaticPaths() {
   const allProjects = await getAllProjects();
   const sortedProjects = sortProjects(allProjects, "date");
@@ -71,51 +69,14 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <nav class="flex items-center justify-between pt-6 border-t border-border">
-              <div class="flex-1">
-                {hasPrev && prevUrl && (
-                  <Link
-                    href={prevUrl}
-                    class:list={cn(
-                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                      "text-sm font-medium text-foreground",
-                      "border border-border hover:bg-muted/50",
-                      "transition-colors"
-                    )}
-                    data-astro-prefetch="hover"
-                  >
-                    <ChevronLeft size={16} />
-                    Previous
-                  </Link>
-                )}
-              </div>
-
-              <div class="flex items-center gap-2 text-sm text-muted-foreground">
-                <span>
-                  Page {currentPage} of {totalPages}
-                </span>
-              </div>
-
-              <div class="flex-1 flex justify-end">
-                {hasNext && nextUrl && (
-                  <Link
-                    href={nextUrl}
-                    class:list={cn(
-                      "inline-flex items-center gap-2 px-4 py-2 rounded-md",
-                      "text-sm font-medium text-foreground",
-                      "border border-border hover:bg-muted/50",
-                      "transition-colors"
-                    )}
-                    data-astro-prefetch="hover"
-                  >
-                    Next
-                    <ChevronRight size={16} />
-                  </Link>
-                )}
-              </div>
-            </nav>
-          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            prevUrl={prevUrl}
+            nextUrl={nextUrl}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
         </>
       ) : (
         <p class="text-muted-foreground text-center py-8">No projects to display yet.</p>
