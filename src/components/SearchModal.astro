@@ -319,6 +319,15 @@ import { X } from "lucide-astro";
     };
     modal?.addEventListener("click", modalClickHandler);
 
+    // Close on search result click (using event delegation)
+    const resultClickHandler = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.closest(".pagefind-ui__result-link")) {
+        closeSearchModal();
+      }
+    };
+    modal?.addEventListener("click", resultClickHandler);
+
     // Close on ESC key
     escKeyHandler = (e) => {
       if (e.key === "Escape") {
