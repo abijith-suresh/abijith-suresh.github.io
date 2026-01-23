@@ -243,6 +243,7 @@ import { X } from "lucide-astro";
 </style>
 
 <script>
+  // @ts-expect-error - Pagefind doesn't provide TypeScript types
   import { PagefindUI } from "@pagefind/default-ui";
 
   let pagefindInstance: PagefindUI | null = null;
@@ -265,6 +266,11 @@ import { X } from "lucide-astro";
         showImages: false,
         highlightParam: "highlight",
         excerptLength: 30,
+        showSubResults: false,
+        processResult: (result: unknown) => {
+          // Pagefind automatically processes metadata tags
+          return result;
+        },
       });
     }
 

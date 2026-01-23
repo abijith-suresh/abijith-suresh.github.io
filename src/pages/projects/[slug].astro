@@ -26,6 +26,9 @@ const { project } = Astro.props;
 const { title, description, tags, startDate, endDate } = project.data;
 const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
+
+// Prepare tags for Pagefind metadata (limit to first 5 for search display)
+const searchTags = tags.slice(0, 5).join(", ");
 ---
 
 <Layout
@@ -34,7 +37,10 @@ const formattedDate = formatProjectDate(startDate, endDate);
   jsonLd={{ type: "article" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
+  <main
+    class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12"
+    data-pagefind-meta={`tags:${searchTags}`}
+  >
     <!-- Breadcrumb -->
     <Breadcrumb
       items={[

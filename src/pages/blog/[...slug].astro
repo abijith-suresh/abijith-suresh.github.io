@@ -38,6 +38,9 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
 // Get related posts
 const relatedPosts = await getRelatedPosts(post.slug, 3);
+
+// Prepare tags for Pagefind metadata (limit to first 5 for search display)
+const searchTags = tags.slice(0, 5).join(", ");
 ---
 
 <Layout
@@ -65,7 +68,10 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
   <Header slot="header" />
   {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
 
-  <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
+  <section
+    class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12"
+    data-pagefind-meta={`tags:${searchTags}`}
+  >
     {/* Breadcrumb */}
     <Breadcrumb
       items={[
