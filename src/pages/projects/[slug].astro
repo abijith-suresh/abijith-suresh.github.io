@@ -50,7 +50,7 @@ const formattedDate = formatProjectDate(startDate, endDate);
         >
           <div class="flex items-center gap-1.5">
             <Calendar size={16} />
-            <time>{formattedDate}</time>
+            <time datetime={startDate.toISOString()}>{formattedDate}</time>
           </div>
         </div>
 

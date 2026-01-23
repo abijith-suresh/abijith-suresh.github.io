@@ -27,7 +27,10 @@ const iconMap = {
 };
 ---
 
-<nav class:list={["flex items-center gap-2 text-sm text-muted-foreground", className]}>
+<nav
+  aria-label="Breadcrumb"
+  class:list={["flex items-center gap-2 text-sm text-muted-foreground", className]}
+>
   {
     items.map((item, index) => {
       const Icon = item.icon ? iconMap[item.icon] : null;
