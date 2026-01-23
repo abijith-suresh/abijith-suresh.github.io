@@ -28,7 +28,11 @@ const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
 ---
 
-<Layout title={`${title} - Projects - ${SITE.title}`} description={description}>
+<Layout
+  title={`${title} - Projects - ${SITE.title}`}
+  description={description}
+  jsonLd={{ type: "article" }}
+>
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->

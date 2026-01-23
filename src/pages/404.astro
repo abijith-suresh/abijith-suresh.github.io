@@ -10,6 +10,7 @@ import { Home, Search } from "lucide-astro";
   title={`404 - Page Not Found | ${SITE.title}`}
   description="The page you're looking for doesn't exist."
   noindex={true}
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">

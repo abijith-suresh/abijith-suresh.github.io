@@ -42,6 +42,7 @@ const nextUrl = hasNext ? `/blog/${currentPage + 1}` : null;
 <Layout
   title={`Blog${currentPage > 1 ? ` - Page ${currentPage}` : ""} - ${SITE.title}`}
   description="Articles, tutorials, and thoughts on web development, design, and technology."
+  jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
