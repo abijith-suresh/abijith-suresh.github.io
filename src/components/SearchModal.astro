@@ -291,46 +291,95 @@ import { X } from "lucide-astro";
     }, 200);
   }
 
+  // Store event listeners for cleanup
+  let openButtonClickHandler: (() => void) | null = null;
+  let closeButtonDesktopClickHandler: (() => void) | null = null;
+  let modalClickHandler: ((e: Event) => void) | null = null;
+  let escKeyHandler: ((e: KeyboardEvent) => void) | null = null;
+  let cmdKKeyHandler: ((e: KeyboardEvent) => void) | null = null;
+
   function initSearchModal() {
     const openButton = document.getElementById("open-search-modal");
     const closeButtonDesktop = document.getElementById("close-search-modal-desktop");
     const modal = document.getElementById("search-modal");
 
     // Open modal
-    openButton?.addEventListener("click", openSearchModal);
+    openButtonClickHandler = openSearchModal;
+    openButton?.addEventListener("click", openButtonClickHandler);
 
     // Close modal buttons
-    closeButtonDesktop?.addEventListener("click", closeSearchModal);
+    closeButtonDesktopClickHandler = closeSearchModal;
+    closeButtonDesktop?.addEventListener("click", closeButtonDesktopClickHandler);
 
     // Close on backdrop click
-    modal?.addEventListener("click", (e) => {
+    modalClickHandler = (e) => {
       if (e.target === modal) {
         closeSearchModal();
       }
-    });
+    };
+    modal?.addEventListener("click", modalClickHandler);
 
     // Close on ESC key
-    document.addEventListener("keydown", (e) => {
+    escKeyHandler = (e) => {
       if (e.key === "Escape") {
         const modal = document.getElementById("search-modal");
         if (modal && !modal.classList.contains("hidden")) {
           closeSearchModal();
         }
       }
-    });
+    };
+    document.addEventListener("keydown", escKeyHandler);
 
     // Open search modal with Cmd/Ctrl+K
-    document.addEventListener("keydown", (e) => {
+    cmdKKeyHandler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         openSearchModal();
       }
-    });
+    };
+    document.addEventListener("keydown", cmdKKeyHandler);
+  }
+
+  function cleanupSearchModal() {
+    const openButton = document.getElementById("open-search-modal");
+    const closeButtonDesktop = document.getElementById("close-search-modal-desktop");
+    const modal = document.getElementById("search-modal");
+
+    // Remove open button handler
+    if (openButtonClickHandler && openButton) {
+      openButton.removeEventListener("click", openButtonClickHandler);
+      openButtonClickHandler = null;
+    }
+
+    // Remove close button handler
+    if (closeButtonDesktopClickHandler && closeButtonDesktop) {
+      closeButtonDesktop.removeEventListener("click", closeButtonDesktopClickHandler);
+      closeButtonDesktopClickHandler = null;
+    }
+
+    // Remove modal click handler
+    if (modalClickHandler && modal) {
+      modal.removeEventListener("click", modalClickHandler);
+      modalClickHandler = null;
+    }
+
+    // Remove ESC key handler
+    if (escKeyHandler) {
+      document.removeEventListener("keydown", escKeyHandler);
+      escKeyHandler = null;
+    }
+
+    // Remove Cmd/Ctrl+K handler
+    if (cmdKKeyHandler) {
+      document.removeEventListener("keydown", cmdKKeyHandler);
+      cmdKKeyHandler = null;
+    }
   }
 
   // Initialize on page load
   initSearchModal();
 
-  // Reinitialize on view transitions
+  // Cleanup and reinitialize on view transitions
+  document.addEventListener("astro:before-swap", cleanupSearchModal);
   document.addEventListener("astro:after-swap", initSearchModal);
 </script>
