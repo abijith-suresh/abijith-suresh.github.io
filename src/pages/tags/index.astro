@@ -1,5 +1,4 @@
 ---
-import BackLink from "@/components/BackLink.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
@@ -85,8 +84,5 @@ const tags = Array.from(tagMap.entries())
         <p class="text-muted-foreground text-center py-8">No tags found.</p>
       )
     }
-
-    <!-- Back to Home -->
-    <BackLink href="/" label="Back to Home" />
   </main>
 </Layout>
