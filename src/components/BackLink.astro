@@ -1,0 +1,27 @@
+---
+import Link from "@/components/Link.astro";
+
+interface Props {
+  href: string;
+  label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<div class="pt-6 border-t border-border">
+  <Link
+    href={href}
+    class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M10 12L6 8L10 4"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+    {label}
+  </Link>
+</div>
