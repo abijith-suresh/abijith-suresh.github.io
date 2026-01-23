@@ -61,10 +61,8 @@
   --foreground: #575279; /* Text */
 
   --card: #fffaf3; /* Surface */
-  --card-foreground: #575279; /* Text */
 
   --popover: #f2e9e1; /* Overlay */
-  --popover-foreground: #575279; /* Text */
 
   /* Primary - Rose accent */
   --primary: #d7827e; /* Rose */
@@ -82,13 +80,8 @@
   --accent: #f4ede8; /* Highlight Low */
   --accent-foreground: #575279; /* Text */
 
-  /* Destructive - Love */
-  --destructive: #b4637a; /* Love */
-  --destructive-foreground: #faf4ed; /* Base */
-
-  /* Borders and inputs */
+  /* Borders and ring */
   --border: #dfdad9; /* Highlight Med */
-  --input: #dfdad9; /* Highlight Med */
   --ring: #d7827e; /* Rose */
 }
 
@@ -103,10 +96,8 @@
   --foreground: #e0def4; /* Text */
 
   --card: #1f1d2e; /* Surface */
-  --card-foreground: #e0def4; /* Text */
 
   --popover: #26233a; /* Overlay */
-  --popover-foreground: #e0def4; /* Text */
 
   /* Primary - Rose accent */
   --primary: #ebbcba; /* Rose */
@@ -124,13 +115,8 @@
   --accent: #21202e; /* Highlight Low */
   --accent-foreground: #e0def4; /* Text */
 
-  /* Destructive - Love */
-  --destructive: #eb6f92; /* Love */
-  --destructive-foreground: #191724; /* Base */
-
-  /* Borders and inputs */
+  /* Borders and ring */
   --border: #403d52; /* Highlight Med */
-  --input: #403d52; /* Highlight Med */
   --ring: #ebbcba; /* Rose */
 }
 
