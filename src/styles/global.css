@@ -83,6 +83,12 @@
   /* Borders and ring */
   --border: #dfdad9; /* Highlight Med */
   --ring: #d7827e; /* Rose */
+
+  /* Transition durations */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+  --ease-default: ease-out;
 }
 
 /* ==========================================================================
@@ -118,12 +124,6 @@
   /* Borders and ring */
   --border: #403d52; /* Highlight Med */
   --ring: #ebbcba; /* Rose */
-
-  /* Transition durations */
-  --transition-fast: 150ms;
-  --transition-normal: 200ms;
-  --transition-slow: 300ms;
-  --ease-default: ease-out;
 }
 
 /* Smooth theme transitions */
