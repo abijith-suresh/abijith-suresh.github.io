@@ -8,16 +8,10 @@ type Blog = CollectionEntry<"blog">;
  * Get all projects with optional filtering
  */
 export async function getAllProjects(options?: {
-  featured?: boolean;
   tags?: string[];
   limit?: number;
 }): Promise<Project[]> {
   let projects = await getCollection("projects");
-
-  // Filter by featured status
-  if (options?.featured !== undefined) {
-    projects = projects.filter((project) => project.data.featured === options.featured);
-  }
 
   // Filter by tags
   if (options?.tags && options.tags.length > 0) {
@@ -81,6 +75,38 @@ export async function getAllBlogTagsWithCount(): Promise<Array<{ tag: string; co
 
   publishedPosts.forEach((post) => {
     post.data.tags.forEach((tag) => {
+      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+    });
+  });
+
+  return Array.from(tagCounts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => a.tag.localeCompare(b.tag));
+}
+
+/**
+ * Get all unique tags from projects
+ */
+export async function getAllProjectTags(): Promise<string[]> {
+  const projects = await getCollection("projects");
+  const tags = new Set<string>();
+
+  projects.forEach((project) => {
+    project.data.tags.forEach((tag) => tags.add(tag));
+  });
+
+  return Array.from(tags).sort();
+}
+
+/**
+ * Get all unique tags from projects with counts
+ */
+export async function getAllProjectTagsWithCount(): Promise<Array<{ tag: string; count: number }>> {
+  const projects = await getCollection("projects");
+  const tagCounts = new Map<string, number>();
+
+  projects.forEach((project) => {
+    project.data.tags.forEach((tag) => {
       tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
     });
   });

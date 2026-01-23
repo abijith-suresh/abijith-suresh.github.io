@@ -4,22 +4,39 @@ import BlogCard from "@/components/BlogCard.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { getAllBlogPosts, getAllBlogTags } from "@/lib/data-utils";
+import {
+  getAllBlogPosts,
+  getAllBlogTags,
+  getAllProjects,
+  getAllProjectTags,
+  sortProjects,
+} from "@/lib/data-utils";
 import type { CollectionEntry } from "astro:content";
 import { Tag as TagIcon } from "lucide-astro";
 
 export async function getStaticPaths() {
-  const allTags = await getAllBlogTags();
+  const blogTags = await getAllBlogTags();
+  const projectTags = await getAllProjectTags();
+
+  // Get all unique tags
+  const allTags = Array.from(new Set([...blogTags, ...projectTags])).sort();
+
   const allPosts = await getAllBlogPosts();
+  const allProjects = await getAllProjects();
 
   return allTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
+    const filteredProjects = allProjects.filter((project) => project.data.tags.includes(tag));
+
+    // Sort projects by date
+    const sortedProjects = sortProjects(filteredProjects, "date");
 
     return {
       params: { tag },
-      props: { tag, posts: filteredPosts },
+      props: { tag, posts: filteredPosts, projects: sortedProjects },
     };
   });
 }
@@ -27,15 +44,37 @@ export async function getStaticPaths() {
 interface Props {
   tag: string;
   posts: CollectionEntry<"blog">[];
+  projects: CollectionEntry<"projects">[];
 }
 
-const { tag, posts } = Astro.props;
+const { tag, posts, projects } = Astro.props;
 const postCount = posts.length;
+const projectCount = projects.length;
+const totalCount = postCount + projectCount;
+
+// Combine and sort by date (most recent first)
+type ContentItem = {
+  type: "blog" | "project";
+  date: Date;
+  item: CollectionEntry<"blog"> | CollectionEntry<"projects">;
+};
+const allContent: ContentItem[] = [
+  ...posts.map((post) => ({
+    type: "blog" as const,
+    date: post.data.publishDate,
+    item: post,
+  })),
+  ...projects.map((project) => ({
+    type: "project" as const,
+    date: project.data.startDate,
+    item: project,
+  })),
+].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
 
 <Layout
-  title={`Tag: ${tag} - Blog - ${SITE.title}`}
-  description={`Blog posts tagged with "${tag}"`}
+  title={`Tag: ${tag} - ${SITE.title}`}
+  description={`Content tagged with "${tag}" - ${postCount} ${postCount === 1 ? "post" : "posts"} and ${projectCount} ${projectCount === 1 ? "project" : "projects"}`}
   jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
@@ -57,22 +96,31 @@ const postCount = posts.length;
         <div>
           <h1 class="text-3xl font-bold text-foreground">{tag}</h1>
           <p class="text-sm text-muted-foreground">
-            {postCount}
-            {postCount === 1 ? "post" : "posts"}
+            {totalCount}
+            {totalCount === 1 ? "item" : "items"}
+            {
+              postCount > 0 && projectCount > 0 && (
+                <span>
+                  {" "}
+                  • {postCount} {postCount === 1 ? "post" : "posts"}, {projectCount}{" "}
+                  {projectCount === 1 ? "project" : "projects"}
+                </span>
+              )
+            }
           </p>
         </div>
       </div>
     </div>
 
     {
-      posts.length > 0 ? (
+      allContent.length > 0 ? (
         <div class="flex flex-col gap-6">
-          {posts.map((post) => (
-            <BlogCard post={post} />
-          ))}
+          {allContent.map(({ type, item }) =>
+            type === "blog" ? <BlogCard post={item} /> : <ProjectCard project={item} />
+          )}
         </div>
       ) : (
-        <p class="text-muted-foreground text-center py-8">No posts found with this tag.</p>
+        <p class="text-muted-foreground text-center py-8">No content found with this tag.</p>
       )
     }
 

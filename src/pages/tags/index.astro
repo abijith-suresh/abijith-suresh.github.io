@@ -5,15 +5,43 @@ import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { getAllBlogTagsWithCount } from "@/lib/data-utils";
+import { getAllBlogTagsWithCount, getAllProjectTagsWithCount } from "@/lib/data-utils";
 import { Tag as TagIcon } from "lucide-astro";
 
-const tags = await getAllBlogTagsWithCount();
+// Get tags from both blogs and projects
+const blogTags = await getAllBlogTagsWithCount();
+const projectTags = await getAllProjectTagsWithCount();
+
+// Combine tags and their counts
+const tagMap = new Map<string, { blogCount: number; projectCount: number }>();
+
+blogTags.forEach(({ tag, count }) => {
+  tagMap.set(tag, { blogCount: count, projectCount: 0 });
+});
+
+projectTags.forEach(({ tag, count }) => {
+  const existing = tagMap.get(tag);
+  if (existing) {
+    existing.projectCount = count;
+  } else {
+    tagMap.set(tag, { blogCount: 0, projectCount: count });
+  }
+});
+
+// Convert to array and sort alphabetically
+const tags = Array.from(tagMap.entries())
+  .map(([tag, counts]) => ({
+    tag,
+    blogCount: counts.blogCount,
+    projectCount: counts.projectCount,
+    totalCount: counts.blogCount + counts.projectCount,
+  }))
+  .sort((a, b) => a.tag.localeCompare(b.tag));
 ---
 
 <Layout
-  title={`All Tags - Blog - ${SITE.title}`}
-  description="Browse all blog posts by topic. Explore tags and discover content that interests you."
+  title={`All Tags - ${SITE.title}`}
+  description="Browse all blog posts and projects by topic. Explore tags and discover content that interests you."
   jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
@@ -43,13 +71,13 @@ const tags = await getAllBlogTagsWithCount();
     {
       tags.length > 0 ? (
         <div class="flex flex-wrap gap-2">
-          {tags.map(({ tag, count }) => (
+          {tags.map(({ tag, totalCount }) => (
             <Link
               href={`/tags/${tag}`}
               class="inline-flex items-center gap-2 px-3 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-md transition-colors group"
             >
               <span class="text-sm group-hover:text-primary transition-colors">{tag}</span>
-              <span class="text-xs text-muted-foreground">({count})</span>
+              <span class="text-xs text-muted-foreground">({totalCount})</span>
             </Link>
           ))}
         </div>
