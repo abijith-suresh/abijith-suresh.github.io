@@ -35,14 +35,6 @@ export async function getAllProjects(options?: {
 }
 
 /**
- * Get featured projects sorted by order
- */
-export async function getFeaturedProjects(): Promise<Project[]> {
-  const projects = await getAllProjects({ featured: true });
-  return sortProjects(projects, "order");
-}
-
-/**
  * Sort projects by different criteria
  */
 export function sortProjects(
@@ -61,20 +53,6 @@ export function sortProjects(
     default:
       return sorted;
   }
-}
-
-/**
- * Get all unique tags from projects
- */
-export async function getAllProjectTags(): Promise<string[]> {
-  const projects = await getCollection("projects");
-  const tags = new Set<string>();
-
-  projects.forEach((project) => {
-    project.data.tags.forEach((tag) => tags.add(tag));
-  });
-
-  return Array.from(tags).sort();
 }
 
 /**
@@ -189,13 +167,4 @@ export async function getAllBlogPosts(options?: {
   }
 
   return posts;
-}
-
-/**
- * Calculate reading time for blog post content
- */
-export function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
 }
