@@ -32,7 +32,6 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = {
   github: "https://github.com/abijith-suresh",
   twitter: "https://x.com/abijith_sh",
-  bluesky: "https://bsky.app/profile/yourusername.bsky.social",
   linkedin: "https://linkedin.com/in/abijith-suresh",
 } as const;
 
