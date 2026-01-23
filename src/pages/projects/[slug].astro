@@ -4,6 +4,7 @@ import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { formatProjectDate } from "@/lib/data-utils";
+import { cn } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar, ChevronRight, Folder, Home, Package } from "lucide-astro";
 
@@ -69,9 +70,15 @@ const formattedDate = formatProjectDate(startDate, endDate);
         <div class="flex flex-wrap justify-center gap-2">
           {
             tags.map((tag) => (
-              <span class="text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium">
+              <Link
+                href={`/tags/${tag}`}
+                class:list={cn(
+                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                  "hover:bg-muted/80 transition-colors"
+                )}
+              >
                 {tag}
-              </span>
+              </Link>
             ))
           }
         </div>
