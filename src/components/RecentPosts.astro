@@ -5,8 +5,13 @@ import { getAllBlogPosts } from "@/lib/data-utils";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-astro";
 
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
 const allPosts = await getAllBlogPosts();
-const recentPosts = allPosts.slice(0, 3);
+const recentPosts = allPosts.slice(0, limit);
 ---
 
 <section class="flex flex-col gap-y-4">
