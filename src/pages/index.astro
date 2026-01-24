@@ -14,6 +14,12 @@ import Layout from "@/layouts/Layout.astro";
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl">
+    <!-- Searchable Home Page Title -->
+    <div data-pagefind-body data-pagefind-meta="content_type:page">
+      <h1 class="sr-only">Home</h1>
+      <p class="sr-only">Welcome to {SITE.title} - {SITE.description}</p>
+    </div>
+
     <Hero />
 
     <!-- What I Do -->
