@@ -2,15 +2,16 @@
 import BackLink from "@/components/BackLink.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
-import Link from "@/components/Link.astro";
 import ReadingProgress from "@/components/ReadingProgress.astro";
 import RelatedPosts from "@/components/RelatedPosts.astro";
+import TagList from "@/components/TagList.astro";
 import TOCHeader from "@/components/TOCHeader.astro";
 import TOCSidebar from "@/components/TOCSidebar.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
+import { createSearchTagMeta } from "@/lib/pagefind";
 import { getRelatedPosts } from "@/lib/recommendations";
-import { calculateReadingTime, cn, formatBlogDate, formatReadingTime } from "@/lib/utils";
+import { calculateReadingTime, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar, Clock } from "lucide-astro";
 
@@ -40,7 +41,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 const relatedPosts = await getRelatedPosts(post.slug, 3);
 
 // Prepare tags for Pagefind metadata (limit to first 5 for search display)
-const searchTags = tags.slice(0, 5).join(", ");
+const searchTags = createSearchTagMeta(tags);
 ---
 
 <Layout
@@ -120,23 +121,7 @@ const searchTags = tags.slice(0, 5).join(", ");
 
       {/* Tags */}
       <div data-pagefind-ignore>
-        {
-          tags.length > 0 && (
-            <div class="flex flex-wrap justify-center gap-2">
-              {tags.map((tag) => (
-                <Link
-                  href={`/tags/${tag}`}
-                  class:list={cn(
-                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                    "hover:bg-muted/80 transition-colors"
-                  )}
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
-          )
-        }
+        <TagList tags={tags} class="justify-center" />
       </div>
     </header>
 
