@@ -37,10 +37,7 @@ const searchTags = tags.slice(0, 5).join(", ");
   jsonLd={{ type: "article" }}
 >
   <Header slot="header" />
-  <main
-    class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12"
-    data-pagefind-meta={`tags:${searchTags}`}
-  >
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
     <Breadcrumb
       items={[
@@ -50,13 +47,18 @@ const searchTags = tags.slice(0, 5).join(", ");
       ]}
     />
 
-    <!-- Project Header -->
+    <!-- Project Header - Only this is indexed for search -->
     <article class="flex flex-col gap-y-6">
-      <header class="flex flex-col gap-y-4 text-center">
+      <header
+        class="flex flex-col gap-y-4 text-center"
+        data-pagefind-body
+        data-pagefind-meta={`tags:${searchTags}`}
+      >
         <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
 
         <div
           class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
+          data-pagefind-ignore
         >
           <div class="flex items-center gap-1.5">
             <Calendar size={16} />
@@ -67,24 +69,26 @@ const searchTags = tags.slice(0, 5).join(", ");
         <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
 
         <!-- Tags -->
-        <div class="flex flex-wrap justify-center gap-2">
-          {
-            tags.map((tag) => (
-              <Link
-                href={`/tags/${tag}`}
-                class:list={cn(
-                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                  "hover:bg-muted/80 transition-colors"
-                )}
-              >
-                {tag}
-              </Link>
-            ))
-          }
+        <div data-pagefind-ignore>
+          <div class="flex flex-wrap justify-center gap-2">
+            {
+              tags.map((tag) => (
+                <Link
+                  href={`/tags/${tag}`}
+                  class:list={cn(
+                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                    "hover:bg-muted/80 transition-colors"
+                  )}
+                >
+                  {tag}
+                </Link>
+              ))
+            }
+          </div>
         </div>
       </header>
 
-      <!-- Project Content -->
+      <!-- Project Content - NOT indexed -->
       <div class="prose prose-neutral dark:prose-invert max-w-none">
         <Content />
       </div>

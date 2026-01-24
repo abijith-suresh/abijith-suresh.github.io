@@ -94,7 +94,7 @@ import { X } from "lucide-astro";
     display: none !important;
   }
 
-  /* Results container */
+  /* Results container - Scrollable */
   .pagefind-ui__results {
     padding: 0 !important;
     margin: 0 !important;
@@ -118,9 +118,11 @@ import { X } from "lucide-astro";
     padding: 1rem !important;
     margin: 0 !important;
     border-radius: 0 !important;
+    cursor: pointer !important;
   }
 
-  .pagefind-ui__result:hover {
+  .pagefind-ui__result:hover,
+  .pagefind-ui__result[data-focused="true"] {
     background-color: var(--muted) !important;
   }
 
@@ -138,6 +140,42 @@ import { X } from "lucide-astro";
     font-size: 0.95rem !important;
     font-weight: 500 !important;
     margin-bottom: 0.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Content type icon */
+  .pagefind-ui__result-title::before {
+    content: "" !important;
+    display: inline-block !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    flex-shrink: 0 !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0.7 !important;
+  }
+
+  /* Blog icon (FileText) */
+  .pagefind-ui__result[data-content-type="blog"] .pagefind-ui__result-title::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3Cpath d='M10 9H8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Project icon (Code2) */
+  .pagefind-ui__result[data-content-type="project"] .pagefind-ui__result-title::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 16 4-4-4-4'/%3E%3Cpath d='m6 8-4 4 4 4'/%3E%3Cpath d='m14.5 4-5 16'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Tag icon (Tag) */
+  .pagefind-ui__result[data-content-type="tag"] .pagefind-ui__result-title::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z'/%3E%3Ccircle cx='7.5' cy='7.5' r='.5' fill='%23888888'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Dark mode icons - Use CSS filter to make them lighter */
+  [data-theme="dark"] .pagefind-ui__result-title::before {
+    filter: brightness(1.8) !important;
   }
 
   /* Result excerpt */
@@ -170,6 +208,11 @@ import { X } from "lucide-astro";
     font-size: 0.875rem !important;
   }
 
+  /* Hide results count message (e.g., "4 results for typescript") */
+  .pagefind-ui__results-area > .pagefind-ui__message {
+    display: none !important;
+  }
+
   /* Load more button */
   .pagefind-ui__button {
     background-color: var(--primary) !important;
@@ -189,6 +232,16 @@ import { X } from "lucide-astro";
   /* Hide result image/thumbnail */
   .pagefind-ui__result-image {
     display: none !important;
+  }
+
+  /* Search term highlighting - use theme primary color */
+  .pagefind-ui__result-excerpt mark,
+  .pagefind-ui__result-title mark {
+    background-color: hsl(var(--primary) / 0.2) !important;
+    color: var(--foreground) !important;
+    font-weight: 600 !important;
+    border-radius: 0.125rem !important;
+    padding: 0 0.125rem !important;
   }
 
   /* Prevent body scroll when modal is open */
@@ -247,6 +300,77 @@ import { X } from "lucide-astro";
   import { PagefindUI } from "@pagefind/default-ui";
 
   let pagefindInstance: PagefindUI | null = null;
+  let mutationObserver: MutationObserver | null = null;
+  const seenTagResults = new Map<string, Element>(); // Track tag results globally
+  let focusedIndex = -1; // Track currently focused result (-1 = none)
+  let keyboardNavHandler: ((e: KeyboardEvent) => void) | null = null;
+
+  // Update focused result visual state
+  function updateFocusedResult() {
+    const results = Array.from(document.querySelectorAll(".pagefind-ui__result"));
+    results.forEach((result, index) => {
+      if (index === focusedIndex) {
+        result.setAttribute("data-focused", "true");
+        result.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      } else {
+        result.removeAttribute("data-focused");
+      }
+    });
+  }
+
+  // Handle keyboard navigation
+  function handleKeyboardNavigation(e: KeyboardEvent) {
+    const results = Array.from(document.querySelectorAll(".pagefind-ui__result"));
+    if (results.length === 0) return;
+
+    const searchInput = document.querySelector(".pagefind-ui__search-input");
+
+    // Arrow keys: navigate results
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      focusedIndex = Math.min(focusedIndex + 1, results.length - 1);
+      updateFocusedResult();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      focusedIndex = Math.max(focusedIndex - 1, -1);
+      updateFocusedResult();
+      // If we're back at -1, refocus the input
+      if (focusedIndex === -1 && searchInput instanceof HTMLElement) {
+        searchInput.focus();
+      }
+    } else if (e.key === "Enter" && focusedIndex >= 0) {
+      // Enter: navigate to focused result
+      e.preventDefault();
+      const link = results[focusedIndex].querySelector(
+        ".pagefind-ui__result-link"
+      ) as HTMLAnchorElement;
+      if (link) {
+        link.click();
+      }
+    }
+  }
+
+  // Attach keyboard navigation
+  function attachKeyboardNavigation() {
+    if (keyboardNavHandler) return; // Already attached
+
+    keyboardNavHandler = handleKeyboardNavigation;
+    document.addEventListener("keydown", keyboardNavHandler);
+  }
+
+  // Detach keyboard navigation
+  function detachKeyboardNavigation() {
+    if (keyboardNavHandler) {
+      document.removeEventListener("keydown", keyboardNavHandler);
+      keyboardNavHandler = null;
+    }
+  }
+
+  // Reset focused index when search query changes
+  function resetFocusedIndex() {
+    focusedIndex = -1;
+    updateFocusedResult();
+  }
 
   function openSearchModal() {
     const modal = document.getElementById("search-modal");
@@ -267,12 +391,68 @@ import { X } from "lucide-astro";
         highlightParam: "highlight",
         excerptLength: 30,
         showSubResults: false,
-        processResult: (result: unknown) => {
-          // Pagefind automatically processes metadata tags
-          return result;
-        },
+        showEmptyFilters: false,
+        // No pageSize limit - show all results with scrolling
       });
+
+      // Add content type data attributes and keyboard navigation to results
+      mutationObserver = new MutationObserver(() => {
+        const results = document.querySelectorAll(".pagefind-ui__result");
+
+        // Reset focused index when results change
+        resetFocusedIndex();
+
+        results.forEach((result) => {
+          if (!result.hasAttribute("data-content-type")) {
+            // Extract content type from the result link
+            const link = result.querySelector(".pagefind-ui__result-link") as HTMLAnchorElement;
+            if (link) {
+              const href = link.getAttribute("href") || "";
+
+              if (href.includes("/blog/") && !href.endsWith("/blog") && !href.endsWith("/blog/")) {
+                result.setAttribute("data-content-type", "blog");
+              } else if (
+                href.includes("/projects/") &&
+                !href.endsWith("/projects") &&
+                !href.endsWith("/projects/")
+              ) {
+                result.setAttribute("data-content-type", "project");
+              } else if (
+                href.includes("/tags/") &&
+                !href.endsWith("/tags") &&
+                !href.endsWith("/tags/")
+              ) {
+                result.setAttribute("data-content-type", "tag");
+
+                // Deduplicate tag pages (case-insensitive)
+                const title = link.textContent?.trim() || "";
+                const titleLower = title.toLowerCase();
+
+                if (titleLower && seenTagResults.has(titleLower)) {
+                  // Remove this duplicate completely from DOM to fix pageSize counting
+                  result.remove();
+                } else if (titleLower) {
+                  // Track this as the first occurrence
+                  seenTagResults.set(titleLower, result);
+                }
+              }
+            }
+          }
+        });
+      });
+
+      // Observe the search container for changes
+      const searchContainer = document.getElementById("search-container");
+      if (searchContainer) {
+        mutationObserver.observe(searchContainer, {
+          childList: true,
+          subtree: true,
+        });
+      }
     }
+
+    // Attach keyboard navigation handler
+    attachKeyboardNavigation();
 
     // Focus the search input
     setTimeout(() => {
@@ -285,6 +465,10 @@ import { X } from "lucide-astro";
     const modal = document.getElementById("search-modal");
     const modalContent = modal?.querySelector('[role="dialog"]');
     if (!modal || !modalContent) return;
+
+    // Detach keyboard navigation
+    detachKeyboardNavigation();
+    resetFocusedIndex();
 
     modal.setAttribute("data-state", "closed");
     modalContent.setAttribute("data-state", "closed");
@@ -389,6 +573,24 @@ import { X } from "lucide-astro";
       document.removeEventListener("keydown", cmdKKeyHandler);
       cmdKKeyHandler = null;
     }
+
+    // Disconnect MutationObserver
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      mutationObserver = null;
+    }
+
+    // Remove keyboard navigation handler
+    detachKeyboardNavigation();
+
+    // Clear tag tracking
+    seenTagResults.clear();
+
+    // Reset focused index
+    focusedIndex = -1;
+
+    // Reset pagefind instance
+    pagefindInstance = null;
   }
 
   // Initialize on page load
