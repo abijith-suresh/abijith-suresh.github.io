@@ -203,11 +203,6 @@ import { X } from "lucide-astro";
     border-radius: 0.25rem !important;
   }
 
-  /* Hide content_type metadata from results */
-  .pagefind-ui__result-nested {
-    display: none !important;
-  }
-
   /* Message styling (no results, loading, etc.) */
   .pagefind-ui__message {
     color: var(--muted-foreground) !important;
@@ -239,6 +234,11 @@ import { X } from "lucide-astro";
 
   /* Hide result image/thumbnail */
   .pagefind-ui__result-image {
+    display: none !important;
+  }
+
+  /* Hide duplicate tag results */
+  .pagefind-ui__result[data-duplicate="true"] {
     display: none !important;
   }
 
@@ -309,6 +309,7 @@ import { X } from "lucide-astro";
 
   let pagefindInstance: PagefindUI | null = null;
   let mutationObserver: MutationObserver | null = null;
+  const seenTagResults = new Map<string, Element>(); // Track tag results globally
 
   function openSearchModal() {
     const modal = document.getElementById("search-modal");
@@ -336,7 +337,6 @@ import { X } from "lucide-astro";
       // Add content type data attributes to results after they're rendered
       mutationObserver = new MutationObserver(() => {
         const results = document.querySelectorAll(".pagefind-ui__result");
-        const seenTags = new Map<string, HTMLElement>(); // Track seen tag pages by lowercase name
 
         results.forEach((result) => {
           if (!result.hasAttribute("data-content-type")) {
@@ -344,6 +344,7 @@ import { X } from "lucide-astro";
             const link = result.querySelector(".pagefind-ui__result-link") as HTMLAnchorElement;
             if (link) {
               const href = link.getAttribute("href") || "";
+
               if (href.includes("/blog/") && !href.endsWith("/blog")) {
                 result.setAttribute("data-content-type", "blog");
               } else if (href.includes("/projects/") && !href.endsWith("/projects")) {
@@ -353,11 +354,13 @@ import { X } from "lucide-astro";
 
                 // Deduplicate tag pages (case-insensitive)
                 const title = link.textContent?.trim().toLowerCase() || "";
-                if (seenTags.has(title)) {
-                  // Hide duplicate tag result
+                if (title && seenTagResults.has(title)) {
+                  // Hide this duplicate
                   (result as HTMLElement).style.display = "none";
-                } else {
-                  seenTags.set(title, result as HTMLElement);
+                  result.setAttribute("data-duplicate", "true");
+                } else if (title) {
+                  // Track this as the first occurrence
+                  seenTagResults.set(title, result);
                 }
               } else if (
                 href === "/" ||
@@ -504,6 +507,9 @@ import { X } from "lucide-astro";
       mutationObserver.disconnect();
       mutationObserver = null;
     }
+
+    // Clear tag tracking
+    seenTagResults.clear();
 
     // Reset pagefind instance
     pagefindInstance = null;
