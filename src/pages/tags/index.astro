@@ -4,38 +4,10 @@ import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { getAllBlogTagsWithCount, getAllProjectTagsWithCount } from "@/lib/data-utils";
+import { getAllContentTagCounts } from "@/lib/content-tags";
 import { Tag as TagIcon } from "lucide-astro";
 
-// Get tags from both blogs and projects
-const blogTags = await getAllBlogTagsWithCount();
-const projectTags = await getAllProjectTagsWithCount();
-
-// Combine tags and their counts
-const tagMap = new Map<string, { blogCount: number; projectCount: number }>();
-
-blogTags.forEach(({ tag, count }) => {
-  tagMap.set(tag, { blogCount: count, projectCount: 0 });
-});
-
-projectTags.forEach(({ tag, count }) => {
-  const existing = tagMap.get(tag);
-  if (existing) {
-    existing.projectCount = count;
-  } else {
-    tagMap.set(tag, { blogCount: 0, projectCount: count });
-  }
-});
-
-// Convert to array and sort alphabetically
-const tags = Array.from(tagMap.entries())
-  .map(([tag, counts]) => ({
-    tag,
-    blogCount: counts.blogCount,
-    projectCount: counts.projectCount,
-    totalCount: counts.blogCount + counts.projectCount,
-  }))
-  .sort((a, b) => a.tag.localeCompare(b.tag));
+const tags = await getAllContentTagCounts();
 ---
 
 <Layout
