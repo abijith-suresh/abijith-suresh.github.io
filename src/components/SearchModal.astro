@@ -237,11 +237,6 @@ import { X } from "lucide-astro";
     display: none !important;
   }
 
-  /* Hide duplicate tag results */
-  .pagefind-ui__result[data-duplicate="true"] {
-    display: none !important;
-  }
-
   /* Search term highlighting - use theme primary color */
   .pagefind-ui__result-excerpt mark,
   .pagefind-ui__result-title mark {
@@ -345,29 +340,42 @@ import { X } from "lucide-astro";
             if (link) {
               const href = link.getAttribute("href") || "";
 
-              if (href.includes("/blog/") && !href.endsWith("/blog")) {
+              if (href.includes("/blog/") && !href.endsWith("/blog") && !href.endsWith("/blog/")) {
                 result.setAttribute("data-content-type", "blog");
-              } else if (href.includes("/projects/") && !href.endsWith("/projects")) {
+              } else if (
+                href.includes("/projects/") &&
+                !href.endsWith("/projects") &&
+                !href.endsWith("/projects/")
+              ) {
                 result.setAttribute("data-content-type", "project");
-              } else if (href.includes("/tags/") && !href.endsWith("/tags")) {
+              } else if (
+                href.includes("/tags/") &&
+                !href.endsWith("/tags") &&
+                !href.endsWith("/tags/")
+              ) {
                 result.setAttribute("data-content-type", "tag");
 
                 // Deduplicate tag pages (case-insensitive)
-                const title = link.textContent?.trim().toLowerCase() || "";
-                if (title && seenTagResults.has(title)) {
-                  // Hide this duplicate
-                  (result as HTMLElement).style.display = "none";
-                  result.setAttribute("data-duplicate", "true");
-                } else if (title) {
+                const title = link.textContent?.trim() || "";
+                const titleLower = title.toLowerCase();
+
+                if (titleLower && seenTagResults.has(titleLower)) {
+                  // Remove this duplicate completely from DOM to fix pageSize counting
+                  result.remove();
+                } else if (titleLower) {
                   // Track this as the first occurrence
-                  seenTagResults.set(title, result);
+                  seenTagResults.set(titleLower, result);
                 }
               } else if (
                 href === "/" ||
-                href.endsWith("/about") ||
-                href.endsWith("/blog") ||
-                href.endsWith("/projects") ||
-                href.endsWith("/tags")
+                href === "/about" ||
+                href === "/about/" ||
+                href === "/blog" ||
+                href === "/blog/" ||
+                href === "/projects" ||
+                href === "/projects/" ||
+                href === "/tags" ||
+                href === "/tags/"
               ) {
                 result.setAttribute("data-content-type", "page");
               }
