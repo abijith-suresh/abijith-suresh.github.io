@@ -4,9 +4,6 @@ description: "Spotify-like music streaming service with playlists, recommendatio
 tags: ["react", "nodejs", "postgresql", "aws"]
 startDate: 2025-02-01
 endDate: 2025-04-15
-github: "https://github.com/abijith-suresh/music-streaming"
-image: "/projects/music-platform.jpg"
-order: 13
 ---
 
 A full-featured music streaming platform with playlist management, personalized recommendations, and offline playback capabilities.

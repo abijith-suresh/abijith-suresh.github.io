@@ -4,10 +4,6 @@ description: "Fast and scalable URL shortening service with custom aliases, anal
 tags: ["go", "redis", "postgresql", "docker"]
 startDate: 2025-07-01
 endDate: 2025-08-15
-github: "https://github.com/abijith-suresh/url-shortener"
-demo: "https://short.abijith.sh"
-image: "/projects/url-shortener.jpg"
-order: 9
 ---
 
 A high-performance URL shortening service built with Go, featuring custom aliases, click analytics, and QR code generation.

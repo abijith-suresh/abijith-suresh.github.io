@@ -2,8 +2,6 @@
 title: "Weather CLI Tool"
 description: "A command-line weather application with beautiful ASCII art visualizations."
 tags: ["Rust", "CLI", "API Integration"]
-github: "https://github.com/abijith/weather-cli"
-image: "/projects/weather-cli.jpg"
 startDate: 2025-03-10
 endDate: 2025-04-05
 ---

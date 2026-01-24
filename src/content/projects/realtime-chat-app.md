@@ -4,10 +4,6 @@ description: "WebSocket-based chat app with rooms, private messages, typing indi
 tags: ["socket.io", "nodejs", "react", "postgresql"]
 startDate: 2025-10-01
 endDate: 2025-11-10
-github: "https://github.com/abijith-suresh/realtime-chat"
-demo: "https://chat.abijith.sh"
-image: "/projects/chat-app.jpg"
-order: 6
 ---
 
 A real-time chat application using WebSocket technology, supporting multiple chat rooms, private messaging, and rich media sharing.

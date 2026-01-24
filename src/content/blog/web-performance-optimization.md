@@ -3,8 +3,6 @@ title: "Web Performance Optimization"
 description: "Practical tips and techniques for optimizing web application performance, from loading times to runtime efficiency."
 publishDate: 2025-12-25
 tags: ["performance", "web", "optimization", "frontend"]
-image: "/blog/performance.jpg"
-imageAlt: "Performance metrics dashboard"
 ---
 
 Web performance directly impacts user experience and conversion rates. Let's explore key optimization techniques.

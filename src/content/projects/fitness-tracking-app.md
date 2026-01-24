@@ -4,9 +4,6 @@ description: "Mobile-first fitness tracker with workout logging, progress charts
 tags: ["react-native", "nodejs", "mongodb", "expo"]
 startDate: 2025-08-01
 endDate: 2025-09-30
-github: "https://github.com/abijith-suresh/fitness-tracker"
-image: "/projects/fitness-tracker.jpg"
-order: 8
 ---
 
 A comprehensive fitness tracking application built with React Native, helping users log workouts, track progress, and stay motivated.

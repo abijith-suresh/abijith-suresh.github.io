@@ -2,9 +2,6 @@
 title: "Personal Portfolio Website"
 description: "A minimal, clean portfolio website built with Astro, showcasing projects and technical writing."
 tags: ["Astro", "TypeScript", "Tailwind CSS"]
-github: "https://github.com/abijith/portfolio"
-demo: "https://abijith.sh"
-image: "/projects/portfolio.jpg"
 startDate: 2025-12-01
 ---
 

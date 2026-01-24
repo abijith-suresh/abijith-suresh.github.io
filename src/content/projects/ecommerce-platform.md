@@ -4,10 +4,6 @@ description: "Full-stack e-commerce platform with payment integration, inventory
 tags: ["react", "nodejs", "mongodb", "stripe"]
 startDate: 2025-11-15
 endDate: 2025-12-20
-github: "https://github.com/abijith-suresh/ecommerce-platform"
-demo: "https://ecommerce-demo.abijith.sh"
-image: "/projects/ecommerce.jpg"
-order: 5
 ---
 
 A comprehensive e-commerce platform built with the MERN stack, featuring secure payment processing, real-time inventory management, and a powerful admin dashboard.

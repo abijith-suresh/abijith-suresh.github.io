@@ -4,10 +4,6 @@ description: "Web app that generates images from text descriptions using AI mode
 tags: ["python", "flask", "stable-diffusion", "react"]
 startDate: 2025-09-01
 endDate: 2025-10-15
-github: "https://github.com/abijith-suresh/ai-image-gen"
-demo: "https://imagegen.abijith.sh"
-image: "/projects/ai-image-gen.jpg"
-order: 7
 ---
 
 An AI-powered image generation platform that transforms text prompts into stunning images using Stable Diffusion models.
