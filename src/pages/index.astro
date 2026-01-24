@@ -13,11 +13,11 @@ import Layout from "@/layouts/Layout.astro";
   jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl">
+  <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl page-enter">
     <Hero />
 
     <!-- What I Do -->
-    <section class="py-12 border-t border-border">
+    <section class="py-12 border-t border-border page-enter page-enter-delay-2">
       <h2 class="text-2xl font-semibold mb-4">What I do</h2>
       <p class="text-muted-foreground leading-relaxed">
         {SITE.whatIDo}
@@ -25,7 +25,7 @@ import Layout from "@/layouts/Layout.astro";
     </section>
 
     <!-- Recent Posts -->
-    <section class="py-12 border-t border-border">
+    <section class="py-12 border-t border-border page-enter page-enter-delay-3">
       <RecentPosts />
     </section>
   </main>

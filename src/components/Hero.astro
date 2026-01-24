@@ -7,7 +7,7 @@ import { SITE } from "@/consts";
 <section class="py-16 md:py-24">
   <div class="space-y-6">
     <!-- Greeting -->
-    <div class="space-y-2 fade-in">
+    <div class="space-y-2 page-enter page-enter-delay-1">
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
         {SITE.greeting}
       </h1>
@@ -17,27 +17,31 @@ import { SITE } from "@/consts";
     </div>
 
     <!-- Intro -->
-    <p class="text-lg text-muted-foreground max-w-2xl leading-relaxed fade-in fade-in-delay-1">
+    <p
+      class="text-lg text-muted-foreground max-w-2xl leading-relaxed page-enter page-enter-delay-2"
+    >
       {SITE.heroIntro}
     </p>
 
     <!-- CTA Buttons -->
-    <div class="flex flex-wrap gap-3 pt-2 fade-in fade-in-delay-2">
+    <div class="flex flex-wrap gap-3 pt-2 page-enter page-enter-delay-2">
       <Link
         href="/blog"
         class="inline-flex items-center px-5 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+        prefetch="viewport"
       >
         Read the blog
       </Link>
       <Link
         href="/about"
         class="inline-flex items-center px-5 py-2.5 rounded-md border border-border hover:bg-muted transition-colors font-medium"
+        prefetch="viewport"
       >
         About me
       </Link>
     </div>
 
     <!-- Social Links -->
-    <SocialLinks class="pt-2 fade-in fade-in-delay-3" />
+    <SocialLinks class="pt-2 page-enter page-enter-delay-3" />
   </div>
 </section>

@@ -16,17 +16,19 @@ const tags = await getAllContentTagCounts();
   jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
     <!-- Breadcrumb -->
-    <Breadcrumb
-      items={[
-        { label: "Home", href: "/", icon: "home" },
-        { label: "Tags", icon: "tags" },
-      ]}
-    />
+    <div class="page-enter page-enter-delay-1">
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/", icon: "home" },
+          { label: "Tags", icon: "tags" },
+        ]}
+      />
+    </div>
 
     <!-- Header -->
-    <div class="flex flex-col gap-y-3">
+    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2">
       <div class="flex items-center gap-3">
         <div class="p-2 bg-muted rounded-md">
           <TagIcon size={20} class="text-muted-foreground" />
