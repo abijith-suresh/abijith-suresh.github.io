@@ -22,7 +22,7 @@ import { BookOpen, Github, Linkedin } from "lucide-astro";
       ]}
     />
 
-    <!-- Photo + Caption - Searchable -->
+    <!-- Photo + Caption -->
     <section class="flex flex-col items-center gap-4 fade-in">
       <img
         src={AUTHOR.avatar}
@@ -34,14 +34,8 @@ import { BookOpen, Github, Linkedin } from "lucide-astro";
       </p>
     </section>
 
-    <!-- Story Content - Searchable -->
-    <article
-      class="space-y-6 text-foreground/80 leading-relaxed fade-in fade-in-delay-1"
-      data-pagefind-body
-    >
-      <!-- Hidden searchable title -->
-      <h1 class="sr-only">About</h1>
-
+    <!-- Story Content -->
+    <article class="space-y-6 text-foreground/80 leading-relaxed fade-in fade-in-delay-1">
       <!-- Intro -->
       <p>
         {AUTHOR.aboutIntro}
