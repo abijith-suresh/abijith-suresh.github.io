@@ -198,8 +198,14 @@
   /* Card hover effect - used by BlogCard, ProjectCard */
   .card-hover {
     @apply border border-border rounded-lg overflow-hidden;
-    @apply hover:bg-muted/50 transition-all ease-in-out;
-    transition-duration: var(--transition-slow);
+    @apply hover:bg-muted/50 transition-colors ease-in-out;
+    transition-duration: var(--transition-normal);
+    transition-property: background-color, border-color, color, transform, box-shadow;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -18px hsl(var(--foreground) / 0.35);
   }
 
   /* Tag pill styling - used for tags in cards and posts */
@@ -217,12 +223,47 @@
   /* Nav link styling */
   .nav-link {
     @apply text-foreground/60 hover:text-foreground transition-colors;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-normal) var(--ease-default);
+    opacity: 0.5;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
   }
 
   /* Fade-in animation */
   .fade-in {
     animation: fadeIn 0.6s var(--ease-default) forwards;
     opacity: 0;
+  }
+
+  .page-enter {
+    animation: pageEnter 0.45s var(--ease-default) both;
+  }
+
+  .page-enter-delay-1 {
+    animation-delay: 0.08s;
+  }
+
+  .page-enter-delay-2 {
+    animation-delay: 0.16s;
+  }
+
+  .page-enter-delay-3 {
+    animation-delay: 0.24s;
   }
 
   .fade-in-delay-1 {
@@ -241,6 +282,17 @@
     from {
       opacity: 0;
       transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
@@ -360,6 +412,31 @@
   }
 }
 
+@layer base {
+  ::view-transition-old(page-main),
+  ::view-transition-new(page-main) {
+    animation-duration: 220ms;
+    animation-timing-function: var(--ease-default);
+  }
+
+  ::view-transition-old(page-main) {
+    animation-name: fadeOut;
+  }
+
+  ::view-transition-new(page-main) {
+    animation-name: fadeIn;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* ==========================================================================
    Accessibility
    ========================================================================== */
@@ -372,5 +449,10 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms !important;
   }
 }
