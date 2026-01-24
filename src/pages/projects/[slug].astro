@@ -37,10 +37,7 @@ const searchTags = tags.slice(0, 5).join(", ");
   jsonLd={{ type: "article" }}
 >
   <Header slot="header" />
-  <main
-    class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12"
-    data-pagefind-meta={`tags:${searchTags}`}
-  >
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
     <!-- Breadcrumb -->
     <Breadcrumb
       items={[
@@ -51,7 +48,11 @@ const searchTags = tags.slice(0, 5).join(", ");
     />
 
     <!-- Project Header -->
-    <article class="flex flex-col gap-y-6">
+    <article
+      class="flex flex-col gap-y-6"
+      data-pagefind-body
+      data-pagefind-meta={`tags:${searchTags},content_type:project`}
+    >
       <header class="flex flex-col gap-y-4 text-center">
         <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
 

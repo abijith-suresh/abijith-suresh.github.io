@@ -68,10 +68,7 @@ const searchTags = tags.slice(0, 5).join(", ");
   <Header slot="header" />
   {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
 
-  <section
-    class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12"
-    data-pagefind-meta={`tags:${searchTags}`}
-  >
+  <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
     {/* Breadcrumb */}
     <Breadcrumb
       items={[
@@ -83,7 +80,11 @@ const searchTags = tags.slice(0, 5).join(", ");
     />
 
     {/* Post Header */}
-    <header class="col-start-2 flex flex-col gap-y-4 px-4 text-center">
+    <header
+      class="col-start-2 flex flex-col gap-y-4 px-4 text-center"
+      data-pagefind-body
+      data-pagefind-meta={`tags:${searchTags},content_type:blog`}
+    >
       <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
 
       <div
@@ -139,7 +140,7 @@ const searchTags = tags.slice(0, 5).join(", ");
     {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
 
     {/* Post Content */}
-    <article class="prose col-start-2 max-w-none px-4">
+    <article class="prose col-start-2 max-w-none px-4" data-pagefind-body>
       <Content />
     </article>
 
