@@ -74,7 +74,7 @@ function getIndent(depth: number): string {
               <li class:list={["px-4 text-sm text-foreground/60", getIndent(heading.depth)]}>
                 <a
                   href={`#${heading.slug}`}
-                  class="mobile-toc-item underline decoration-transparent underline-offset-[3px] transition-colors duration-200 hover:decoration-inherit"
+                  class="mobile-toc-item underline decoration-transparent underline-offset-[3px] transition-all duration-200 hover:decoration-inherit"
                   data-heading-id={heading.slug}
                 >
                   {heading.text}
@@ -99,6 +99,7 @@ function getIndent(depth: number): string {
     currentSectionId: "mobile-toc-current-section",
     listId: "mobile-table-of-contents",
     containerSelector: "#mobile-toc-container details",
+    enableSmoothScroll: true,
   });
 
   document.addEventListener("astro:page-load", () => controller.init());

@@ -32,7 +32,7 @@ function getIndent(depth: number): string {
             <li class:list={["text-sm text-foreground/60", getIndent(heading.depth)]}>
               <a
                 href={`#${heading.slug}`}
-                class="toc-sidebar-link underline decoration-transparent underline-offset-[3px] transition-colors duration-200 hover:decoration-inherit hover:text-foreground"
+                class="toc-sidebar-link underline decoration-transparent underline-offset-[3px] transition-all duration-200 hover:decoration-inherit hover:text-foreground"
                 data-heading-link={heading.slug}
               >
                 {heading.text}
@@ -54,6 +54,7 @@ function getIndent(depth: number): string {
     containerSelector: "#toc-sidebar-container",
     linkSelector: "[data-heading-link]",
     activeClass: "text-foreground",
+    enableSmoothScroll: true,
   });
 
   document.addEventListener("astro:page-load", () => controller.init());
