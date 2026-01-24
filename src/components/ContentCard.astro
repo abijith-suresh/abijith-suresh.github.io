@@ -1,0 +1,32 @@
+---
+import Link from "@/components/Link.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  href: string;
+  meta?: string;
+  class?: string;
+}
+
+const { title, description, tags, href, meta, class: className } = Astro.props;
+---
+
+<article class:list={cn("group", className)}>
+  <Link href={href} class:list={cn("block card-hover")} prefetch="hover">
+    <div class="flex flex-col gap-2 p-4">
+      <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+        {title}
+      </h3>
+      {meta && <p class="text-sm text-muted-foreground">{meta}</p>}
+      <p class="text-sm text-muted-foreground line-clamp-2">
+        {description}
+      </p>
+      <div class="flex flex-wrap gap-2 mt-2">
+        {tags.map((tag: string) => <span class="tag-pill">{tag}</span>)}
+      </div>
+    </div>
+  </Link>
+</article>

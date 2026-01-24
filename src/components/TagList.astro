@@ -1,0 +1,31 @@
+---
+import Link from "@/components/Link.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  tags: string[];
+  class?: string;
+  linkClass?: string;
+}
+
+const { tags, class: className, linkClass } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <div class:list={cn("flex flex-wrap gap-2", className)}>
+      {tags.map((tag) => (
+        <Link
+          href={`/tags/${tag}`}
+          class:list={cn(
+            "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+            "hover:bg-muted/80 transition-colors",
+            linkClass
+          )}
+        >
+          {tag}
+        </Link>
+      ))}
+    </div>
+  )
+}

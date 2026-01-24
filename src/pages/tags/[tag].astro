@@ -6,13 +6,8 @@ import Link from "@/components/Link.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import {
-  getAllBlogPosts,
-  getAllBlogTags,
-  getAllProjects,
-  getAllProjectTags,
-  sortProjects,
-} from "@/lib/data-utils";
+import { getAllBlogPosts, getAllBlogTags } from "@/lib/blog";
+import { getAllProjects, getAllProjectTags, sortProjects } from "@/lib/projects";
 import type { CollectionEntry } from "astro:content";
 import { Tag as TagIcon } from "lucide-astro";
 
@@ -57,17 +52,22 @@ type ContentItem = {
   date: Date;
   item: CollectionEntry<"blog"> | CollectionEntry<"projects">;
 };
+
 const allContent: ContentItem[] = [
-  ...posts.map((post) => ({
-    type: "blog" as const,
-    date: post.data.publishDate,
-    item: post,
-  })),
-  ...projects.map((project) => ({
-    type: "project" as const,
-    date: project.data.startDate,
-    item: project,
-  })),
+  ...posts.map(
+    (post): ContentItem => ({
+      type: "blog",
+      date: post.data.publishDate,
+      item: post,
+    })
+  ),
+  ...projects.map(
+    (project): ContentItem => ({
+      type: "project",
+      date: project.data.startDate,
+      item: project,
+    })
+  ),
 ].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
 

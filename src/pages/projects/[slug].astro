@@ -2,11 +2,11 @@
 import BackLink from "@/components/BackLink.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
-import Link from "@/components/Link.astro";
+import TagList from "@/components/TagList.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { formatProjectDate } from "@/lib/data-utils";
-import { cn } from "@/lib/utils";
+import { createSearchTagMeta } from "@/lib/pagefind";
+import { formatProjectDate } from "@/lib/projects";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { Calendar } from "lucide-astro";
 
@@ -28,7 +28,7 @@ const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
 
 // Prepare tags for Pagefind metadata (limit to first 5 for search display)
-const searchTags = tags.slice(0, 5).join(", ");
+const searchTags = createSearchTagMeta(tags);
 ---
 
 <Layout
@@ -70,21 +70,7 @@ const searchTags = tags.slice(0, 5).join(", ");
 
         <!-- Tags -->
         <div data-pagefind-ignore>
-          <div class="flex flex-wrap justify-center gap-2">
-            {
-              tags.map((tag) => (
-                <Link
-                  href={`/tags/${tag}`}
-                  class:list={cn(
-                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                    "hover:bg-muted/80 transition-colors"
-                  )}
-                >
-                  {tag}
-                </Link>
-              ))
-            }
-          </div>
+          <TagList tags={tags} class="justify-center" />
         </div>
       </header>
 
