@@ -8,6 +8,7 @@ import { X } from "lucide-astro";
   class="fixed inset-0 z-50 hidden bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
   aria-hidden="true"
   data-state="closed"
+  style="view-transition-name: none;"
 >
   <!-- Modal Container -->
   <div
@@ -19,6 +20,7 @@ import { X } from "lucide-astro";
       aria-modal="true"
       aria-labelledby="search-title"
       data-state="closed"
+      style="view-transition-name: none;"
     >
       <!-- Close Button (Desktop) - Absolute positioned -->
       <button
@@ -287,11 +289,11 @@ import { X } from "lucide-astro";
   }
 
   [data-state="open"] {
-    animation: fade-in var(--transition-normal) var(--ease-default);
+    animation: fade-in 180ms var(--ease-default);
   }
 
   [data-state="closed"] {
-    animation: fade-out var(--transition-normal) var(--ease-default);
+    animation: fade-out 180ms var(--ease-default);
   }
 </style>
 
@@ -457,7 +459,7 @@ import { X } from "lucide-astro";
     setTimeout(() => {
       const searchInput = document.querySelector<HTMLInputElement>(".pagefind-ui__search-input");
       searchInput?.focus();
-    }, 100);
+    }, 120);
   }
 
   function closeSearchModal() {
@@ -477,7 +479,7 @@ import { X } from "lucide-astro";
       modal.classList.add("hidden");
       modal.setAttribute("aria-hidden", "true");
       document.body.classList.remove("search-modal-open");
-    }, 200);
+    }, 180);
   }
 
   // Store event listeners for cleanup
