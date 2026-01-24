@@ -46,117 +46,20 @@ function getIndent(depth: number): string {
 }
 
 <script>
-  const HEADER_OFFSET = 100;
+  import { createDesktopTocController } from "@/lib/toc";
 
-  class TOCState {
-    links: NodeListOf<Element> = document.querySelectorAll("[data-heading-link]");
-    activeIds: string[] = [];
-    headings: HTMLElement[] = [];
-
-    reset() {
-      this.links = document.querySelectorAll("#toc-sidebar-container [data-heading-link]");
-      this.activeIds = [];
-      this.headings = [];
-    }
-  }
-
-  const state = new TOCState();
-
-  class HeadingRegions {
-    static build() {
-      state.headings = Array.from(
-        document.querySelectorAll<HTMLElement>(".prose h2[id], .prose h3[id]")
-      );
-    }
-
-    static getVisibleIds(): string[] {
-      if (state.headings.length === 0) return [];
-
-      const viewportTop = window.scrollY + HEADER_OFFSET;
-      const visibleIds: string[] = [];
-
-      for (let i = state.headings.length - 1; i >= 0; i--) {
-        const heading = state.headings[i];
-        if (heading.offsetTop <= viewportTop) {
-          visibleIds.push(heading.id);
-          break;
-        }
-      }
-
-      // If nothing found and we have headings, use the first one
-      if (visibleIds.length === 0 && state.headings.length > 0) {
-        visibleIds.push(state.headings[0].id);
-      }
-
-      return visibleIds;
-    }
-  }
-
-  class TOCLinks {
-    static update(headingIds: string[]) {
-      state.links.forEach((link) => {
-        link.classList.remove("text-foreground");
-      });
-
-      headingIds.forEach((id) => {
-        if (id) {
-          const activeLink = document.querySelector(
-            `#toc-sidebar-container [data-heading-link="${id}"]`
-          );
-          if (activeLink) {
-            activeLink.classList.add("text-foreground");
-          }
-        }
-      });
-    }
-  }
-
-  class TOCController {
-    static handleScroll() {
-      const newActiveIds = HeadingRegions.getVisibleIds();
-
-      if (JSON.stringify(newActiveIds) !== JSON.stringify(state.activeIds)) {
-        state.activeIds = newActiveIds;
-        TOCLinks.update(state.activeIds);
-      }
-    }
-
-    static handleResize() {
-      HeadingRegions.build();
-      const newActiveIds = HeadingRegions.getVisibleIds();
-      if (JSON.stringify(newActiveIds) !== JSON.stringify(state.activeIds)) {
-        state.activeIds = newActiveIds;
-        TOCLinks.update(state.activeIds);
-      }
-    }
-
-    static init() {
-      state.reset();
-      HeadingRegions.build();
-
-      if (state.headings.length === 0) {
-        TOCLinks.update([]);
-        return;
-      }
-
-      this.handleScroll();
-
-      window.addEventListener("scroll", this.handleScroll, { passive: true });
-      window.addEventListener("resize", this.handleResize, { passive: true });
-    }
-
-    static cleanup() {
-      window.removeEventListener("scroll", this.handleScroll);
-      window.removeEventListener("resize", this.handleResize);
-      state.activeIds = [];
-      state.headings = [];
-    }
-  }
-
-  document.addEventListener("astro:page-load", () => TOCController.init());
-  document.addEventListener("astro:after-swap", () => {
-    TOCController.cleanup();
-    TOCController.init();
+  const controller = createDesktopTocController({
+    headingSelector: ".prose h2[id], .prose h3[id]",
+    headerOffset: 100,
+    containerSelector: "#toc-sidebar-container",
+    linkSelector: "[data-heading-link]",
+    activeClass: "text-foreground",
   });
-  document.addEventListener("astro:before-swap", () => TOCController.cleanup());
+
+  document.addEventListener("astro:page-load", () => controller.init());
+  document.addEventListener("astro:after-swap", () => {
+    controller.cleanup();
+    controller.init();
+  });
+  document.addEventListener("astro:before-swap", () => controller.cleanup());
 </script>
