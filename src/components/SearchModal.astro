@@ -272,6 +272,7 @@ import { X } from "lucide-astro";
   import { PagefindUI } from "@pagefind/default-ui";
 
   let pagefindInstance: PagefindUI | null = null;
+  let mutationObserver: MutationObserver | null = null;
 
   function openSearchModal() {
     const modal = document.getElementById("search-modal");
@@ -295,7 +296,7 @@ import { X } from "lucide-astro";
       });
 
       // Add content type data attributes to results after they're rendered
-      const observer = new MutationObserver(() => {
+      mutationObserver = new MutationObserver(() => {
         const results = document.querySelectorAll(".pagefind-ui__result");
         results.forEach((result) => {
           if (!result.hasAttribute("data-content-type")) {
@@ -316,7 +317,7 @@ import { X } from "lucide-astro";
       // Observe the search container for changes
       const searchContainer = document.getElementById("search-container");
       if (searchContainer) {
-        observer.observe(searchContainer, {
+        mutationObserver.observe(searchContainer, {
           childList: true,
           subtree: true,
         });
@@ -438,6 +439,15 @@ import { X } from "lucide-astro";
       document.removeEventListener("keydown", cmdKKeyHandler);
       cmdKKeyHandler = null;
     }
+
+    // Disconnect MutationObserver
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      mutationObserver = null;
+    }
+
+    // Reset pagefind instance
+    pagefindInstance = null;
   }
 
   // Initialize on page load
