@@ -7,6 +7,7 @@ type DesktopTocConfig = HeadingConfig & {
   containerSelector: string;
   linkSelector: string;
   activeClass: string;
+  enableSmoothScroll?: boolean;
 };
 
 type MobileTocConfig = HeadingConfig & {
@@ -15,6 +16,7 @@ type MobileTocConfig = HeadingConfig & {
   currentSectionId: string;
   listId: string;
   containerSelector: string;
+  enableSmoothScroll?: boolean;
 };
 
 type TocController = {
@@ -55,6 +57,9 @@ export function createDesktopTocController(config: DesktopTocConfig): TocControl
     activeIds: [] as string[],
   };
 
+  const linkListeners = new Map<Element, (event: Event) => void>();
+  const enableSmoothScroll = config.enableSmoothScroll ?? true;
+
   const refreshHeadings = () => {
     state.headings = Array.from(document.querySelectorAll<HTMLElement>(config.headingSelector));
   };
@@ -89,6 +94,23 @@ export function createDesktopTocController(config: DesktopTocConfig): TocControl
     }
   };
 
+  const setupInteraction = () => {
+    if (!enableSmoothScroll) return;
+    state.links.forEach((link) => {
+      if (linkListeners.has(link)) return;
+      const handler = (event: Event) => {
+        const target = event.currentTarget as HTMLElement | null;
+        const headingId = target?.getAttribute("data-heading-link");
+        if (!headingId) return;
+        event.preventDefault();
+        const heading = document.getElementById(headingId);
+        heading?.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+      linkListeners.set(link, handler);
+      link.addEventListener("click", handler);
+    });
+  };
+
   const handleScroll = () => {
     updateActiveIds();
   };
@@ -102,6 +124,7 @@ export function createDesktopTocController(config: DesktopTocConfig): TocControl
     refreshLinks();
     refreshHeadings();
     updateActiveIds();
+    setupInteraction();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
@@ -110,6 +133,10 @@ export function createDesktopTocController(config: DesktopTocConfig): TocControl
   const cleanup = () => {
     window.removeEventListener("scroll", handleScroll);
     window.removeEventListener("resize", handleResize);
+    linkListeners.forEach((handler, link) => {
+      link.removeEventListener("click", handler);
+    });
+    linkListeners.clear();
     state.activeIds = [];
     state.headings = [];
   };
@@ -129,6 +156,9 @@ export function createMobileTocController(config: MobileTocConfig): TocControlle
     headings: [] as HTMLElement[],
     activeIds: [] as string[],
   };
+
+  const linkListeners = new Map<Element, (event: Event) => void>();
+  const enableSmoothScroll = config.enableSmoothScroll ?? true;
 
   const reset = () => {
     state.progressCircle = document.getElementById(config.progressCircleId);
@@ -205,9 +235,21 @@ export function createMobileTocController(config: MobileTocConfig): TocControlle
     if (!state.listElement) return;
 
     state.listElement.querySelectorAll(".mobile-toc-item").forEach((item) => {
-      item.addEventListener("click", () => {
+      if (linkListeners.has(item)) return;
+      const handler = (event: Event) => {
+        if (enableSmoothScroll) {
+          const target = event.currentTarget as HTMLElement | null;
+          const headingId = target?.dataset.headingId;
+          if (headingId) {
+            event.preventDefault();
+            const heading = document.getElementById(headingId);
+            heading?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
         if (state.detailsElement) state.detailsElement.open = false;
-      });
+      };
+      linkListeners.set(item, handler);
+      item.addEventListener("click", handler);
     });
   };
 
@@ -247,6 +289,10 @@ export function createMobileTocController(config: MobileTocConfig): TocControlle
     window.removeEventListener("scroll", handleScroll);
     window.removeEventListener("scroll", updateProgressCircle);
     window.removeEventListener("resize", handleResize);
+    linkListeners.forEach((handler, link) => {
+      link.removeEventListener("click", handler);
+    });
+    linkListeners.clear();
     state.activeIds = [];
     state.headings = [];
   };

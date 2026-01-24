@@ -47,11 +47,17 @@ const projectCount = projects.length;
 const totalCount = postCount + projectCount;
 
 // Combine and sort by date (most recent first)
-type ContentItem = {
-  type: "blog" | "project";
-  date: Date;
-  item: CollectionEntry<"blog"> | CollectionEntry<"projects">;
-};
+type ContentItem =
+  | {
+      type: "blog";
+      date: Date;
+      item: CollectionEntry<"blog">;
+    }
+  | {
+      type: "project";
+      date: Date;
+      item: CollectionEntry<"projects">;
+    };
 
 const allContent: ContentItem[] = [
   ...posts.map(
@@ -77,18 +83,20 @@ const allContent: ContentItem[] = [
   jsonLd={{ type: "website" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12">
+  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
     <!-- Breadcrumb -->
-    <Breadcrumb
-      items={[
-        { label: "Home", href: "/", icon: "home" },
-        { label: "Tags", href: "/tags", icon: "tags" },
-        { label: tag, icon: "tag" },
-      ]}
-    />
+    <div class="page-enter page-enter-delay-1">
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/", icon: "home" },
+          { label: "Tags", href: "/tags", icon: "tags" },
+          { label: tag, icon: "tag" },
+        ]}
+      />
+    </div>
 
     <!-- Tag Header - Searchable -->
-    <div class="flex flex-col gap-y-3" data-pagefind-body>
+    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2" data-pagefind-body>
       <div class="flex items-center gap-3">
         <div class="p-2 bg-muted rounded-md" data-pagefind-ignore>
           <TagIcon size={20} class="text-muted-foreground" />

@@ -60,14 +60,22 @@ const {
     <slot name="head" />
   </head>
   <body class="flex h-fit min-h-screen flex-col gap-y-6">
-    <header class="bg-background/50 sticky top-0 z-50 backdrop-blur-sm">
+    <header
+      class="bg-background/50 sticky top-0 z-50 backdrop-blur-sm"
+      style="view-transition-name: site-header;"
+    >
       <slot name="header" />
       <slot name="table-of-contents" />
     </header>
-    <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4">
+    <main
+      class="w-full mx-auto flex grow flex-col gap-y-6 px-4"
+      style="view-transition-name: page-main;"
+    >
       <slot />
     </main>
-    <Footer />
+    <div style="view-transition-name: site-footer;">
+      <Footer />
+    </div>
     <SearchModal />
     <Analytics />
 

@@ -19,7 +19,7 @@ import { Monitor, Moon, Sun } from "lucide-astro";
     id="theme-menu"
     role="menu"
     class="absolute right-0 mt-2 w-36 bg-popover border border-border rounded-md shadow-lg py-1 z-50 opacity-0 scale-95 pointer-events-none transition-all origin-top-right"
-    style="transition-duration: var(--transition-normal); transition-timing-function: var(--ease-default);"
+    style="transition-duration: var(--transition-normal); transition-timing-function: var(--ease-default); transition-delay: 0ms;"
   >
     <button
       role="menuitem"
@@ -94,6 +94,7 @@ import { Monitor, Moon, Sun } from "lucide-astro";
 
     menu?.classList.remove("opacity-0", "scale-95", "pointer-events-none");
     menu?.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+    menu?.style.setProperty("transition-delay", "0ms");
     button?.setAttribute("aria-expanded", "true");
   }
 
@@ -103,6 +104,7 @@ import { Monitor, Moon, Sun } from "lucide-astro";
 
     menu?.classList.remove("opacity-100", "scale-100", "pointer-events-auto");
     menu?.classList.add("opacity-0", "scale-95", "pointer-events-none");
+    menu?.style.setProperty("transition-delay", "40ms");
     button?.setAttribute("aria-expanded", "false");
   }
 

@@ -22,6 +22,7 @@ const { tags, class: className, linkClass } = Astro.props;
             "hover:bg-muted/80 transition-colors",
             linkClass
           )}
+          prefetch="viewport"
         >
           {tag}
         </Link>

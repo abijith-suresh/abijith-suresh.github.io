@@ -37,18 +37,20 @@ const searchTags = createSearchTagMeta(tags);
   jsonLd={{ type: "article" }}
 >
   <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12">
+  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12 page-enter">
     <!-- Breadcrumb -->
-    <Breadcrumb
-      items={[
-        { label: "Home", href: "/", icon: "home" },
-        { label: "Projects", href: "/projects", icon: "projects" },
-        { label: title, icon: "project" },
-      ]}
-    />
+    <div class="page-enter page-enter-delay-1">
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/", icon: "home" },
+          { label: "Projects", href: "/projects", icon: "projects" },
+          { label: title, icon: "project" },
+        ]}
+      />
+    </div>
 
     <!-- Project Header - Only this is indexed for search -->
-    <article class="flex flex-col gap-y-6">
+    <article class="flex flex-col gap-y-6 page-enter page-enter-delay-2">
       <header
         class="flex flex-col gap-y-4 text-center"
         data-pagefind-body
@@ -81,6 +83,8 @@ const searchTags = createSearchTagMeta(tags);
     </article>
 
     <!-- Back to Projects -->
-    <BackLink href="/projects" label="Back to Projects" />
+    <div class="page-enter page-enter-delay-2">
+      <BackLink href="/projects" label="Back to Projects" />
+    </div>
   </main>
 </Layout>
