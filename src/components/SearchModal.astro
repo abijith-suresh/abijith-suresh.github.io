@@ -14,7 +14,7 @@ import { X } from "lucide-astro";
     class="fixed left-1/2 top-0 sm:top-[10%] z-50 w-full max-w-full sm:max-w-lg md:max-w-2xl -translate-x-1/2 translate-y-0"
   >
     <div
-      class="relative flex flex-col h-[100dvh] sm:h-auto sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-none sm:rounded-lg overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0 duration-200"
+      class="relative flex flex-col h-dvh sm:h-auto sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-none sm:rounded-lg overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0 duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="search-title"
@@ -296,10 +296,9 @@ import { X } from "lucide-astro";
 </style>
 
 <script>
-  // @ts-expect-error - Pagefind doesn't provide TypeScript types
   import { PagefindUI } from "@pagefind/default-ui";
 
-  let pagefindInstance: PagefindUI | null = null;
+  let pagefindInstance: InstanceType<typeof PagefindUI> | null = null;
   let mutationObserver: MutationObserver | null = null;
   const seenTagResults = new Map<string, Element>(); // Track tag results globally
   let focusedIndex = -1; // Track currently focused result (-1 = none)
