@@ -3,8 +3,6 @@ title: "React Hooks Deep Dive"
 description: "Explore React Hooks in depth, from useState and useEffect to custom hooks, and learn how to write cleaner functional components."
 publishDate: 2026-01-01
 tags: ["react", "javascript", "frontend", "hooks"]
-image: "/blog/react-hooks.jpg"
-imageAlt: "React hooks visualization"
 ---
 
 React Hooks revolutionized how we write React components. Let's dive deep into the most commonly used hooks and best practices.

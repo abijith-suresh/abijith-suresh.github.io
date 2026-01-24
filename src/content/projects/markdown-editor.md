@@ -2,9 +2,6 @@
 title: "Markdown Editor with Live Preview"
 description: "A lightweight, distraction-free markdown editor with syntax highlighting and live preview."
 tags: ["TypeScript", "CodeMirror", "Vite"]
-github: "https://github.com/abijith/md-editor"
-demo: "https://editor.abijith.sh"
-image: "/projects/editor.jpg"
 startDate: 2025-08-01
 endDate: 2025-09-15
 ---

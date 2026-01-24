@@ -3,8 +3,6 @@ title: "Welcome to My Portfolio"
 description: "An introduction to this website, its purpose, and what you can expect to find here."
 publishDate: 2026-01-09
 tags: ["meta", "portfolio"]
-image: "/blog/welcome.jpg"
-imageAlt: "Welcome banner with geometric patterns"
 ---
 
 Welcome to my portfolio and blog! This is where I share my projects, technical writings, and thoughts on software development.

@@ -31,10 +31,7 @@ export async function getAllProjects(options?: {
 /**
  * Sort projects by different criteria
  */
-export function sortProjects(
-  projects: Project[],
-  sortBy: "date" | "title" | "order" = "date"
-): Project[] {
+export function sortProjects(projects: Project[], sortBy: "date" | "title" = "date"): Project[] {
   const sorted = [...projects];
 
   switch (sortBy) {
@@ -42,25 +39,9 @@ export function sortProjects(
       return sorted.sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
     case "title":
       return sorted.sort((a, b) => a.data.title.localeCompare(b.data.title));
-    case "order":
-      return sorted.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
     default:
       return sorted;
   }
-}
-
-/**
- * Get all unique tags from blog posts
- */
-export async function getAllBlogTags(): Promise<string[]> {
-  const posts = await getCollection("blog");
-  const tags = new Set<string>();
-
-  posts.forEach((post) => {
-    post.data.tags.forEach((tag) => tags.add(tag));
-  });
-
-  return Array.from(tags).sort();
 }
 
 /**
@@ -85,17 +66,11 @@ export async function getAllBlogTagsWithCount(): Promise<Array<{ tag: string; co
 }
 
 /**
- * Get all unique tags from projects
+ * Get all unique tags from blog posts (without counts)
  */
-export async function getAllProjectTags(): Promise<string[]> {
-  const projects = await getCollection("projects");
-  const tags = new Set<string>();
-
-  projects.forEach((project) => {
-    project.data.tags.forEach((tag) => tags.add(tag));
-  });
-
-  return Array.from(tags).sort();
+export async function getAllBlogTags(): Promise<string[]> {
+  const tagsWithCount = await getAllBlogTagsWithCount();
+  return tagsWithCount.map((t) => t.tag);
 }
 
 /**
@@ -114,6 +89,14 @@ export async function getAllProjectTagsWithCount(): Promise<Array<{ tag: string;
   return Array.from(tagCounts.entries())
     .map(([tag, count]) => ({ tag, count }))
     .sort((a, b) => a.tag.localeCompare(b.tag));
+}
+
+/**
+ * Get all unique tags from projects (without counts)
+ */
+export async function getAllProjectTags(): Promise<string[]> {
+  const tagsWithCount = await getAllProjectTagsWithCount();
+  return tagsWithCount.map((t) => t.tag);
 }
 
 /**

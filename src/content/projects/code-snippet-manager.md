@@ -4,9 +4,6 @@ description: "Developer tool for organizing and searching code snippets with syn
 tags: ["electron", "react", "sqlite", "typescript"]
 startDate: 2025-06-01
 endDate: 2025-07-20
-github: "https://github.com/abijith-suresh/snippet-manager"
-image: "/projects/snippet-manager.jpg"
-order: 10
 ---
 
 A desktop application for developers to organize, search, and manage code snippets efficiently with powerful search and tagging capabilities.

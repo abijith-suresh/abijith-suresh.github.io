@@ -4,10 +4,6 @@ description: "Tool that automatically generates beautiful API documentation from
 tags: ["rust", "webassembly", "svelte", "openapi"]
 startDate: 2025-01-01
 endDate: 2025-02-28
-github: "https://github.com/abijith-suresh/api-doc-gen"
-demo: "https://apidocs.abijith.sh"
-image: "/projects/api-docs.jpg"
-order: 14
 ---
 
 An automated API documentation generator that creates beautiful, interactive documentation from OpenAPI/Swagger specifications.

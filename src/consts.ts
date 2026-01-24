@@ -1,5 +1,6 @@
 // Site Configuration
 export const SITE = {
+  // Basic Info
   title: "Abijith S",
   description: "Personal portfolio and blog of Abijith S - developer, builder, writer.",
   author: "Abijith S",
@@ -15,13 +16,12 @@ export const SITE = {
   whatIDo:
     "I spend most of my time working on backend systems, but I'm comfortable across the stack. I like solving problems, writing clean code, and learning new technologies. When I'm not coding, I'm probably gaming, watching anime, or reading something interesting.",
 
-  // Feature Configuration
+  // Pagination
   postsPerPage: 10,
   projectsPerPage: 12,
-  featuredProjectCount: 4,
 } as const;
 
-// Navigation Links
+// Navigation
 export const NAV_LINKS = [
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
@@ -35,17 +35,15 @@ export const SOCIAL_LINKS = {
   linkedin: "https://linkedin.com/in/abijith-suresh",
 } as const;
 
-// Personal Information
+// Author Information
 export const AUTHOR = {
   name: "Abijith S",
   fullName: "Abijith Suresh",
-  username: "abijith",
   tagline: "Developer, builder, writer.",
-  role: "Software Developer",
-  location: "Kochi, Kerala, India",
   avatar: "/avatar.jpg",
   twitterHandle: "@abijith_sh",
-  // About page content
+
+  // About Page Content
   aboutIntro:
     "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things.",
   aboutJourney:
@@ -55,7 +53,3 @@ export const AUTHOR = {
   aboutInterests:
     "Outside of work, I'm usually gaming, watching anime or TV shows, reading, or catching up on movies. I like stories in all their forms.",
 } as const;
-
-// Type exports for better TypeScript support
-export type NavLink = (typeof NAV_LINKS)[number];
-export type SocialLink = keyof typeof SOCIAL_LINKS;

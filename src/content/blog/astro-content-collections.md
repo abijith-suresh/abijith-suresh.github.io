@@ -3,8 +3,6 @@ title: "Building Type-Safe Content with Astro Collections"
 description: "Learn how to use Astro's Content Collections API with Zod for type-safe content management."
 publishDate: 2026-01-08
 tags: ["astro", "typescript", "content-management"]
-image: "/blog/astro-collections.jpg"
-imageAlt: "Code editor showing Astro content collection configuration"
 ---
 
 Astro's Content Collections API provides a powerful way to manage your content with full TypeScript support and runtime validation using Zod schemas.

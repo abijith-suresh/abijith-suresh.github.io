@@ -4,10 +4,6 @@ description: "RESTful API for searching recipes by ingredients, dietary restrict
 tags: ["nodejs", "express", "mongodb", "elasticsearch"]
 startDate: 2025-05-01
 endDate: 2025-06-15
-github: "https://github.com/abijith-suresh/recipe-api"
-demo: "https://api.recipes.abijith.sh"
-image: "/projects/recipe-api.jpg"
-order: 11
 ---
 
 A comprehensive recipe API that allows searching by ingredients, dietary preferences, and cuisine types, with detailed nutrition information.

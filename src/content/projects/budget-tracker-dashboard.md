@@ -4,10 +4,6 @@ description: "Personal finance dashboard for tracking expenses, income, and budg
 tags: ["vue", "typescript", "firebase", "chartjs"]
 startDate: 2025-04-01
 endDate: 2025-05-15
-github: "https://github.com/abijith-suresh/budget-tracker"
-demo: "https://budget.abijith.sh"
-image: "/projects/budget-tracker.jpg"
-order: 12
 ---
 
 A personal finance dashboard that helps users track expenses, set budgets, and gain insights into their spending patterns.
