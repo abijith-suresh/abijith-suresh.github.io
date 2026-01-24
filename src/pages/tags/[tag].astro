@@ -87,14 +87,15 @@ const allContent: ContentItem[] = [
       ]}
     />
 
-    <div class="flex flex-col gap-y-3">
+    <!-- Tag Header - Searchable -->
+    <div class="flex flex-col gap-y-3" data-pagefind-body data-pagefind-meta="content_type:tag">
       <div class="flex items-center gap-3">
-        <div class="p-2 bg-muted rounded-md">
+        <div class="p-2 bg-muted rounded-md" data-pagefind-ignore>
           <TagIcon size={20} class="text-muted-foreground" />
         </div>
         <div>
           <h1 class="text-3xl font-bold text-foreground">{tag}</h1>
-          <p class="text-sm text-muted-foreground">
+          <p class="text-sm text-muted-foreground" data-pagefind-ignore>
             {totalCount}
             {totalCount === 1 ? "item" : "items"}
             {
