@@ -14,20 +14,20 @@ import Layout from "@/layouts/Layout.astro";
 >
   <Header slot="header" />
   <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl">
-    <!-- Searchable Home Page Title -->
-    <div data-pagefind-body data-pagefind-meta="content_type:page">
-      <h1 class="sr-only">Home</h1>
-      <p class="sr-only">Welcome to {SITE.title} - {SITE.description}</p>
-    </div>
-
     <Hero />
 
-    <!-- What I Do -->
-    <section class="py-12 border-t border-border">
+    <!-- What I Do - Searchable -->
+    <section
+      class="py-12 border-t border-border"
+      data-pagefind-body
+      data-pagefind-meta="content_type:page"
+    >
       <h2 class="text-2xl font-semibold mb-4">What I do</h2>
       <p class="text-muted-foreground leading-relaxed">
         {SITE.whatIDo}
       </p>
+      <!-- Hidden searchable title -->
+      <span class="sr-only">Home page</span>
     </section>
 
     <!-- Recent Posts -->
