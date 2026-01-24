@@ -70,16 +70,17 @@ const searchTags = tags.slice(0, 5).join(", ");
 
   <section class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12">
     {/* Breadcrumb */}
-    <Breadcrumb
-      items={[
-        { label: "Home", href: "/", icon: "home" },
-        { label: "Blog", href: "/blog", icon: "blog" },
-        { label: title, icon: "blogpost" },
-      ]}
-      class="col-start-2 px-4"
-    />
+    <div class="col-start-2 px-4">
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/", icon: "home" },
+          { label: "Blog", href: "/blog", icon: "blog" },
+          { label: title, icon: "blogpost" },
+        ]}
+      />
+    </div>
 
-    {/* Post Header */}
+    {/* Post Header - Only this is indexed for search */}
     <header
       class="col-start-2 flex flex-col gap-y-4 px-4 text-center"
       data-pagefind-body
@@ -89,6 +90,7 @@ const searchTags = tags.slice(0, 5).join(", ");
 
       <div
         class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
+        data-pagefind-ignore
       >
         <div class="flex items-center gap-1.5">
           <Calendar size={16} />
@@ -117,30 +119,32 @@ const searchTags = tags.slice(0, 5).join(", ");
       <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
 
       {/* Tags */}
-      {
-        tags.length > 0 && (
-          <div class="flex flex-wrap justify-center gap-2">
-            {tags.map((tag) => (
-              <Link
-                href={`/tags/${tag}`}
-                class:list={cn(
-                  "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
-                  "hover:bg-muted/80 transition-colors"
-                )}
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
-        )
-      }
+      <div data-pagefind-ignore>
+        {
+          tags.length > 0 && (
+            <div class="flex flex-wrap justify-center gap-2">
+              {tags.map((tag) => (
+                <Link
+                  href={`/tags/${tag}`}
+                  class:list={cn(
+                    "text-xs px-3 py-1.5 bg-muted text-muted-foreground rounded-md font-medium",
+                    "hover:bg-muted/80 transition-colors"
+                  )}
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )
+        }
+      </div>
     </header>
 
     {/* Desktop TOC Sidebar */}
     {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
 
-    {/* Post Content */}
-    <article class="prose col-start-2 max-w-none px-4" data-pagefind-body>
+    {/* Post Content - NOT indexed */}
+    <article class="prose col-start-2 max-w-none px-4">
       <Content />
     </article>
 
