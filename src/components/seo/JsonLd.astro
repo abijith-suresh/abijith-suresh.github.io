@@ -118,7 +118,7 @@ if (type === "website") {
     name: AUTHOR.fullName,
     url: SITE.url,
     jobTitle: person?.jobTitle || AUTHOR.tagline,
-    description: person?.description || AUTHOR.bio,
+    description: person?.description || AUTHOR.tagline,
     sameAs: [SOCIAL_LINKS.github, SOCIAL_LINKS.twitter, SOCIAL_LINKS.linkedin].filter(Boolean),
     image: AUTHOR.avatar ? new URL(AUTHOR.avatar, Astro.site).href : undefined,
   };
