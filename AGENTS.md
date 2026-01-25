@@ -4,11 +4,11 @@ This document provides essential information for AI coding agents working in thi
 
 ## Project Overview
 
-**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX  
-**Package Manager:** Bun 1.3+ (preferred) or npm  
+**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX, Pagefind (search)  
+**Package Manager:** Bun 1.3.5+ (preferred) or npm  
 **Node Version:** v24+ (ES Module project)  
-**Site URL:** https://abijith.sh  
-**Description:** Personal portfolio and blog built with Astro, featuring content collections for blog posts and projects.
+**Site URL:** https://abijith-suresh.github.io (GitHub Pages)  
+**Description:** Personal portfolio and blog built with Astro, featuring content collections for blog posts and projects, with integrated search functionality via Pagefind.
 
 ## Build & Development Commands
 
@@ -21,7 +21,7 @@ bun install
 # Development server (http://localhost:4321)
 bun run dev
 
-# Production build (~4s, outputs to dist/)
+# Production build (outputs to dist/, includes Pagefind indexing)
 bun run build
 
 # Preview production build locally
@@ -164,8 +164,6 @@ Blog and project content must match Zod schemas in `src/content/config.ts`:
   updatedDate?: Date;
   tags: string[];
   draft: boolean;  // default: false
-  image?: string;
-  imageAlt?: string;
 }
 
 // Project schema
@@ -173,12 +171,8 @@ Blog and project content must match Zod schemas in `src/content/config.ts`:
   title: string;
   description: string;
   tags: string[];
-  github?: string;  // URL
-  demo?: string;    // URL
-  image?: string;
   startDate: Date;
   endDate?: Date;
-  order?: number;
 }
 ```
 
@@ -187,17 +181,25 @@ Blog and project content must match Zod schemas in `src/content/config.ts`:
 ```
 src/
 ├── components/       # Astro components (.astro)
+│   ├── mdx/         # MDX components (Callout.astro, CodeBlock.astro)
 │   └── seo/         # SEO components (SEO.astro, JsonLd.astro)
 ├── content/         # Content collections (validated by Zod)
 │   ├── blog/        # Blog posts (.md, .mdx)
 │   ├── projects/    # Projects (.md, .mdx)
 │   └── config.ts    # Content schemas
-├── data/            # TypeScript data files (about.ts)
 ├── layouts/         # Page layouts (Layout.astro)
-├── lib/             # Utilities (utils.ts, data-utils.ts)
+├── lib/             # Utilities (utils.ts, blog.ts, projects.ts, toc.ts, etc.)
 ├── pages/           # File-based routing
+│   ├── blog/        # Blog list and post pages
+│   ├── projects/    # Project list and detail pages
+│   ├── tags/        # Tag-based content filtering
+│   ├── about.astro  # About page
+│   ├── index.astro  # Home page
+│   └── rss.xml.js   # RSS feed generation
 ├── styles/          # Global CSS (global.css)
-└── consts.ts        # Site constants
+├── themes/          # Theme-related utilities
+├── types/           # TypeScript type definitions
+└── consts.ts        # Site constants (SITE, NAV_LINKS, SOCIAL_LINKS, AUTHOR)
 ```
 
 ## Key Configuration Files
@@ -207,6 +209,34 @@ src/
 - `.prettierrc` - Prettier formatting config
 - `tsconfig.json` - TypeScript strict mode with @ path alias
 - `src/content/config.ts` - Zod schemas for content validation
+- `.lintstagedrc.json` - Lint-staged configuration for pre-commit hooks
+
+## Pre-commit Hooks
+
+This project uses Husky and lint-staged for automated code quality checks:
+
+- **Husky:** Manages Git hooks (configured via `bun run prepare`)
+- **lint-staged:** Runs linters/formatters on staged files only
+  - JS/TS/Astro files: ESLint auto-fix + Prettier
+  - JSON/MD/MDX/CSS files: Prettier only
+
+**Configuration:** See `.lintstagedrc.json` and `.husky/pre-commit`
+
+## CI/CD Pipeline
+
+### GitHub Actions Workflows
+
+1. **CI Workflow** (`.github/workflows/ci.yml`)
+   - Triggers: Pull requests to `main`
+   - Runs: ESLint, Prettier check, build validation
+   - Uses: Bun 1.3.5, frozen lockfile
+
+2. **GitHub Pages Deployment** (`.github/workflows/gh-pages.yml`)
+   - Triggers: Push to `main`, manual dispatch
+   - Steps: Install deps → Build → Upload artifact → Deploy
+   - Output: Deploys to https://abijith-suresh.github.io
+
+**Note:** Vercel deployment was removed in PR #136 (2026-01-25)
 
 ## Rules from .github/copilot-instructions.md
 
@@ -257,17 +287,21 @@ import { calculateReadingTime } from "@/lib/utils";
 calculateReadingTime(content); // Returns number of minutes
 
 // Get content
-import { getAllBlogPosts, getAllProjects } from "@/lib/data-utils";
+import { getAllBlogPosts, getAllProjects } from "@/lib/blog" or "@/lib/projects";
 await getAllBlogPosts({ limit: 5 });
 ```
 
 ## Site Configuration
 
-Site URL: `https://abijith.sh` (configured in `astro.config.mjs`)
+Site URL: `https://abijith-suresh.github.io` (configured in `astro.config.mjs`)
 Features: RSS feed at `/rss.xml`, auto-generated sitemap
 
 ## Recent Important Changes
 
+- **2026-01-25:** Migrated to GitHub Pages deployment, removed Vercel analytics (PR #136)
+- **2026-01-24:** Added comprehensive search modal with Pagefind integration (PR #130)
+- **2026-01-24:** Improved SPA-like motion and navigation (PR #135)
+- **2026-01-24:** Refactored shared content patterns and improved type safety (PR #132-#134)
 - **2026-01-17:** Added `@astrojs/rss` dependency (PR #29) - Required for RSS feed generation
 - **2026-01-17:** Created 18 GitHub issues for feature tracking (#11-#28)
 - **2026-01-17:** Added AGENTS.md documentation (PR #10)
@@ -283,6 +317,6 @@ Features: RSS feed at `/rss.xml`, auto-generated sitemap
 
 ### Deployment Issues
 
-- Vercel/Netlify builds require all imports to have corresponding dependencies
+- GitHub Pages builds require all imports to have corresponding dependencies
 - Check that RSS generation works: look for `dist/rss.xml` after build
 - Ensure `site` is configured in `astro.config.mjs` for absolute URLs
