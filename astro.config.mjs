@@ -5,7 +5,7 @@ import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://abijith.sh",
+  site: "https://abijith-suresh.github.io",
   integrations: [
     expressiveCode({
       themes: ["github-light", "github-dark"],
