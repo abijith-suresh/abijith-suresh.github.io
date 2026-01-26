@@ -1,5 +1,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 
+import { getAllTagsWithCount } from "@/lib/utils";
+
 type Project = CollectionEntry<"projects">;
 
 /**
@@ -65,17 +67,7 @@ export function formatProjectDate(startDate: Date, endDate?: Date): string {
  */
 export async function getAllProjectTagsWithCount(): Promise<Array<{ tag: string; count: number }>> {
   const projects = await getCollection("projects");
-  const tagCounts = new Map<string, number>();
-
-  projects.forEach((project) => {
-    project.data.tags.forEach((tag) => {
-      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
-    });
-  });
-
-  return Array.from(tagCounts.entries())
-    .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => a.tag.localeCompare(b.tag));
+  return getAllTagsWithCount(projects, (project) => project.data.tags);
 }
 
 /**
