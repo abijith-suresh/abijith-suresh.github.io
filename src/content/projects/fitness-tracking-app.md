@@ -1,7 +1,7 @@
 ---
 title: "Fitness Tracking App"
 description: "Mobile-first fitness tracker with workout logging, progress charts, and social features for accountability."
-tags: ["react-native", "nodejs", "mongodb", "expo"]
+tags: ["react-native", "Node.js", "mongodb", "expo"]
 startDate: 2025-08-01
 endDate: 2025-09-30
 ---

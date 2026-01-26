@@ -2,7 +2,7 @@
 title: "Getting Started with TypeScript"
 description: "A comprehensive guide to TypeScript fundamentals, covering types, interfaces, and best practices for building type-safe applications."
 publishDate: 2026-01-04
-tags: ["typescript", "programming", "tutorial"]
+tags: ["TypeScript", "programming", "tutorial"]
 ---
 
 TypeScript has become an essential tool for modern web development. In this guide, we'll explore the fundamentals of TypeScript and how it can improve your development workflow.

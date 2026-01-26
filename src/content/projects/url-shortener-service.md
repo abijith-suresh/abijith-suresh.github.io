@@ -1,7 +1,7 @@
 ---
 title: "URL Shortener Service"
 description: "Fast and scalable URL shortening service with custom aliases, analytics, and QR code generation."
-tags: ["go", "redis", "postgresql", "docker"]
+tags: ["go", "redis", "PostgreSQL", "docker"]
 startDate: 2025-07-01
 endDate: 2025-08-15
 ---
