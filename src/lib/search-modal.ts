@@ -7,6 +7,9 @@
 
 import { PagefindUI } from "@pagefind/default-ui";
 
+// Transition durations (matching CSS variables from global.css)
+const TRANSITION_FAST = 150; // --transition-fast: 150ms
+
 // Module state
 let pagefindInstance: InstanceType<typeof PagefindUI> | null = null;
 let mutationObserver: MutationObserver | null = null;
@@ -188,7 +191,7 @@ export function openModal() {
   setTimeout(() => {
     const searchInput = document.querySelector<HTMLInputElement>(".pagefind-ui__search-input");
     searchInput?.focus();
-  }, 120);
+  }, TRANSITION_FAST);
 }
 
 /**
@@ -211,7 +214,7 @@ export function closeModal() {
     modal.classList.add("hidden");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("search-modal-open");
-  }, 180);
+  }, TRANSITION_FAST);
 }
 
 /**
