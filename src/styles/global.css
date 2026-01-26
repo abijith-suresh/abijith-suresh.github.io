@@ -426,6 +426,21 @@
   ::view-transition-new(page-main) {
     animation-name: fadeIn;
   }
+
+  /* Theme transition animations */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 300ms;
+    animation-timing-function: var(--ease-default);
+  }
+
+  ::view-transition-old(root) {
+    animation-name: fadeOut;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: fadeIn;
+  }
 }
 
 @keyframes fadeOut {

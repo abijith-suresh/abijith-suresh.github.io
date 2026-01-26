@@ -1,215 +1,97 @@
 ---
-import { Monitor, Moon, Sun } from "lucide-astro";
+import { Moon, Sun } from "lucide-astro";
 ---
 
-<div class="relative" id="theme-picker">
-  <button
-    id="theme-button"
-    aria-label="Select theme"
-    aria-haspopup="menu"
-    aria-expanded="false"
-    class="icon-button p-2 cursor-pointer"
-  >
-    <Sun size={16} id="theme-icon-light" class="hidden" />
-    <Moon size={16} id="theme-icon-dark" class="hidden" />
-    <Monitor size={16} id="theme-icon-system" class="hidden" />
-  </button>
-
-  <div
-    id="theme-menu"
-    role="menu"
-    class="absolute right-0 mt-2 w-36 bg-popover border border-border rounded-md shadow-lg py-1 z-50 opacity-0 scale-95 pointer-events-none transition-all origin-top-right"
-    style="transition-duration: var(--transition-normal); transition-timing-function: var(--ease-default); transition-delay: 0ms;"
-  >
-    <button
-      role="menuitem"
-      data-theme-option="light"
-      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-foreground rounded-sm mx-1 transition-colors cursor-pointer"
-    >
-      <Sun size={14} />
-      <span>Light</span>
-    </button>
-    <button
-      role="menuitem"
-      data-theme-option="dark"
-      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-foreground rounded-sm mx-1 transition-colors cursor-pointer"
-    >
-      <Moon size={14} />
-      <span>Dark</span>
-    </button>
-    <button
-      role="menuitem"
-      data-theme-option="system"
-      class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-foreground rounded-sm mx-1 transition-colors cursor-pointer"
-    >
-      <Monitor size={14} />
-      <span>System</span>
-    </button>
-  </div>
-</div>
+<button id="theme-toggle" aria-label="Toggle theme" class="icon-button p-2 cursor-pointer">
+  <Sun size={16} id="theme-icon-light" class="hidden" />
+  <Moon size={16} id="theme-icon-dark" class="hidden" />
+</button>
 
 <script>
-  type Theme = "light" | "dark" | "system";
+  type Theme = "light" | "dark";
 
-  function getSystemTheme(): "light" | "dark" {
+  function getSystemTheme(): Theme {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
-  function getEffectiveTheme(theme: Theme): "light" | "dark" {
-    return theme === "system" ? getSystemTheme() : theme;
+  function getCurrentTheme(): Theme {
+    const stored = localStorage.getItem("theme") as Theme | null;
+    return stored || getSystemTheme();
   }
 
-  function applyTheme(theme: Theme) {
-    const effectiveTheme = getEffectiveTheme(theme);
-    document.documentElement.setAttribute("data-theme", effectiveTheme);
-    localStorage.setItem("theme", theme);
-    updateThemeIcon(theme);
-    updateMenuSelection(theme);
-  }
-
-  function updateThemeIcon(theme: Theme) {
-    const icons = {
-      light: document.getElementById("theme-icon-light"),
-      dark: document.getElementById("theme-icon-dark"),
-      system: document.getElementById("theme-icon-system"),
+  function applyTheme(theme: Theme, withTransition = false) {
+    const applyThemeChange = () => {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateThemeIcon(theme);
     };
 
-    Object.values(icons).forEach((icon) => icon?.classList.add("hidden"));
-    icons[theme]?.classList.remove("hidden");
-  }
-
-  function updateMenuSelection(theme: Theme) {
-    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
-    buttons.forEach((button) => {
-      const isSelected = button.dataset.themeOption === theme;
-      button.classList.toggle("font-semibold", isSelected);
-      button.classList.toggle("text-foreground", isSelected);
-      button.classList.toggle("text-foreground/80", !isSelected);
-    });
-  }
-
-  function openMenu() {
-    const menu = document.getElementById("theme-menu");
-    const button = document.getElementById("theme-button");
-
-    menu?.classList.remove("opacity-0", "scale-95", "pointer-events-none");
-    menu?.classList.add("opacity-100", "scale-100", "pointer-events-auto");
-    menu?.style.setProperty("transition-delay", "0ms");
-    button?.setAttribute("aria-expanded", "true");
-  }
-
-  function closeMenu() {
-    const menu = document.getElementById("theme-menu");
-    const button = document.getElementById("theme-button");
-
-    menu?.classList.remove("opacity-100", "scale-100", "pointer-events-auto");
-    menu?.classList.add("opacity-0", "scale-95", "pointer-events-none");
-    menu?.style.setProperty("transition-delay", "40ms");
-    button?.setAttribute("aria-expanded", "false");
-  }
-
-  function toggleMenu() {
-    const menu = document.getElementById("theme-menu");
-    const isHidden = menu?.classList.contains("opacity-0");
-
-    if (isHidden) {
-      openMenu();
+    // Use View Transition API if supported and requested
+    if (withTransition && document.startViewTransition) {
+      document.startViewTransition(() => applyThemeChange());
     } else {
-      closeMenu();
+      applyThemeChange();
     }
   }
 
-  // Store event listeners for cleanup
-  let buttonClickHandler: ((e: Event) => void) | null = null;
-  const themeButtonHandlers: Map<HTMLButtonElement, () => void> = new Map();
-  let documentClickHandler: ((e: Event) => void) | null = null;
-  let documentKeydownHandler: ((e: KeyboardEvent) => void) | null = null;
+  function updateThemeIcon(theme: Theme) {
+    const lightIcon = document.getElementById("theme-icon-light");
+    const darkIcon = document.getElementById("theme-icon-dark");
+
+    if (theme === "light") {
+      lightIcon?.classList.remove("hidden");
+      darkIcon?.classList.add("hidden");
+    } else {
+      lightIcon?.classList.add("hidden");
+      darkIcon?.classList.remove("hidden");
+    }
+  }
+
+  function toggleTheme() {
+    const currentTheme = getCurrentTheme();
+    const newTheme: Theme = currentTheme === "light" ? "dark" : "light";
+
+    // Save to localStorage (only set after first manual change)
+    localStorage.setItem("theme", newTheme);
+
+    // Apply with transition
+    applyTheme(newTheme, true);
+  }
+
+  // Store event listener for cleanup
+  let toggleHandler: (() => void) | null = null;
   let mediaQueryChangeHandler: (() => void) | null = null;
   let mediaQuery: MediaQueryList | null = null;
 
-  function initThemePicker() {
-    const button = document.getElementById("theme-button");
-    const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+  function initThemeToggle() {
+    const button = document.getElementById("theme-toggle");
 
-    // Get current theme preference
-    const storedTheme = (localStorage.getItem("theme") as Theme) || "system";
-    applyTheme(storedTheme);
+    // Apply current theme without transition on init
+    const currentTheme = getCurrentTheme();
+    applyTheme(currentTheme, false);
 
-    // Toggle menu on button click
-    buttonClickHandler = (e) => {
-      e.stopPropagation();
-      toggleMenu();
-    };
-    button?.addEventListener("click", buttonClickHandler);
+    // Toggle theme on button click
+    toggleHandler = () => toggleTheme();
+    button?.addEventListener("click", toggleHandler);
 
-    // Handle theme selection
-    themeButtons.forEach((themeButton) => {
-      const handler = () => {
-        const theme = themeButton.dataset.themeOption as Theme;
-        applyTheme(theme);
-        closeMenu();
-      };
-      themeButtonHandlers.set(themeButton, handler);
-      themeButton.addEventListener("click", handler);
-    });
-
-    // Close menu when clicking outside
-    documentClickHandler = (e) => {
-      const picker = document.getElementById("theme-picker");
-      if (picker && !picker.contains(e.target as Node)) {
-        closeMenu();
-      }
-    };
-    document.addEventListener("click", documentClickHandler);
-
-    // Close menu on escape key
-    documentKeydownHandler = (e) => {
-      if (e.key === "Escape") {
-        closeMenu();
-      }
-    };
-    document.addEventListener("keydown", documentKeydownHandler);
-
-    // Listen for system theme changes when in system mode
+    // Listen for system theme changes if user hasn't set a preference
     mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQueryChangeHandler = () => {
-      const currentTheme = localStorage.getItem("theme") as Theme;
-      if (currentTheme === "system") {
-        applyTheme("system");
+      // Only respond to system changes if user hasn't explicitly set a preference
+      if (!localStorage.getItem("theme")) {
+        const systemTheme = getSystemTheme();
+        applyTheme(systemTheme, false);
       }
     };
     mediaQuery.addEventListener("change", mediaQueryChangeHandler);
   }
 
-  function cleanupThemePicker() {
-    const button = document.getElementById("theme-button");
-    const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+  function cleanupThemeToggle() {
+    const button = document.getElementById("theme-toggle");
 
     // Remove button click handler
-    if (buttonClickHandler && button) {
-      button.removeEventListener("click", buttonClickHandler);
-      buttonClickHandler = null;
-    }
-
-    // Remove theme button handlers
-    themeButtons.forEach((themeButton) => {
-      const handler = themeButtonHandlers.get(themeButton);
-      if (handler) {
-        themeButton.removeEventListener("click", handler);
-      }
-    });
-    themeButtonHandlers.clear();
-
-    // Remove document click handler
-    if (documentClickHandler) {
-      document.removeEventListener("click", documentClickHandler);
-      documentClickHandler = null;
-    }
-
-    // Remove document keydown handler
-    if (documentKeydownHandler) {
-      document.removeEventListener("keydown", documentKeydownHandler);
-      documentKeydownHandler = null;
+    if (toggleHandler && button) {
+      button.removeEventListener("click", toggleHandler);
+      toggleHandler = null;
     }
 
     // Remove media query change handler
@@ -221,9 +103,9 @@ import { Monitor, Moon, Sun } from "lucide-astro";
   }
 
   // Initialize on page load
-  initThemePicker();
+  initThemeToggle();
 
   // Cleanup and reinitialize on view transitions
-  document.addEventListener("astro:before-swap", cleanupThemePicker);
-  document.addEventListener("astro:after-swap", initThemePicker);
+  document.addEventListener("astro:before-swap", cleanupThemeToggle);
+  document.addEventListener("astro:after-swap", initThemeToggle);
 </script>
