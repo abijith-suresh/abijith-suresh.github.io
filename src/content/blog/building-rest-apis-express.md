@@ -2,7 +2,7 @@
 title: "Building REST APIs with Express"
 description: "Learn how to build robust REST APIs using Express.js, covering routing, middleware, error handling, and best practices."
 publishDate: 2026-01-03
-tags: ["nodejs", "express", "api", "backend"]
+tags: ["Node.js", "express", "api", "backend"]
 ---
 
 Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications.

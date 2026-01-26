@@ -1,7 +1,7 @@
 ---
 title: "Code Snippet Manager"
 description: "Developer tool for organizing and searching code snippets with syntax highlighting and tag-based filtering."
-tags: ["electron", "react", "sqlite", "typescript"]
+tags: ["electron", "React", "sqlite", "TypeScript"]
 startDate: 2025-06-01
 endDate: 2025-07-20
 ---

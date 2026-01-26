@@ -1,7 +1,7 @@
 ---
 title: "Budget Tracker Dashboard"
 description: "Personal finance dashboard for tracking expenses, income, and budgets with interactive charts and insights."
-tags: ["vue", "typescript", "firebase", "chartjs"]
+tags: ["vue", "TypeScript", "firebase", "chartjs"]
 startDate: 2025-04-01
 endDate: 2025-05-15
 ---

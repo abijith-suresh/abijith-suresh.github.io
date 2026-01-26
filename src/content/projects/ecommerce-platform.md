@@ -1,7 +1,7 @@
 ---
 title: "E-commerce Platform"
 description: "Full-stack e-commerce platform with payment integration, inventory management, and admin dashboard."
-tags: ["react", "nodejs", "mongodb", "stripe"]
+tags: ["React", "Node.js", "mongodb", "stripe"]
 startDate: 2025-11-15
 endDate: 2025-12-20
 ---

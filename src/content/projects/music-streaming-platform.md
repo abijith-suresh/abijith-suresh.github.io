@@ -1,7 +1,7 @@
 ---
 title: "Music Streaming Platform"
 description: "Spotify-like music streaming service with playlists, recommendations, and offline playback support."
-tags: ["react", "nodejs", "postgresql", "aws"]
+tags: ["React", "Node.js", "PostgreSQL", "aws"]
 startDate: 2025-02-01
 endDate: 2025-04-15
 ---

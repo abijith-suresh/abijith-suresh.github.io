@@ -1,7 +1,7 @@
 ---
 title: "AI Image Generator"
 description: "Web app that generates images from text descriptions using AI models, with style customization options."
-tags: ["python", "flask", "stable-diffusion", "react"]
+tags: ["python", "flask", "stable-diffusion", "React"]
 startDate: 2025-09-01
 endDate: 2025-10-15
 ---
