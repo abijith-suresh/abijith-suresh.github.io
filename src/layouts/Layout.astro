@@ -83,20 +83,14 @@ const {
           return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         }
 
-        const storedTheme = localStorage?.getItem("theme") ?? "system";
+        // Get stored theme or default to system preference
+        const storedTheme = localStorage?.getItem("theme");
         const effectiveTheme =
-          storedTheme === "system"
-            ? getSystemTheme()
-            : ["dark", "light"].includes(storedTheme)
-              ? storedTheme
-              : "dark";
+          storedTheme && ["dark", "light"].includes(storedTheme) ? storedTheme : getSystemTheme();
 
         document.documentElement.setAttribute("data-theme", effectiveTheme);
 
-        // Store the preference (which might be "system")
-        if (!localStorage.getItem("theme")) {
-          localStorage.setItem("theme", "system");
-        }
+        // Don't set localStorage on first visit - let user's first manual toggle do that
       })();
     </script>
   </body>
