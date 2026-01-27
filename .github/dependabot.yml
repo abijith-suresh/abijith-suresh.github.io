@@ -23,6 +23,14 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    auto-merge:
+      enabled: true
+      require-auto-merge:
+        labels: ["dependencies"]
+        required-status-checks: ["Quality Checks"]
+      ignore:
+        - dependency-name: "*"
+          update-types: ["major"]
 
   # Maintain GitHub Actions workflows
   - package-ecosystem: "github-actions"
