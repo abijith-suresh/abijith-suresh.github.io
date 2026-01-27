@@ -238,9 +238,9 @@ This project uses Husky and lint-staged for automated code quality checks:
 
 **Note:** Vercel deployment was removed in PR #136 (2026-01-25)
 
-## Rules from .github/copilot-instructions.md
+## Development Rules & Best Practices
 
-### Always Do
+### Required Practices
 
 - Run `bun run lint` and `bun run format:check` before commits
 - Use TypeScript strict mode
@@ -248,14 +248,14 @@ This project uses Husky and lint-staged for automated code quality checks:
 - Keep content frontmatter valid against Zod schemas
 - Use `@/*` path alias for all src/ imports
 
-### Ask First
+### Approval Required
 
 - Adding new dependencies
 - Modifying `astro.config.mjs`
 - Changing content collection schemas
 - Modifying the theme/design system
 
-### Never Do
+### Prohibited Actions
 
 - Commit to `dist/`, `.astro/`, or `node_modules/`
 - Use `var` (use `const`/`let`)
