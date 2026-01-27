@@ -119,7 +119,12 @@ if (type === "website") {
     url: SITE.url,
     jobTitle: person?.jobTitle || AUTHOR.tagline,
     description: person?.description || AUTHOR.tagline,
-    sameAs: [SOCIAL_LINKS.github, SOCIAL_LINKS.twitter, SOCIAL_LINKS.linkedin].filter(Boolean),
+    sameAs: [
+      SOCIAL_LINKS.github,
+      SOCIAL_LINKS.x,
+      SOCIAL_LINKS.linkedin,
+      SOCIAL_LINKS.bluesky,
+    ].filter(Boolean),
     image: AUTHOR.avatar ? new URL(AUTHOR.avatar, Astro.site).href : undefined,
   };
 }
