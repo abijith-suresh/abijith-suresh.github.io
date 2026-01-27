@@ -31,8 +31,9 @@ export const NAV_LINKS = [
 // Social Links
 export const SOCIAL_LINKS = {
   github: "https://github.com/abijith-suresh",
-  twitter: "https://x.com/abijith_sh",
+  x: "https://x.com/abijith_sh",
   linkedin: "https://linkedin.com/in/abijith-suresh",
+  bluesky: "https://bsky.app/profile/abijith.bsky.social",
 } as const;
 
 // Author Information
@@ -41,7 +42,7 @@ export const AUTHOR = {
   fullName: "Abijith Suresh",
   tagline: "Developer, builder, writer.",
   avatar: "/avatar.jpg",
-  twitterHandle: "@abijith_sh",
+  twitterHandle: "@abijith_sh", // Kept for SEO compatibility (twitter:creator metadata)
 
   // About Page Content
   aboutIntro:

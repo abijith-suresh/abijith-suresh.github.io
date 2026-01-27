@@ -2,9 +2,9 @@
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
-import { AUTHOR, SITE, SOCIAL_LINKS } from "@/consts";
+import { AUTHOR, SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { BookOpen, Github, Linkedin } from "lucide-astro";
+import { BookOpen } from "lucide-astro";
 ---
 
 <Layout
@@ -71,27 +71,11 @@ import { BookOpen, Github, Linkedin } from "lucide-astro";
 
         <div class="flex flex-wrap gap-3">
           <Link
-            href={SOCIAL_LINKS.github}
-            external
-            class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
-          >
-            <Github size={16} />
-            GitHub
-          </Link>
-          <Link
-            href={SOCIAL_LINKS.linkedin}
-            external
-            class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors"
-          >
-            <Linkedin size={16} />
-            LinkedIn
-          </Link>
-          <Link
             href="/blog"
             class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
           >
             <BookOpen size={16} />
-            Read the blog
+            Read my blog
           </Link>
         </div>
       </section>

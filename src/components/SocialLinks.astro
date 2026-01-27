@@ -1,7 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
 import { SOCIAL_LINKS } from "@/consts";
-import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
+import { Cloud, Github, Linkedin, Rss, Twitter } from "lucide-astro";
 
 interface Props {
   class?: string;
@@ -21,6 +21,14 @@ const { class: className, size = 20 } = Astro.props;
     <Github size={size} />
   </Link>
   <Link
+    href={SOCIAL_LINKS.x}
+    external
+    class="text-muted-foreground hover:text-foreground transition-colors"
+    aria-label="X (formerly Twitter)"
+  >
+    <Twitter size={size} />
+  </Link>
+  <Link
     href={SOCIAL_LINKS.linkedin}
     external
     class="text-muted-foreground hover:text-foreground transition-colors"
@@ -29,12 +37,12 @@ const { class: className, size = 20 } = Astro.props;
     <Linkedin size={size} />
   </Link>
   <Link
-    href={SOCIAL_LINKS.twitter}
+    href={SOCIAL_LINKS.bluesky}
     external
     class="text-muted-foreground hover:text-foreground transition-colors"
-    aria-label="Twitter"
+    aria-label="Bluesky"
   >
-    <Twitter size={size} />
+    <Cloud size={size} />
   </Link>
   <Link
     href="/rss.xml"
