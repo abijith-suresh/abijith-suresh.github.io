@@ -93,7 +93,6 @@ function calculateRelevanceScore(result: SearchResult, query: string, queryLower
   let score = 0;
   const titleLower = result.title.toLowerCase();
   const descLower = result.description.toLowerCase();
-  const contentLower = result.content.toLowerCase();
   const tagsLower = result.tags.join(" ").toLowerCase();
 
   // Exact title match (highest priority)
@@ -127,15 +126,6 @@ function calculateRelevanceScore(result: SearchResult, query: string, queryLower
   // Tag matches
   for (const qWord of queryWords) {
     if (tagsLower.includes(qWord)) score += 40;
-  }
-
-  // Content match (lower priority)
-  if (contentLower.includes(queryLower)) {
-    score += 10;
-  }
-  for (const qWord of queryWords) {
-    const matches = (contentLower.match(new RegExp(qWord, "g")) || []).length;
-    score += matches * 2;
   }
 
   // Recency boost (newer posts get slight boost)
@@ -198,9 +188,9 @@ function buildIndex(): void {
     tokenize: "forward",
   });
 
-  // Index all items
+  // Index all items (search titles, descriptions, and tags only - not content body)
   searchData.forEach((item, idx) => {
-    const searchableText = [item.title, item.description, item.tags.join(" "), item.content]
+    const searchableText = [item.title, item.description, item.tags.join(" ")]
       .join(" ")
       .toLowerCase();
     searchIndex?.add(idx, searchableText);
