@@ -1,265 +1,203 @@
 ---
-import { X } from "lucide-astro";
+import { FileText, Search, X } from "lucide-astro";
 ---
 
-<!-- Modal Overlay -->
+<!-- Search Modal -->
 <div
   id="search-modal"
-  class="fixed inset-0 z-50 hidden bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+  class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm"
   aria-hidden="true"
   data-state="closed"
   style="view-transition-name: none;"
 >
-  <!-- Modal Container -->
   <div
     class="fixed left-1/2 top-0 sm:top-[10%] z-50 w-full max-w-full sm:max-w-lg md:max-w-2xl -translate-x-1/2 translate-y-0"
   >
     <div
-      class="relative flex flex-col h-dvh sm:h-auto sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-none sm:rounded-lg overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0 duration-200"
+      id="search-modal-content"
+      class="relative flex flex-col h-dvh sm:h-auto sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-none sm:rounded-lg overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-labelledby="search-title"
-      data-state="closed"
       style="view-transition-name: none;"
     >
-      <!-- Close Button (Desktop) - Absolute positioned -->
-      <button
-        id="close-search-modal-desktop"
-        aria-label="Close search"
-        class="hidden sm:block absolute right-4 top-4 p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors z-10"
-      >
-        <X size={16} />
-      </button>
+      <!-- Header with Search Input -->
+      <div class="flex items-center gap-3 px-4 py-4 border-b border-border">
+        <Search class="w-5 h-5 text-muted-foreground shrink-0" />
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search posts and projects..."
+          class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground text-base"
+          autocomplete="off"
+        />
+        <button
+          id="close-search-modal"
+          class="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors shrink-0"
+          aria-label="Close search"
+        >
+          <X class="w-4 h-4" />
+        </button>
+      </div>
 
-      <!-- Search Content -->
-      <div class="flex-1 min-h-0 overflow-hidden">
-        <div id="search-container"></div>
+      <!-- Results Container -->
+      <div id="search-results" class="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+        <!-- Skeleton Loading State -->
+        <div id="search-skeleton" class="hidden">
+          {
+            [1, 2, 3, 4].map((_i) => (
+              <div class="p-4 border-b border-border animate-pulse">
+                <div class="flex items-start gap-3">
+                  <div class="w-4 h-4 bg-muted rounded mt-1 shrink-0" />
+                  <div class="flex-1 space-y-2">
+                    <div class="h-4 bg-muted rounded w-3/4" />
+                    <div class="h-3 bg-muted rounded w-full" />
+                    <div class="h-3 bg-muted rounded w-2/3" />
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- No Results State -->
+        <div
+          id="search-empty"
+          class="hidden flex-col items-center justify-center py-12 px-4 text-center"
+        >
+          <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+            <FileText class="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h3 class="text-lg font-medium text-foreground mb-2">No results found</h3>
+          <p class="text-sm text-muted-foreground max-w-sm mb-6">
+            We couldn't find any matches for your search. Try different keywords or check your
+            spelling.
+          </p>
+          <div class="flex flex-wrap gap-2 justify-center">
+            <a
+              href="/blog"
+              class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+            >
+              Browse Blog
+            </a>
+            <a
+              href="/projects"
+              class="px-4 py-2 bg-muted text-foreground rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
+            >
+              Browse Projects
+            </a>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div
+          id="search-error"
+          class="hidden flex-col items-center justify-center py-12 px-4 text-center"
+        >
+          <div
+            class="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-8 h-8 text-destructive"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-foreground mb-2">Something went wrong</h3>
+          <p class="text-sm text-muted-foreground max-w-sm mb-4">
+            Failed to load search. Please try again later.
+          </p>
+          <button
+            id="retry-search"
+            class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            Try Again
+          </button>
+        </div>
+
+        <!-- Results List -->
+        <div id="search-results-list" class="hidden">
+          <div id="results-container" class="divide-y divide-border"></div>
+
+          <!-- Load More Button -->
+          <div id="load-more-container" class="hidden p-4">
+            <button
+              id="load-more-btn"
+              class="w-full py-2 px-4 bg-muted text-foreground rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
+            >
+              Load more results
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keyboard Shortcuts Footer - only show when there are results -->
+      <div
+        id="search-footer"
+        class="hidden shrink-0 items-center justify-center border-t border-border bg-muted/50 px-4 py-3 sm:py-2 text-xs text-muted-foreground"
+      >
+        <div class="hidden sm:flex flex-wrap items-center gap-4">
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >↑↓</kbd
+            >{" "}
+            navigate
+          </span>
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >↵</kbd
+            >{" "}
+            select
+          </span>
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >esc</kbd
+            >{" "}
+            close
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <style is:global>
-  :root {
-    --pagefind-ui-scale: 1;
-    --pagefind-ui-primary: var(--primary);
-    --pagefind-ui-text: var(--foreground);
-    --pagefind-ui-background: var(--background);
-    --pagefind-ui-border: var(--border);
-    --pagefind-ui-tag: var(--muted);
-    --pagefind-ui-border-width: 0px;
-    --pagefind-ui-border-radius: 0;
-    --pagefind-ui-image-border-radius: 0.5rem;
-    --pagefind-ui-image-box-ratio: 3 / 2;
-    --pagefind-ui-font: inherit;
+  /* Search modal animations */
+  #search-modal[data-state="open"] {
+    animation: fadeIn 150ms ease-out;
   }
 
-  /* Hide default Pagefind wrapper elements */
-  .pagefind-ui {
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    padding: 0 !important;
+  #search-modal[data-state="closed"] {
+    animation: fadeOut 150ms ease-in forwards;
   }
 
-  /* Search input styling */
-  .pagefind-ui__form {
-    border-bottom: 1px solid var(--border) !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-  }
-
-  .pagefind-ui__search-input {
-    background-color: transparent !important;
-    border: none !important;
-    color: var(--foreground) !important;
-    font-size: 1rem !important;
-    padding: 1rem 1rem 1rem 3rem !important;
-    height: 3.5rem !important;
-    outline: none !important;
-    box-shadow: none !important;
-  }
-
-  .pagefind-ui__search-input:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .pagefind-ui__search-input::placeholder {
-    color: var(--muted-foreground) !important;
-  }
-
-  /* Search icon */
-  .pagefind-ui__search-clear {
-    display: none !important;
-  }
-
-  /* Results container - Scrollable */
-  .pagefind-ui__results {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-height: calc(85vh - 4rem) !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  @media (max-width: 640px) {
-    .pagefind-ui__results {
-      max-height: calc(100dvh - 4rem) !important;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 
-  /* Individual result item */
-  .pagefind-ui__result {
-    border: none !important;
-    border-bottom: 1px solid var(--border) !important;
-    background-color: transparent !important;
-    padding: 1rem !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    cursor: pointer !important;
-  }
-
-  .pagefind-ui__result:hover,
-  .pagefind-ui__result[data-focused="true"] {
-    background-color: var(--muted) !important;
-  }
-
-  .pagefind-ui__result:last-child {
-    border-bottom: none !important;
-  }
-
-  .pagefind-ui__result-link {
-    text-decoration: none !important;
-  }
-
-  /* Result title */
-  .pagefind-ui__result-title {
-    color: var(--foreground) !important;
-    font-size: 0.95rem !important;
-    font-weight: 500 !important;
-    margin-bottom: 0.25rem !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
-  }
-
-  /* Content type icon */
-  .pagefind-ui__result-title::before {
-    content: "" !important;
-    display: inline-block !important;
-    width: 1rem !important;
-    height: 1rem !important;
-    flex-shrink: 0 !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    opacity: 0.7 !important;
-  }
-
-  /* Blog icon (FileText) */
-  .pagefind-ui__result[data-content-type="blog"] .pagefind-ui__result-title::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3Cpath d='M10 9H8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3C/svg%3E") !important;
-  }
-
-  /* Project icon (Code2) */
-  .pagefind-ui__result[data-content-type="project"] .pagefind-ui__result-title::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 16 4-4-4-4'/%3E%3Cpath d='m6 8-4 4 4 4'/%3E%3Cpath d='m14.5 4-5 16'/%3E%3C/svg%3E") !important;
-  }
-
-  /* Tag icon (Tag) */
-  .pagefind-ui__result[data-content-type="tag"] .pagefind-ui__result-title::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z'/%3E%3Ccircle cx='7.5' cy='7.5' r='.5' fill='%23888888'/%3E%3C/svg%3E") !important;
-  }
-
-  /* Dark mode icons - Use CSS filter to make them lighter */
-  [data-theme="dark"] .pagefind-ui__result-title::before {
-    filter: brightness(1.8) !important;
-  }
-
-  /* Result excerpt */
-  .pagefind-ui__result-excerpt {
-    color: var(--muted-foreground) !important;
-    font-size: 0.875rem !important;
-    line-height: 1.5 !important;
-    margin: 0.25rem 0 !important;
-  }
-
-  /* Result tags */
-  .pagefind-ui__result-tags {
-    margin-top: 0.5rem !important;
-  }
-
-  .pagefind-ui__result-tag {
-    background-color: var(--muted) !important;
-    color: var(--muted-foreground) !important;
-    border: none !important;
-    font-size: 0.75rem !important;
-    padding: 0.125rem 0.5rem !important;
-    border-radius: 0.25rem !important;
-  }
-
-  /* Message styling (no results, loading, etc.) */
-  .pagefind-ui__message {
-    color: var(--muted-foreground) !important;
-    padding: 2rem 1rem !important;
-    text-align: center !important;
-    font-size: 0.875rem !important;
-    line-height: 1.6 !important;
-    white-space: pre-line !important;
-  }
-
-  /* Action links within empty state message */
-  .pagefind-ui__action-link {
-    color: var(--primary) !important;
-    text-decoration: none !important;
-    font-weight: 500 !important;
-    display: inline-block !important;
-    transition: opacity 0.2s ease !important;
-  }
-
-  .pagefind-ui__action-link:hover {
-    opacity: 0.8 !important;
-    text-decoration: underline !important;
-  }
-
-  /* Hide results count message (e.g., "4 results for typescript") */
-  .pagefind-ui__results-area > .pagefind-ui__message {
-    display: none !important;
-  }
-
-  /* Load more button */
-  .pagefind-ui__button {
-    background-color: var(--primary) !important;
-    color: var(--primary-foreground) !important;
-    border: none !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 0.375rem !important;
-    font-size: 0.875rem !important;
-    margin: 1rem auto !important;
-    display: block !important;
-  }
-
-  .pagefind-ui__button:hover {
-    opacity: 0.9 !important;
-  }
-
-  /* Hide result image/thumbnail */
-  .pagefind-ui__result-image {
-    display: none !important;
-  }
-
-  /* Search term highlighting - use theme primary color */
-  .pagefind-ui__result-excerpt mark,
-  .pagefind-ui__result-title mark {
-    background-color: hsl(var(--primary) / 0.2) !important;
-    color: var(--foreground) !important;
-    font-weight: 600 !important;
-    border-radius: 0.125rem !important;
-    padding: 0 0.125rem !important;
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   /* Prevent body scroll when modal is open */
@@ -267,59 +205,375 @@ import { X } from "lucide-astro";
     overflow: hidden;
   }
 
-  /* Animation keyframes */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  /* Search result item focus state */
+  .search-result-item {
+    transition: background-color 150ms ease;
   }
 
-  @keyframes fade-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  .search-result-item:hover,
+  .search-result-item[data-focused="true"] {
+    background-color: var(--muted);
   }
 
-  @keyframes slide-in-from-top {
-    from {
-      transform: translateY(-100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  /* Highlight search terms */
+  .search-highlight {
+    background-color: hsl(var(--primary) / 0.2);
+    color: var(--foreground);
+    font-weight: 600;
+    border-radius: 0.125rem;
+    padding: 0 0.125rem;
   }
 
-  @keyframes slide-out-to-top {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(-100%);
-    }
-  }
-
-  [data-state="open"] {
-    animation: fade-in var(--transition-fast) var(--ease-default);
-  }
-
-  [data-state="closed"] {
-    animation: fade-out var(--transition-fast) var(--ease-default);
+  /* Safe area for mobile */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
 
 <script>
-  import { cleanupSearchModal, initSearchModal } from "@/lib/search-modal";
+  import { formatBlogDate } from "@/lib/utils";
+  import {
+    clearCallbacks,
+    clearSearchIndex,
+    getAllData,
+    highlightText,
+    initSearchIndex,
+    search,
+    setCallbacks,
+  } from "@/lib/flexsearch";
+  import type { SearchResult } from "@/pages/api/search-index.json";
 
-  // Initialize on page load
-  initSearchModal();
+  // DOM elements
+  const modal = document.getElementById("search-modal");
+  const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  const closeBtn = document.getElementById("close-search-modal");
+  const skeleton = document.getElementById("search-skeleton");
+  const emptyState = document.getElementById("search-empty");
+  const errorState = document.getElementById("search-error");
+  const resultsList = document.getElementById("search-results-list");
+  const resultsContainer = document.getElementById("results-container");
+  const footer = document.getElementById("search-footer");
+  const retryBtn = document.getElementById("retry-search");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+  const loadMoreContainer = document.getElementById("load-more-container");
 
-  // Cleanup and reinitialize on view transitions
-  document.addEventListener("astro:before-swap", cleanupSearchModal);
-  document.addEventListener("astro:after-swap", initSearchModal);
+  // State
+  let isOpen = false;
+  let results: SearchResult[] = [];
+  let displayedCount = 10;
+  let focusedIndex = -1;
+
+  // Initialize search on page load
+  let indexInitialized = false;
+
+  // Set up callbacks
+  setCallbacks(
+    (searchResults) => {
+      results = searchResults;
+      displayedCount = 10;
+      renderResults();
+    },
+    (loading) => {
+      if (loading && !indexInitialized) {
+        showSkeleton();
+      }
+    },
+    (error) => {
+      if (error) {
+        showError(error);
+      }
+    }
+  );
+
+  function showSkeleton() {
+    skeleton?.classList.remove("hidden");
+    emptyState?.classList.add("hidden");
+    errorState?.classList.add("hidden");
+    resultsList?.classList.add("hidden");
+    footer?.classList.add("hidden");
+  }
+
+  function showEmpty() {
+    skeleton?.classList.add("hidden");
+    emptyState?.classList.remove("hidden");
+    emptyState?.classList.add("flex");
+    errorState?.classList.add("hidden");
+    resultsList?.classList.add("hidden");
+    footer?.classList.add("hidden");
+  }
+
+  function showError(_errorMsg: string) {
+    skeleton?.classList.add("hidden");
+    emptyState?.classList.add("hidden");
+    errorState?.classList.remove("hidden");
+    errorState?.classList.add("flex");
+    resultsList?.classList.add("hidden");
+    footer?.classList.add("hidden");
+  }
+
+  function showResults() {
+    skeleton?.classList.add("hidden");
+    emptyState?.classList.add("hidden");
+    emptyState?.classList.remove("flex");
+    errorState?.classList.add("hidden");
+    errorState?.classList.remove("flex");
+    resultsList?.classList.remove("hidden");
+    footer?.classList.remove("hidden");
+    footer?.classList.add("flex");
+  }
+
+  function renderResults() {
+    if (!resultsContainer) return;
+
+    const query = searchInput?.value || "";
+
+    if (results.length === 0) {
+      if (query.trim()) {
+        showEmpty();
+      } else {
+        // Show initial state - maybe recent items
+        const allData = getAllData();
+        if (allData.length > 0) {
+          results = allData.slice(0, 3);
+          renderResultsList(results, query);
+          showResults();
+        } else {
+          showEmpty();
+        }
+      }
+      return;
+    }
+
+    const displayResults = results.slice(0, displayedCount);
+    renderResultsList(displayResults, query);
+    showResults();
+
+    // Show/hide load more button
+    if (loadMoreContainer) {
+      if (results.length > displayedCount) {
+        loadMoreContainer.classList.remove("hidden");
+        if (loadMoreBtn) {
+          loadMoreBtn.textContent = `Load more (${results.length - displayedCount} remaining)`;
+        }
+      } else {
+        loadMoreContainer.classList.add("hidden");
+      }
+    }
+  }
+
+  function renderResultsList(items: SearchResult[], query: string) {
+    if (!resultsContainer) return;
+
+    resultsContainer.innerHTML = items
+      .map((item, index) => {
+        const icon = item.type === "blog" ? "file-text" : "code";
+        const highlightedTitle = highlightText(item.title, query);
+        const highlightedDesc = highlightText(item.description, query);
+
+        return `
+          <a
+            href="${item.url}"
+            class="search-result-item block p-4 focus:outline-none focus:bg-muted"
+            data-index="${index}"
+            data-focused="false"
+          >
+            <div class="flex items-start gap-3">
+              <div class="shrink-0 mt-0.5">
+                ${getIconSvg(icon)}
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-medium text-foreground mb-1 line-clamp-1">
+                  ${highlightedTitle}
+                </h4>
+                <p class="text-sm text-muted-foreground mb-2 line-clamp-2">
+                  ${highlightedDesc}
+                </p>
+                <div class="flex items-center gap-3 text-xs text-muted-foreground">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    ${formatBlogDate(new Date(item.date))}
+                  </span>
+                  ${
+                    item.tags.length > 0
+                      ? `
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                      </svg>
+                      ${item.tags.slice(0, 3).join(", ")}
+                      ${item.tags.length > 3 ? `+${item.tags.length - 3}` : ""}
+                    </span>
+                  `
+                      : ""
+                  }
+                </div>
+              </div>
+            </div>
+          </a>
+        `;
+      })
+      .join("");
+
+    // Update focused state
+    updateFocusedResult();
+  }
+
+  function getIconSvg(type: string): string {
+    if (type === "code") {
+      return `<svg class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+      </svg>`;
+    }
+    return `<svg class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>`;
+  }
+
+  function updateFocusedResult() {
+    const resultItems = resultsContainer?.querySelectorAll("[data-index]");
+    resultItems?.forEach((item, idx) => {
+      item.setAttribute("data-focused", idx === focusedIndex ? "true" : "false");
+    });
+  }
+
+  function openModal() {
+    if (!modal || isOpen) return;
+
+    isOpen = true;
+    modal.classList.remove("hidden");
+    modal.setAttribute("data-state", "open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("search-modal-open");
+
+    // Initialize search index if not already
+    if (!indexInitialized) {
+      initSearchIndex().then(() => {
+        indexInitialized = true;
+        renderResults();
+      });
+    }
+
+    // Focus input
+    setTimeout(() => {
+      searchInput?.focus();
+    }, 100);
+  }
+
+  function closeModal() {
+    if (!modal || !isOpen) return;
+
+    isOpen = false;
+    modal.setAttribute("data-state", "closed");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("search-modal-open");
+
+    // Reset state
+    focusedIndex = -1;
+    if (searchInput) searchInput.value = "";
+
+    // Hide after animation
+    setTimeout(() => {
+      modal.classList.add("hidden");
+    }, 150);
+  }
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (!isOpen) {
+      // Cmd/Ctrl + K to open
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        openModal();
+      }
+      return;
+    }
+
+    // Escape to close
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeModal();
+      return;
+    }
+
+    const resultItems = resultsContainer?.querySelectorAll("[data-index]");
+    if (!resultItems || resultItems.length === 0) return;
+
+    // Arrow navigation
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      focusedIndex = Math.min(focusedIndex + 1, resultItems.length - 1);
+      updateFocusedResult();
+      // Scroll into view
+      const focused = resultItems[focusedIndex];
+      focused?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      focusedIndex = Math.max(focusedIndex - 1, -1);
+      updateFocusedResult();
+      if (focusedIndex === -1) {
+        searchInput?.focus();
+      } else {
+        const focused = resultItems[focusedIndex];
+        focused?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    } else if (e.key === "Enter" && focusedIndex >= 0) {
+      e.preventDefault();
+      const focused = resultItems[focusedIndex] as HTMLElement;
+      if (focused) {
+        const href = focused.getAttribute("href");
+        if (href) {
+          window.location.href = href;
+          closeModal();
+        }
+      }
+    }
+  }
+
+  function handleSearchInput(e: Event) {
+    const query = (e.target as HTMLInputElement).value;
+    search(query);
+  }
+
+  function handleLoadMore() {
+    displayedCount += 10;
+    renderResults();
+  }
+
+  function handleRetry() {
+    initSearchIndex().then(() => {
+      indexInitialized = true;
+      renderResults();
+    });
+  }
+
+  // Event listeners
+  closeBtn?.addEventListener("click", closeModal);
+  searchInput?.addEventListener("input", handleSearchInput);
+  retryBtn?.addEventListener("click", handleRetry);
+  loadMoreBtn?.addEventListener("click", handleLoadMore);
+  document.addEventListener("keydown", handleKeyDown);
+
+  // Click outside to close
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Expose open function globally for the header button
+  (window as Window & { openSearchModal?: () => void }).openSearchModal = openModal;
+
+  // Cleanup on page unload
+  window.addEventListener("beforeunload", () => {
+    clearCallbacks();
+    clearSearchIndex();
+  });
+
+  // Astro view transitions support
+  document.addEventListener("astro:after-swap", () => {
+    clearCallbacks();
+    clearSearchIndex();
+    indexInitialized = false;
+  });
 </script>

@@ -95,15 +95,15 @@ const allContent: ContentItem[] = [
       />
     </div>
 
-    <!-- Tag Header - Searchable -->
-    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2" data-pagefind-body>
+    <!-- Tag Header -->
+    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2">
       <div class="flex items-center gap-3">
-        <div class="p-2 bg-muted rounded-md" data-pagefind-ignore>
+        <div class="p-2 bg-muted rounded-md">
           <TagIcon size={20} class="text-muted-foreground" />
         </div>
         <div>
           <h1 class="text-3xl font-bold text-foreground">{tag}</h1>
-          <p class="text-sm text-muted-foreground" data-pagefind-ignore>
+          <p class="text-sm text-muted-foreground">
             {totalCount}
             {totalCount === 1 ? "item" : "items"}
             {
