@@ -139,23 +139,32 @@ import { FileText, Search, X } from "lucide-astro";
         </div>
       </div>
 
-      <!-- Keyboard Shortcuts Footer -->
+      <!-- Keyboard Shortcuts Footer - only show when there are results -->
       <div
         id="search-footer"
-        class="hidden shrink-0 p-3 border-t border-border bg-muted/50 text-xs text-muted-foreground"
+        class="hidden shrink-0 items-center justify-center border-t border-border bg-muted/50 px-4 py-3 sm:py-2 text-xs text-muted-foreground"
       >
-        <div class="flex items-center justify-center gap-4 flex-wrap">
-          <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 bg-background border rounded text-[10px] font-mono">↑↓</kbd>
-            <span>navigate</span>
+        <div class="hidden sm:flex flex-wrap items-center gap-4">
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >↑↓</kbd
+            >{" "}
+            navigate
           </span>
-          <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 bg-background border rounded text-[10px] font-mono">↵</kbd>
-            <span>select</span>
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >↵</kbd
+            >{" "}
+            select
           </span>
-          <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 bg-background border rounded text-[10px] font-mono">esc</kbd>
-            <span>close</span>
+          <span>
+            <kbd
+              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
+              >esc</kbd
+            >{" "}
+            close
           </span>
         </div>
       </div>
