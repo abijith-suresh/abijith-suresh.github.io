@@ -126,6 +126,15 @@ export function openModal() {
       showSubResults: false,
       showEmptyFilters: false,
       // No pageSize limit - show all results with scrolling
+      translations: {
+        zero_results: `No results found for "[query]"
+
+Try:
+• Using different keywords
+• Checking your spelling
+• <a href="/blog" class="pagefind-ui__action-link">Browse all blog posts</a>
+• <a href="/projects" class="pagefind-ui__action-link">Browse all projects</a>`,
+      },
     });
 
     // Add content type data attributes and keyboard navigation to results

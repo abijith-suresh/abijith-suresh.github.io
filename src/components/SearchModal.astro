@@ -208,6 +208,22 @@ import { X } from "lucide-astro";
     padding: 2rem 1rem !important;
     text-align: center !important;
     font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    white-space: pre-line !important;
+  }
+
+  /* Action links within empty state message */
+  .pagefind-ui__action-link {
+    color: var(--primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    display: inline-block !important;
+    transition: opacity 0.2s ease !important;
+  }
+
+  .pagefind-ui__action-link:hover {
+    opacity: 0.8 !important;
+    text-decoration: underline !important;
   }
 
   /* Hide results count message (e.g., "4 results for typescript") */
