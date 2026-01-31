@@ -224,7 +224,6 @@ import { FileText, Search, X } from "lucide-astro";
   import {
     clearCallbacks,
     clearSearchIndex,
-    extractSnippet,
     getAllData,
     highlightText,
     initSearchIndex,
@@ -324,7 +323,7 @@ import { FileText, Search, X } from "lucide-astro";
         // Show initial state - maybe recent items
         const allData = getAllData();
         if (allData.length > 0) {
-          results = allData.slice(0, 5);
+          results = allData.slice(0, 3);
           renderResultsList(results, query);
           showResults();
         } else {
@@ -357,9 +356,7 @@ import { FileText, Search, X } from "lucide-astro";
     resultsContainer.innerHTML = items
       .map((item, index) => {
         const icon = item.type === "blog" ? "file-text" : "code";
-        const snippet = extractSnippet(item.content, query);
         const highlightedTitle = highlightText(item.title, query);
-        const highlightedSnippet = highlightText(snippet, query);
         const highlightedDesc = highlightText(item.description, query);
 
         return `
@@ -377,10 +374,9 @@ import { FileText, Search, X } from "lucide-astro";
                 <h4 class="font-medium text-foreground mb-1 line-clamp-1">
                   ${highlightedTitle}
                 </h4>
-                <p class="text-sm text-muted-foreground mb-1 line-clamp-2">
+                <p class="text-sm text-muted-foreground mb-2 line-clamp-2">
                   ${highlightedDesc}
                 </p>
-                ${snippet ? `<p class="text-xs text-muted-foreground/80 line-clamp-2 italic mb-2">${highlightedSnippet}</p>` : ""}
                 <div class="flex items-center gap-3 text-xs text-muted-foreground">
                   <span class="flex items-center gap-1">
                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
