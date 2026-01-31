@@ -4,7 +4,7 @@ This document provides essential information for AI coding agents working in thi
 
 ## Project Overview
 
-**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX, Pagefind (search)  
+**Tech Stack:** Astro 5.16+, TypeScript, Tailwind CSS 4, MDX, FlexSearch (search)  
 **Package Manager:** Bun 1.3.5+ (preferred) or npm  
 **Node Version:** v24+ (ES Module project)  
 **Site URL:** https://abijith-suresh.github.io (GitHub Pages)  
@@ -56,6 +56,41 @@ This project does not have automated tests configured yet (see Issue #26). Valid
 4. **Successful build** - Run `bun run build` (must complete without errors)
 
 **Note:** To run a "single test", validate one specific file/component by building the project, as Astro validates all dependencies during build.
+
+## DevContainer Setup
+
+The DevContainer configuration provides a fully containerized development environment with all dependencies pre-installed. This ensures consistency across different development machines and eliminates environment-specific issues.
+
+The DevContainer includes:
+
+- Node.js 24
+- Bun (package manager)
+- GitHub CLI (gh)
+- Essential VSCode extensions for Astro, TypeScript, Tailwind CSS, and ESLint
+
+### Docker Setup
+
+**Prerequisites:** Docker Desktop installed and running
+
+1. Install Docker Desktop from [docker.com](https://www.docker.com/products/docker-desktop)
+2. Install the VSCode **Dev Containers** extension (`ms-vscode-remote.remote-containers`)
+3. Open the repository in VSCode
+4. Run `F1` → **"Dev Containers: Reopen in Container"**
+
+### Podman Setup
+
+**Prerequisites:** Podman installed
+
+1. Install Podman from [podman.io](https://podman.io/get-started)
+2. Install the VSCode **Dev Containers** extension (`ms-vscode-remote.remote-containers`)
+3. Configure VSCode to use Podman:
+   - Open VSCode Settings (`Ctrl/Cmd + ,`)
+   - Search for "remote.containers.dockerPath"
+   - Set to `podman`
+4. Open the repository in VSCode
+5. Run `F1` → **"Dev Containers: Reopen in Container"**
+
+**Note:** Both Docker and Podman are fully supported for this project's DevContainer.
 
 ## Code Style Guidelines
 
@@ -291,6 +326,104 @@ import { getAllBlogPosts, getAllProjects } from "@/lib/blog" or "@/lib/projects"
 await getAllBlogPosts({ limit: 5 });
 ```
 
+## Git Workflow
+
+### Branch Naming Conventions
+
+All branches should follow the `type/description` format:
+
+| Prefix      | Purpose               | Example                   |
+| ----------- | --------------------- | ------------------------- |
+| `feat/`     | New features          | `feat/add-search-modal`   |
+| `fix/`      | Bug fixes             | `fix/header-alignment`    |
+| `docs/`     | Documentation changes | `docs/update-readme`      |
+| `refactor/` | Code refactoring      | `refactor/simplify-utils` |
+| `chore/`    | Maintenance tasks     | `chore/update-deps`       |
+
+**Examples:**
+
+- `feat/add-dark-mode`
+- `fix/mobile-navigation-bug`
+- `docs/api-documentation`
+
+### Commit Message Format
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```
+type(scope): subject
+```
+
+**Types:**
+| Type | Description | Example |
+|------|-------------|---------|
+| `feat` | New feature | `feat: add dark mode toggle` |
+| `fix` | Bug fix | `fix: resolve mobile navigation bug` |
+| `docs` | Documentation | `docs: update README with setup instructions` |
+| `refactor` | Code refactoring | `refactor: simplify search component logic` |
+| `chore` | Maintenance | `chore: update dependencies` |
+| `test` | Adding tests | `test: add unit tests for utils` |
+
+**Guidelines:**
+
+- Use present tense ("add" not "added")
+- Keep subject under 50 characters
+- Reference issue numbers when applicable: `fix: resolve header bug (#42)`
+
+### Pull Request Workflow
+
+1. **Create branch from main:**
+
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feat/your-feature-name
+   ```
+
+2. **Make atomic commits:**
+   - Each commit should represent a single logical change
+   - Write clear, descriptive commit messages
+
+3. **Push branch to origin:**
+
+   ```bash
+   git push -u origin feat/your-feature-name
+   ```
+
+4. **Create PR using gh CLI:**
+
+   ```bash
+   gh pr create --title "feat: add new feature" --body "Description of changes"
+   ```
+
+5. **Wait for CI checks to pass:**
+   - PRs require all CI checks (lint, format, build) to pass
+   - Review and address any failures
+
+6. **Merge using squash merge:**
+   - Squash all commits into a single clean commit
+   - Ensures linear history on main branch
+
+7. **Delete branch after merge:**
+   ```bash
+   git branch -d feat/your-feature-name
+   git push origin --delete feat/your-feature-name
+   ```
+
+### Pre-commit Checklist
+
+**MUST run before every commit:**
+
+```bash
+bun install && bun run lint && bun run format:check && bun run build
+```
+
+**All checks must pass.** If any fail:
+
+1. Fix the reported issues
+2. Re-run the command
+3. Only commit after success
+
 ## Site Configuration
 
 Site URL: `https://abijith-suresh.github.io` (configured in `astro.config.mjs`)
@@ -300,6 +433,7 @@ Features: RSS feed at `/rss.xml`, auto-generated sitemap
 
 - **2026-01-25:** Migrated to GitHub Pages deployment, removed Vercel analytics (PR #136)
 - **2026-01-24:** Added comprehensive search modal with Pagefind integration (PR #130)
+- **2026-01-31:** Migrated from Pagefind to FlexSearch for improved search experience (PR #176)
 - **2026-01-24:** Improved SPA-like motion and navigation (PR #135)
 - **2026-01-24:** Refactored shared content patterns and improved type safety (PR #132-#134)
 - **2026-01-17:** Added `@astrojs/rss` dependency (PR #29) - Required for RSS feed generation
