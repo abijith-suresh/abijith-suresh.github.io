@@ -288,7 +288,8 @@ import { FileText, Search, X } from "lucide-astro";
     emptyState?.classList.add("flex");
     errorState?.classList.add("hidden");
     resultsList?.classList.add("hidden");
-    footer?.classList.add("hidden");
+    footer?.classList.remove("hidden");
+    footer?.classList.add("flex");
   }
 
   function showError(_errorMsg: string) {
