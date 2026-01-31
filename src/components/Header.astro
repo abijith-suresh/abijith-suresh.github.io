@@ -33,7 +33,12 @@ import { Search } from "lucide-astro";
 
       <!-- Icons -->
       <div class="flex items-center gap-1">
-        <button id="open-search-modal" aria-label="Open search" class="icon-button p-2">
+        <button
+          onclick="window.openSearchModal?.()"
+          aria-label="Open search (⌘K)"
+          class="icon-button p-2"
+          title="Search (⌘K)"
+        >
           <Search size={16} />
         </button>
 
