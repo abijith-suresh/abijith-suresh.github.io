@@ -62,4 +62,7 @@ For development guidelines, project structure, and contribution info, see [AGENT
 
 ## License
 
-MIT
+This project uses a dual licensing approach. See [LICENSE](LICENSE) for details.
+
+- **Code**: MIT License - free to use, modify, and distribute
+- **Blog Content**: CC BY 4.0 - share and adapt with attribution
