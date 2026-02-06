@@ -1,7 +1,6 @@
 ---
 import BackLink from "@/components/BackLink.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
 import ReadingProgress from "@/components/ReadingProgress.astro";
 import RelatedPosts from "@/components/RelatedPosts.astro";
 import TagList from "@/components/TagList.astro";
@@ -10,9 +9,9 @@ import TOCSidebar from "@/components/TOCSidebar.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getRelatedPosts } from "@/lib/recommendations";
+import { filterTocHeadings } from "@/lib/toc";
 import { calculateReadingTime, formatBlogDate, formatReadingTime } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Calendar, Clock } from "lucide-astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -33,8 +32,7 @@ const formattedDate = formatBlogDate(publishDate);
 const formattedUpdatedDate = updatedDate ? formatBlogDate(updatedDate) : null;
 const readingTime = calculateReadingTime(post.body ?? "");
 
-// Filter headings for TOC (h2 and h3 only)
-const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const tocHeadings = filterTocHeadings(headings);
 
 // Get related posts
 const relatedPosts = await getRelatedPosts(post.slug, 3);
@@ -64,13 +62,11 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
   }}
 >
   <ReadingProgress />
-  <Header slot="header" />
   {tocHeadings.length > 0 && <TOCHeader slot="table-of-contents" headings={tocHeadings} />}
 
   <section
     class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 pb-12 page-enter"
   >
-    {/* Breadcrumb */}
     <div class="col-start-2 px-4 page-enter page-enter-delay-1">
       <Breadcrumb
         items={[
@@ -81,61 +77,44 @@ const relatedPosts = await getRelatedPosts(post.slug, 3);
       />
     </div>
 
-    {/* Post Header */}
-    <header
-      class="col-start-2 flex flex-col gap-y-4 px-4 text-center page-enter page-enter-delay-2"
-    >
-      <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
+    <header class="col-start-2 flex flex-col gap-y-4 px-4 page-enter page-enter-delay-2">
+      <h1 class="text-3xl sm:text-4xl font-semibold text-foreground">{title}</h1>
 
-      <div
-        class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
-      >
-        <div class="flex items-center gap-1.5">
-          <Calendar size={16} />
-          <time datetime={publishDate.toISOString()}>
-            {formattedDate}
-          </time>
-        </div>
-        <span class="text-border">|</span>
-        <div class="flex items-center gap-1.5">
-          <Clock size={16} />
-          <span>{formatReadingTime(readingTime)}</span>
-        </div>
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+        <time datetime={publishDate.toISOString()}>
+          {formattedDate}
+        </time>
+        <span>&middot;</span>
+        <span>{formatReadingTime(readingTime)}</span>
         {
           formattedUpdatedDate && (
             <>
-              <span class="text-border">|</span>
-              <div class="flex items-center gap-1.5">
-                <span>Updated:</span>
-                <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
-              </div>
+              <span>&middot;</span>
+              <span>
+                Updated <time datetime={updatedDate!.toISOString()}>{formattedUpdatedDate}</time>
+              </span>
             </>
           )
         }
       </div>
 
-      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
+      <p class="text-lg text-muted-foreground max-w-2xl">{description}</p>
 
-      {/* Tags */}
       <div>
-        <TagList tags={tags} class="justify-center" />
+        <TagList tags={tags} />
       </div>
     </header>
 
-    {/* Desktop TOC Sidebar */}
     {tocHeadings.length > 0 && <TOCSidebar headings={tocHeadings} />}
 
-    {/* Post Content */}
     <article class="prose col-start-2 max-w-none px-4 page-enter page-enter-delay-2">
       <Content />
     </article>
 
-    {/* Related Posts */}
     <div class="col-start-2 px-4 page-enter page-enter-delay-3">
       <RelatedPosts posts={relatedPosts} />
     </div>
 
-    {/* Back to Blog */}
     <div class="col-start-2 px-4 page-enter page-enter-delay-3">
       <BackLink href="/blog" label="Back to Blog" />
     </div>

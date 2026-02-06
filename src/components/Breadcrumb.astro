@@ -1,11 +1,21 @@
 ---
 import Link from "@/components/Link.astro";
-import { BookOpen, ChevronRight, FileText, Folder, Home, Package, Tag, User } from "lucide-astro";
+import {
+  BookOpen,
+  ChevronRight,
+  Code,
+  FileText,
+  FolderOpen,
+  Home,
+  Tag,
+  Tags,
+  User,
+} from "lucide-astro";
 
 interface BreadcrumbItem {
   label: string;
   href?: string;
-  icon?: "home" | "blog" | "blogpost" | "projects" | "project" | "about" | "tags" | "tag";
+  icon?: string;
 }
 
 interface Props {
@@ -15,42 +25,45 @@ interface Props {
 
 const { items, class: className } = Astro.props;
 
-const iconMap = {
+const ICON_MAP: Record<string, typeof Home> = {
   home: Home,
   blog: BookOpen,
   blogpost: FileText,
-  projects: Folder,
-  project: Package,
-  about: User,
-  tags: Tag,
+  projects: Code,
+  project: FolderOpen,
+  tags: Tags,
   tag: Tag,
+  about: User,
 };
 ---
 
 <nav
   aria-label="Breadcrumb"
-  class:list={["flex items-center gap-2 text-sm text-muted-foreground", className]}
+  class:list={["flex items-center gap-1.5 text-sm text-muted-foreground", className]}
 >
   {
     items.map((item, index) => {
-      const Icon = item.icon ? iconMap[item.icon] : null;
+      const IconComponent = item.icon ? ICON_MAP[item.icon] : null;
+
       return (
         <>
           {item.href ? (
             <Link
               href={item.href}
-              class="flex items-center gap-1.5 hover:text-foreground transition-colors"
+              class="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
             >
-              {Icon && <Icon size={14} />}
-              <span>{item.label}</span>
+              {IconComponent && <IconComponent size={14} />}
+              {item.label}
             </Link>
           ) : (
-            <span class="flex items-center gap-1.5 text-foreground truncate">
-              {Icon && <Icon size={14} />}
-              <span class="truncate">{item.label}</span>
+            <span class="inline-flex items-center gap-1.5 text-foreground truncate">
+              {IconComponent && <IconComponent size={14} />}
+              {item.label}
             </span>
           )}
-          {index < items.length - 1 && <ChevronRight size={14} />}
+          {index < items.length - 1 && (
+            <ChevronRight size={14} class="text-muted-foreground/40 shrink-0" />
+          )}
         </>
       );
     })
