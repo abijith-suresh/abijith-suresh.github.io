@@ -1,5 +1,4 @@
 ---
-import Header from "@/components/Header.astro";
 import Hero from "@/components/Hero.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
 import { SITE } from "@/consts";
@@ -12,21 +11,11 @@ import Layout from "@/layouts/Layout.astro";
   type="website"
   jsonLd={{ type: "website" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col px-4 max-w-3xl page-enter">
+  <div class="w-full mx-auto flex grow flex-col px-4 max-w-3xl page-enter">
     <Hero />
 
-    <!-- What I Do -->
-    <section class="py-12 border-t border-border page-enter page-enter-delay-2">
-      <h2 class="text-2xl font-semibold mb-4">What I do</h2>
-      <p class="text-muted-foreground leading-relaxed">
-        {SITE.whatIDo}
-      </p>
-    </section>
-
-    <!-- Recent Posts -->
-    <section class="py-12 border-t border-border page-enter page-enter-delay-3">
+    <section class="py-12 border-t border-border/50 page-enter page-enter-delay-2">
       <RecentPosts />
     </section>
-  </main>
+  </div>
 </Layout>
