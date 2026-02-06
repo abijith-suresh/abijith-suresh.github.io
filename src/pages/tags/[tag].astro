@@ -1,15 +1,14 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllBlogPosts, getAllBlogTags } from "@/lib/blog";
+import { groupByYear } from "@/lib/group-by-year";
 import { getAllProjects, getAllProjectTags, sortProjects } from "@/lib/projects";
 import type { CollectionEntry } from "astro:content";
-import { Tag as TagIcon } from "lucide-astro";
 
 export async function getStaticPaths() {
   const blogTags = await getAllBlogTags();
@@ -75,6 +74,8 @@ const allContent: ContentItem[] = [
     })
   ),
 ].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+
+const contentByYear = groupByYear(allContent, (item) => item.date);
 ---
 
 <Layout
@@ -82,9 +83,7 @@ const allContent: ContentItem[] = [
   description={`Content tagged with "${tag}" - ${postCount} ${postCount === 1 ? "post" : "posts"} and ${projectCount} ${projectCount === 1 ? "project" : "projects"}`}
   jsonLd={{ type: "website" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
-    <!-- Breadcrumb -->
+  <div class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
     <div class="page-enter page-enter-delay-1">
       <Breadcrumb
         items={[
@@ -95,50 +94,48 @@ const allContent: ContentItem[] = [
       />
     </div>
 
-    <!-- Tag Header -->
-    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-muted rounded-md">
-          <TagIcon size={20} class="text-muted-foreground" />
-        </div>
-        <div>
-          <h1 class="text-3xl font-bold text-foreground">{tag}</h1>
-          <p class="text-sm text-muted-foreground">
-            {totalCount}
-            {totalCount === 1 ? "item" : "items"}
-            {
-              postCount > 0 && projectCount > 0 && (
-                <span>
-                  {" "}
-                  • {postCount} {postCount === 1 ? "post" : "posts"}, {projectCount}{" "}
-                  {projectCount === 1 ? "project" : "projects"}
-                </span>
-              )
-            }
-          </p>
-        </div>
-      </div>
+    <div class="flex flex-col gap-y-2 page-enter page-enter-delay-2">
+      <h1 class="text-3xl font-semibold text-foreground">{tag}</h1>
+      <p class="text-sm text-muted-foreground">
+        {totalCount}
+        {totalCount === 1 ? "item" : "items"}
+        {
+          postCount > 0 && projectCount > 0 && (
+            <span>
+              {" "}
+              &middot; {postCount} {postCount === 1 ? "post" : "posts"}, {projectCount}{" "}
+              {projectCount === 1 ? "project" : "projects"}
+            </span>
+          )
+        }
+      </p>
     </div>
 
     {
       allContent.length > 0 ? (
-        <div class="flex flex-col gap-6">
-          {allContent.map(({ type, item }) =>
-            type === "blog" ? <BlogCard post={item} /> : <ProjectCard project={item} />
-          )}
+        <div class="flex flex-col gap-8">
+          {contentByYear.map(({ year, items: yearContent }) => (
+            <div class="flex flex-col gap-6">
+              <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                <span class="tabular-nums font-medium">{year}</span>
+                <div class="flex-1 border-t border-border/50" />
+              </div>
+              {yearContent.map(({ type, item }) =>
+                type === "blog" ? <BlogCard post={item} /> : <ProjectCard project={item} />
+              )}
+            </div>
+          ))}
         </div>
       ) : (
         <p class="text-muted-foreground text-center py-8">No content found with this tag.</p>
       )
     }
 
-    <!-- Navigation -->
     <Link
       href="/tags"
-      class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors pt-6 border-t border-border"
+      class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors pt-6 border-t border-border/50"
     >
-      <TagIcon size={16} />
-      View all tags
+      &larr; View all tags
     </Link>
-  </main>
+  </div>
 </Layout>

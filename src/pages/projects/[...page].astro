@@ -1,10 +1,10 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
 import PaginatedListLayout from "@/components/PaginatedListLayout.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
+import { groupByYear } from "@/lib/group-by-year";
 import { paginate } from "@/lib/pagination";
 import { getAllProjects, sortProjects } from "@/lib/projects";
 import type { CollectionEntry } from "astro:content";
@@ -38,6 +38,8 @@ const { items: projects, currentPage, totalPages, hasNext, hasPrev } = Astro.pro
 
 const prevUrl = hasPrev ? (currentPage === 2 ? "/projects" : `/projects/${currentPage - 1}`) : null;
 const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
+
+const projectsByYear = groupByYear(projects, (project) => project.data.startDate);
 ---
 
 <Layout
@@ -45,8 +47,7 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
   description="A collection of projects I've built, including web applications, tools, and experiments."
   jsonLd={{ type: "website" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
+  <div class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
     <div class="page-enter page-enter-delay-1">
       <Breadcrumb
         items={[
@@ -56,9 +57,8 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
       />
     </div>
 
-    <!-- Projects Page Title -->
     <div class="flex flex-col gap-y-2 page-enter page-enter-delay-2">
-      <h1 class="text-3xl font-bold text-foreground">Projects</h1>
+      <h1 class="text-3xl font-semibold text-foreground">Projects</h1>
       <p class="text-muted-foreground">
         A collection of projects I've built, ranging from web applications to CLI tools.
       </p>
@@ -76,9 +76,17 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
             hasNext={hasNext}
             ariaLabel="Project pagination"
           >
-            <div slot="items" class="flex flex-col gap-6">
-              {projects.map((project) => (
-                <ProjectCard project={project} />
+            <div slot="items" class="flex flex-col gap-8">
+              {projectsByYear.map(({ year, items: yearProjects }) => (
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span class="tabular-nums font-medium">{year}</span>
+                    <div class="flex-1 border-t border-border/50" />
+                  </div>
+                  {yearProjects.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
               ))}
             </div>
           </PaginatedListLayout>
@@ -87,5 +95,5 @@ const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
         <p class="text-muted-foreground text-center py-8">No projects to display yet.</p>
       )
     }
-  </main>
+  </div>
 </Layout>
