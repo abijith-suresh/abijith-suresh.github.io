@@ -1,10 +1,7 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
-import Link from "@/components/Link.astro";
 import { AUTHOR, SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { BookOpen } from "lucide-astro";
 ---
 
 <Layout
@@ -13,8 +10,7 @@ import { BookOpen } from "lucide-astro";
   type="profile"
   jsonLd={{ type: "person" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-10 px-4 max-w-3xl pb-12 page-enter">
+  <div class="w-full mx-auto flex grow flex-col gap-y-10 px-4 max-w-3xl pb-12 page-enter">
     <Breadcrumb
       items={[
         { label: "Home", href: "/", icon: "home" },
@@ -22,63 +18,30 @@ import { BookOpen } from "lucide-astro";
       ]}
     />
 
-    <!-- Photo + Caption -->
-    <section class="flex flex-col items-center gap-4 page-enter page-enter-delay-1">
+    <header class="flex items-center gap-5 sm:gap-6 page-enter page-enter-delay-1">
       <img
         src={AUTHOR.avatar}
         alt={AUTHOR.name}
-        class="rounded-full w-36 h-36 object-cover border-2 border-border"
+        class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover ring-2 ring-border shrink-0"
       />
-      <p class="text-sm text-muted-foreground italic">
-        Just a developer trying to figure things out.
-      </p>
-    </section>
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">About</h1>
+        <p class="mt-1.5 text-muted-foreground">{AUTHOR.tagline}</p>
+      </div>
+    </header>
 
-    <!-- Story Content -->
-    <article class="space-y-6 text-foreground/80 leading-relaxed page-enter page-enter-delay-2">
-      <!-- Intro -->
-      <p>
-        {AUTHOR.aboutIntro}
-      </p>
-
-      <!-- Journey -->
-      <p>
-        {AUTHOR.aboutJourney}
-      </p>
-
-      <!-- Why I blog -->
-      <section class="space-y-3">
-        <h2 class="text-xl font-semibold text-foreground">Why this blog?</h2>
-        <p>
-          {AUTHOR.aboutBlog}
-        </p>
-      </section>
-
-      <!-- Interests -->
-      <section class="space-y-3">
-        <h2 class="text-xl font-semibold text-foreground">When I'm not coding</h2>
-        <p>
-          {AUTHOR.aboutInterests}
-        </p>
-      </section>
-
-      <!-- CTA -->
-      <section class="space-y-4 pt-4">
-        <p>
-          If you want to connect, feel free to reach out. I'm always happy to chat about code,
-          projects, or anything else.
-        </p>
-
-        <div class="flex flex-wrap gap-3">
-          <Link
-            href="/blog"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-          >
-            <BookOpen size={16} />
-            Read my blog
-          </Link>
-        </div>
-      </section>
+    <article class="space-y-5 text-foreground/80 leading-relaxed page-enter page-enter-delay-2">
+      {AUTHOR.aboutNarrative.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
     </article>
-  </main>
+
+    <aside class="page-enter page-enter-delay-3">
+      <div class="h-px w-10 mb-6" style="background-color: var(--color-warm);" aria-hidden="true">
+      </div>
+
+      <p class="text-sm font-medium text-muted-foreground mb-3">When I'm not coding</p>
+      <div class="flex flex-wrap gap-2">
+        {AUTHOR.interests.map((interest) => <span class="tag-pill">{interest}</span>)}
+      </div>
+    </aside>
+  </div>
 </Layout>
