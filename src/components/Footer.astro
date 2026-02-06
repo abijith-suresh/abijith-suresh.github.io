@@ -5,15 +5,14 @@ import { SITE } from "@/consts";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-border">
+<footer class="border-t border-border/50">
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="flex flex-col items-center gap-6">
-      <!-- Social Links -->
       <SocialLinks class="items-center" />
 
-      <!-- Copyright -->
       <p class="text-sm text-muted-foreground">
-        © {currentYear}
+        &copy; {currentYear}
+        <span style="color: var(--color-warm);">&middot;</span>
         {SITE.author}
       </p>
     </div>

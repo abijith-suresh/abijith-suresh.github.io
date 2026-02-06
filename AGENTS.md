@@ -8,7 +8,7 @@ This document provides essential information for AI coding agents working in thi
 **Package Manager:** Bun 1.3.5+ (preferred) or npm  
 **Node Version:** v24+ (ES Module project)  
 **Site URL:** https://abijith-suresh.github.io (GitHub Pages)  
-**Description:** Personal portfolio and blog built with Astro, featuring content collections for blog posts and projects, with integrated search functionality via Pagefind.
+**Description:** Personal portfolio and blog built with Astro, featuring content collections for blog posts and projects, with integrated search functionality via FlexSearch.
 
 ## Build & Development Commands
 
@@ -21,7 +21,7 @@ bun install
 # Development server (http://localhost:4321)
 bun run dev
 
-# Production build (outputs to dist/, includes Pagefind indexing)
+# Production build (outputs to dist/)
 bun run build
 
 # Preview production build locally
@@ -223,7 +223,7 @@ src/
 │   ├── projects/    # Projects (.md, .mdx)
 │   └── config.ts    # Content schemas
 ├── layouts/         # Page layouts (Layout.astro)
-├── lib/             # Utilities (utils.ts, blog.ts, projects.ts, toc.ts, etc.)
+├── lib/             # Utilities (utils.ts, blog.ts, projects.ts, toc.ts, group-by-year.ts)
 ├── pages/           # File-based routing
 │   ├── blog/        # Blog list and post pages
 │   ├── projects/    # Project list and detail pages
@@ -232,7 +232,7 @@ src/
 │   ├── index.astro  # Home page
 │   └── rss.xml.js   # RSS feed generation
 ├── styles/          # Global CSS (global.css)
-├── themes/          # Theme-related utilities
+├── themes/          # Theme definitions (ink-and-paper.ts, index.ts, types.ts)
 ├── types/           # TypeScript type definitions
 └── consts.ts        # Site constants (SITE, NAV_LINKS, SOCIAL_LINKS, AUTHOR)
 ```
@@ -298,13 +298,21 @@ This project uses Husky and lint-staged for automated code quality checks:
 - Use single quotes (project uses double quotes)
 - Modify ESLint ignore patterns for linted files
 
+## Theme System
+
+- **Active Theme:** Ink & Paper (`src/themes/ink-and-paper.ts`)
+- **Theme Config:** `src/themes/index.ts` controls `ACTIVE_THEME`
+- **CSS Variables:** Defined in `src/styles/global.css` (`:root` for light, `[data-theme="dark"]` for dark)
+- **Warm Accent:** `--color-warm` (teal: `#4a8f8c` light / `#6db3b0` dark) used for logo, decorative lines, reading progress, tag counts, 404 number, footer dot
+- **Font:** Satoshi from Fontshare
+
 ## Astro-Specific Guidelines
 
 - **View Transitions:** Enabled with hover prefetch strategy
 - **Dark Mode:** Via `data-theme` attribute on `<html>` (light/dark)
 - **Max Width:** Use `max-w-3xl` for consistent content width
 - **Code Blocks:** Using `astro-expressive-code` with GitHub themes
-- **Script Reinitialization:** Use `astro:after-swap` event for view transitions
+- **Script Reinitialization:** Use `astro:after-swap` event for view transitions — scripts that capture DOM references must use an `init()` pattern that re-queries DOM after swap (see SearchModal.astro for reference)
 
 ## Common Utilities
 
@@ -431,9 +439,10 @@ Features: RSS feed at `/rss.xml`, auto-generated sitemap
 
 ## Recent Important Changes
 
-- **2026-01-25:** Migrated to GitHub Pages deployment, removed Vercel analytics (PR #136)
-- **2026-01-24:** Added comprehensive search modal with Pagefind integration (PR #130)
+- **2026-02-06:** Portfolio redesign — Ink & Paper theme, editorial Hero, about page with avatar, search fixes
 - **2026-01-31:** Migrated from Pagefind to FlexSearch for improved search experience (PR #176)
+- **2026-01-25:** Migrated to GitHub Pages deployment, removed Vercel analytics (PR #136)
+- **2026-01-24:** Added comprehensive search modal with FlexSearch integration (PR #130)
 - **2026-01-24:** Improved SPA-like motion and navigation (PR #135)
 - **2026-01-24:** Refactored shared content patterns and improved type safety (PR #132-#134)
 - **2026-01-17:** Added `@astrojs/rss` dependency (PR #29) - Required for RSS feed generation

@@ -1,6 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
 import { cn } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-astro";
 
 interface Props {
   title: string;
@@ -16,17 +17,31 @@ const { title, description, tags, href, meta, class: className } = Astro.props;
 
 <article class:list={cn("group", className)}>
   <Link href={href} class:list={cn("block card-hover")} prefetch="hover">
-    <div class="flex flex-col gap-2 p-4">
-      <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-        {title}
-      </h3>
+    <div class="flex flex-col gap-2 p-5">
+      <div class="flex items-start justify-between gap-3">
+        <h3
+          class="text-lg font-medium text-foreground group-hover:text-foreground transition-colors"
+        >
+          {title}
+        </h3>
+        <ArrowUpRight
+          size={16}
+          class="shrink-0 mt-1 text-muted-foreground/0 group-hover:text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </div>
       {meta && <p class="text-sm text-muted-foreground">{meta}</p>}
       <p class="text-sm text-muted-foreground line-clamp-2">
         {description}
       </p>
-      <div class="flex flex-wrap gap-2 mt-2">
-        {tags.map((tag: string) => <span class="tag-pill">{tag}</span>)}
-      </div>
+      {
+        tags.length > 0 && (
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            {tags.map((tag: string) => (
+              <span class="tag-pill">{tag}</span>
+            ))}
+          </div>
+        )
+      }
     </div>
   </Link>
 </article>

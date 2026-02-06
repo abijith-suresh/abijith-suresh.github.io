@@ -1,11 +1,9 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
 import Link from "@/components/Link.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { getAllContentTagCounts } from "@/lib/content-tags";
-import { Tag as TagIcon } from "lucide-astro";
 
 const tags = await getAllContentTagCounts();
 ---
@@ -15,9 +13,7 @@ const tags = await getAllContentTagCounts();
   description="Browse all blog posts and projects by topic. Explore tags and discover content that interests you."
   jsonLd={{ type: "website" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
-    <!-- Breadcrumb -->
+  <div class="w-full mx-auto flex grow flex-col gap-y-8 px-4 max-w-3xl pb-12 page-enter">
     <div class="page-enter page-enter-delay-1">
       <Breadcrumb
         items={[
@@ -27,30 +23,23 @@ const tags = await getAllContentTagCounts();
       />
     </div>
 
-    <!-- Header -->
-    <div class="flex flex-col gap-y-3 page-enter page-enter-delay-2">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-muted rounded-md">
-          <TagIcon size={20} class="text-muted-foreground" />
-        </div>
-        <div>
-          <h1 class="text-3xl font-bold text-foreground">All Tags</h1>
-          <p class="text-sm text-muted-foreground">Browse posts and projects by topic</p>
-        </div>
-      </div>
+    <div class="flex flex-col gap-y-2 page-enter page-enter-delay-2">
+      <h1 class="text-3xl font-semibold text-foreground">All Tags</h1>
+      <p class="text-sm text-muted-foreground">Browse posts and projects by topic</p>
     </div>
 
-    <!-- Tags -->
     {
       tags.length > 0 ? (
         <div class="flex flex-wrap gap-2">
           {tags.map(({ tag, totalCount }) => (
             <Link
               href={`/tags/${tag}`}
-              class="inline-flex items-center gap-2 px-3 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-md transition-colors group"
+              class="inline-flex items-center gap-2 px-3 py-2 border border-border/60 hover:border-border hover:bg-accent text-foreground rounded-lg transition-all"
             >
-              <span class="text-sm group-hover:text-primary transition-colors">{tag}</span>
-              <span class="text-xs text-muted-foreground">({totalCount})</span>
+              <span class="text-sm">{tag}</span>
+              <span class="text-xs" style="color: var(--color-warm);">
+                {totalCount}
+              </span>
             </Link>
           ))}
         </div>
@@ -58,5 +47,5 @@ const tags = await getAllContentTagCounts();
         <p class="text-muted-foreground text-center py-8">No tags found.</p>
       )
     }
-  </main>
+  </div>
 </Layout>

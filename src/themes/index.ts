@@ -1,28 +1,11 @@
-/**
- * Theme Configuration
- *
- * Change the active theme by modifying the export below.
- * The selected theme will be applied at build time.
- *
- * Available themes:
- * - rose-pine: Rosé Pine theme (soft, elegant colors)
- *
- * To add a new theme:
- * 1. Create a new file in src/themes/ (e.g., nord.ts)
- * 2. Export a ThemeDefinition object
- * 3. Import and add it to the themes object in index.ts
- */
-
-import rosePine from "./rose-pine";
+import inkAndPaper from "./ink-and-paper";
 import type { ThemeDefinition } from "./types";
 
-// All available themes
 export const themes = {
-  "rose-pine": rosePine,
+  "ink-and-paper": inkAndPaper,
 } as const;
 
-// Active theme - change this to switch themes
-export const ACTIVE_THEME = "rose-pine" as const;
+export const ACTIVE_THEME = "ink-and-paper" as const;
 
 // Export the active theme definition
 export const activeTheme: ThemeDefinition = themes[ACTIVE_THEME];

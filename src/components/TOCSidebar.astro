@@ -1,18 +1,13 @@
 ---
-/**
- * Desktop Table of Contents - Sticky sidebar
- * Shows all headings with active state highlighting
- */
 import type { MarkdownHeading } from "astro";
+import { filterTocHeadings } from "@/lib/toc";
 
 interface Props {
   headings: MarkdownHeading[];
 }
 
 const { headings } = Astro.props;
-
-// Filter to h2 and h3 headings
-const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const filteredHeadings = filterTocHeadings(headings);
 
 function getIndent(depth: number): string {
   return depth === 3 ? "ml-4" : "";
@@ -23,10 +18,10 @@ function getIndent(depth: number): string {
   filteredHeadings.length > 0 && (
     <div
       id="toc-sidebar-container"
-      class="sticky top-20 col-start-1 row-span-1 mr-8 ml-auto hidden h-[calc(100vh-5rem)] max-w-64 xl:block"
+      class="sticky top-20 col-start-1 row-span-1 mr-8 ml-auto hidden h-[calc(100vh-5rem)] max-w-64 lg:block"
     >
       <div class="flex max-h-[calc(100vh-8rem)] flex-col overflow-y-auto pr-4">
-        <span class="text-sm font-medium mb-3">On this page</span>
+        <span class="text-base font-semibold mb-3">On this page</span>
         <ul class="flex list-none flex-col gap-y-2" id="toc-sidebar-list">
           {filteredHeadings.map((heading) => (
             <li class:list={["text-sm text-foreground/60", getIndent(heading.depth)]}>

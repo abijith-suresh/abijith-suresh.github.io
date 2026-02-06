@@ -1,13 +1,11 @@
 ---
 import BackLink from "@/components/BackLink.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Header from "@/components/Header.astro";
 import TagList from "@/components/TagList.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { formatProjectDate } from "@/lib/projects";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Calendar } from "lucide-astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -25,8 +23,6 @@ const { project } = Astro.props;
 const { title, description, tags, startDate, endDate } = project.data;
 const { Content } = await project.render();
 const formattedDate = formatProjectDate(startDate, endDate);
-
-// Tags are included in search via the JSON index
 ---
 
 <Layout
@@ -34,9 +30,7 @@ const formattedDate = formatProjectDate(startDate, endDate);
   description={description}
   jsonLd={{ type: "article" }}
 >
-  <Header slot="header" />
-  <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12 page-enter">
-    <!-- Breadcrumb -->
+  <div class="w-full mx-auto flex grow flex-col gap-y-6 px-4 max-w-3xl pb-12 page-enter">
     <div class="page-enter page-enter-delay-1">
       <Breadcrumb
         items={[
@@ -47,37 +41,28 @@ const formattedDate = formatProjectDate(startDate, endDate);
       />
     </div>
 
-    <!-- Project Header -->
     <article class="flex flex-col gap-y-6 page-enter page-enter-delay-2">
-      <header class="flex flex-col gap-y-4 text-center">
-        <h1 class="text-3xl sm:text-4xl font-bold text-foreground">{title}</h1>
+      <header class="flex flex-col gap-y-4">
+        <h1 class="text-3xl sm:text-4xl font-semibold text-foreground">{title}</h1>
 
-        <div
-          class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
-        >
-          <div class="flex items-center gap-1.5">
-            <Calendar size={16} />
-            <time datetime={startDate.toISOString()}>{formattedDate}</time>
-          </div>
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+          <time datetime={startDate.toISOString()}>{formattedDate}</time>
         </div>
 
-        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
+        <p class="text-lg text-muted-foreground max-w-2xl">{description}</p>
 
-        <!-- Tags -->
         <div>
-          <TagList tags={tags} class="justify-center" />
+          <TagList tags={tags} />
         </div>
       </header>
 
-      <!-- Project Content -->
       <article class="prose max-w-none">
         <Content />
       </article>
     </article>
 
-    <!-- Back to Projects -->
     <div class="page-enter page-enter-delay-2">
       <BackLink href="/projects" label="Back to Projects" />
     </div>
-  </main>
+  </div>
 </Layout>

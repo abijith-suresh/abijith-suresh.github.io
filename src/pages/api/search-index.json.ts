@@ -48,7 +48,7 @@ async function generateSearchIndex(): Promise<SearchResult[]> {
       description: post.data.description,
       date: post.data.publishDate.toISOString(),
       tags: post.data.tags,
-      url: `/blog/${post.id}`,
+      url: `/blog/${post.slug}`,
       content: content.substring(0, 5000),
       type: "blog",
     });
@@ -64,7 +64,7 @@ async function generateSearchIndex(): Promise<SearchResult[]> {
       description: project.data.description,
       date: project.data.startDate.toISOString(),
       tags: project.data.tags,
-      url: `/projects/${project.id}`,
+      url: `/projects/${project.slug}`,
       content: content.substring(0, 5000),
       type: "project",
     });

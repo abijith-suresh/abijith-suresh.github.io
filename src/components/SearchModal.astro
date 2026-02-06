@@ -11,16 +11,19 @@ import { FileText, Search, X } from "lucide-astro";
   style="view-transition-name: none;"
 >
   <div
-    class="fixed left-1/2 top-0 sm:top-[10%] z-50 w-full max-w-full sm:max-w-lg md:max-w-2xl -translate-x-1/2 translate-y-0"
+    class="fixed left-0 right-0 bottom-0 sm:bottom-auto sm:left-1/2 sm:top-[10%] z-50 w-full sm:max-w-lg md:max-w-2xl sm:-translate-x-1/2"
   >
     <div
       id="search-modal-content"
-      class="relative flex flex-col h-dvh sm:h-auto sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-none sm:rounded-lg overflow-hidden"
+      class="relative flex flex-col max-h-[85dvh] sm:max-h-[85vh] bg-background shadow-lg border border-border rounded-t-xl sm:rounded-lg overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-labelledby="search-title"
       style="view-transition-name: none;"
     >
+      <div class="sm:hidden flex justify-center pt-2 pb-1">
+        <div class="w-8 h-1 rounded-full bg-border"></div>
+      </div>
       <!-- Header with Search Input -->
       <div class="flex items-center gap-3 px-4 py-4 border-b border-border">
         <Search class="w-5 h-5 text-muted-foreground shrink-0" />
@@ -173,16 +176,23 @@ import { FileText, Search, X } from "lucide-astro";
 </div>
 
 <style is:global>
-  /* Search modal animations */
   #search-modal[data-state="open"] {
-    animation: fadeIn 150ms ease-out;
+    animation: searchOverlayIn 150ms ease-out;
   }
 
   #search-modal[data-state="closed"] {
-    animation: fadeOut 150ms ease-in forwards;
+    animation: searchOverlayOut 150ms ease-in forwards;
   }
 
-  @keyframes fadeIn {
+  #search-modal[data-state="open"] #search-modal-content {
+    animation: searchContentIn 200ms ease-out;
+  }
+
+  #search-modal[data-state="closed"] #search-modal-content {
+    animation: searchContentOut 150ms ease-in forwards;
+  }
+
+  @keyframes searchOverlayIn {
     from {
       opacity: 0;
     }
@@ -191,12 +201,58 @@ import { FileText, Search, X } from "lucide-astro";
     }
   }
 
-  @keyframes fadeOut {
+  @keyframes searchOverlayOut {
     from {
       opacity: 1;
     }
     to {
       opacity: 0;
+    }
+  }
+
+  @keyframes searchContentIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes searchContentOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  @media (min-width: 640px) {
+    @keyframes searchContentIn {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes searchContentOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.98);
+      }
     }
   }
 
@@ -243,47 +299,24 @@ import { FileText, Search, X } from "lucide-astro";
   } from "@/lib/flexsearch";
   import type { SearchResult } from "@/pages/api/search-index.json";
 
-  // DOM elements
-  const modal = document.getElementById("search-modal");
-  const searchInput = document.getElementById("search-input") as HTMLInputElement;
-  const closeBtn = document.getElementById("close-search-modal");
-  const skeleton = document.getElementById("search-skeleton");
-  const emptyState = document.getElementById("search-empty");
-  const errorState = document.getElementById("search-error");
-  const resultsList = document.getElementById("search-results-list");
-  const resultsContainer = document.getElementById("results-container");
-  const footer = document.getElementById("search-footer");
-  const retryBtn = document.getElementById("retry-search");
-  const loadMoreBtn = document.getElementById("load-more-btn");
-  const loadMoreContainer = document.getElementById("load-more-container");
+  // DOM element references (re-queried on each init)
+  let modal: HTMLElement | null;
+  let searchInput: HTMLInputElement | null;
+  let skeleton: HTMLElement | null;
+  let emptyState: HTMLElement | null;
+  let errorState: HTMLElement | null;
+  let resultsList: HTMLElement | null;
+  let resultsContainer: HTMLElement | null;
+  let footer: HTMLElement | null;
+  let loadMoreBtn: HTMLElement | null;
+  let loadMoreContainer: HTMLElement | null;
 
   // State
   let isOpen = false;
   let results: SearchResult[] = [];
   let displayedCount = 10;
   let focusedIndex = -1;
-
-  // Initialize search on page load
   let indexInitialized = false;
-
-  // Set up callbacks
-  setCallbacks(
-    (searchResults) => {
-      results = searchResults;
-      displayedCount = 10;
-      renderResults();
-    },
-    (loading) => {
-      if (loading && !indexInitialized) {
-        showSkeleton();
-      }
-    },
-    (error) => {
-      if (error) {
-        showError(error);
-      }
-    }
-  );
 
   function showSkeleton() {
     skeleton?.classList.remove("hidden");
@@ -331,7 +364,6 @@ import { FileText, Search, X } from "lucide-astro";
       if (query.trim()) {
         showEmpty();
       } else {
-        // Show initial state - maybe recent items
         const allData = getAllData();
         if (allData.length > 0) {
           results = allData.slice(0, 3);
@@ -348,7 +380,6 @@ import { FileText, Search, X } from "lucide-astro";
     renderResultsList(displayResults, query);
     showResults();
 
-    // Show/hide load more button
     if (loadMoreContainer) {
       if (results.length > displayedCount) {
         loadMoreContainer.classList.remove("hidden");
@@ -416,7 +447,6 @@ import { FileText, Search, X } from "lucide-astro";
       })
       .join("");
 
-    // Update focused state
     updateFocusedResult();
   }
 
@@ -447,7 +477,6 @@ import { FileText, Search, X } from "lucide-astro";
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("search-modal-open");
 
-    // Initialize search index if not already
     if (!indexInitialized) {
       initSearchIndex().then(() => {
         indexInitialized = true;
@@ -455,7 +484,6 @@ import { FileText, Search, X } from "lucide-astro";
       });
     }
 
-    // Focus input
     setTimeout(() => {
       searchInput?.focus();
     }, 100);
@@ -469,19 +497,16 @@ import { FileText, Search, X } from "lucide-astro";
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("search-modal-open");
 
-    // Reset state
     focusedIndex = -1;
     if (searchInput) searchInput.value = "";
 
-    // Hide after animation
     setTimeout(() => {
-      modal.classList.add("hidden");
+      modal?.classList.add("hidden");
     }, 150);
   }
 
   function handleKeyDown(e: KeyboardEvent) {
     if (!isOpen) {
-      // Cmd/Ctrl + K to open
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         openModal();
@@ -489,7 +514,6 @@ import { FileText, Search, X } from "lucide-astro";
       return;
     }
 
-    // Escape to close
     if (e.key === "Escape") {
       e.preventDefault();
       closeModal();
@@ -499,14 +523,11 @@ import { FileText, Search, X } from "lucide-astro";
     const resultItems = resultsContainer?.querySelectorAll("[data-index]");
     if (!resultItems || resultItems.length === 0) return;
 
-    // Arrow navigation
     if (e.key === "ArrowDown") {
       e.preventDefault();
       focusedIndex = Math.min(focusedIndex + 1, resultItems.length - 1);
       updateFocusedResult();
-      // Scroll into view
-      const focused = resultItems[focusedIndex];
-      focused?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      resultItems[focusedIndex]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       focusedIndex = Math.max(focusedIndex - 1, -1);
@@ -514,18 +535,15 @@ import { FileText, Search, X } from "lucide-astro";
       if (focusedIndex === -1) {
         searchInput?.focus();
       } else {
-        const focused = resultItems[focusedIndex];
-        focused?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        resultItems[focusedIndex]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
     } else if (e.key === "Enter" && focusedIndex >= 0) {
       e.preventDefault();
       const focused = resultItems[focusedIndex] as HTMLElement;
-      if (focused) {
-        const href = focused.getAttribute("href");
-        if (href) {
-          window.location.href = href;
-          closeModal();
-        }
+      const href = focused?.getAttribute("href");
+      if (href) {
+        window.location.href = href;
+        closeModal();
       }
     }
   }
@@ -547,33 +565,74 @@ import { FileText, Search, X } from "lucide-astro";
     });
   }
 
-  // Event listeners
-  closeBtn?.addEventListener("click", closeModal);
-  searchInput?.addEventListener("input", handleSearchInput);
-  retryBtn?.addEventListener("click", handleRetry);
-  loadMoreBtn?.addEventListener("click", handleLoadMore);
+  function init() {
+    // Re-query all DOM elements (fresh references after view transition swap)
+    modal = document.getElementById("search-modal");
+    searchInput = document.getElementById("search-input") as HTMLInputElement;
+    skeleton = document.getElementById("search-skeleton");
+    emptyState = document.getElementById("search-empty");
+    errorState = document.getElementById("search-error");
+    resultsList = document.getElementById("search-results-list");
+    resultsContainer = document.getElementById("results-container");
+    footer = document.getElementById("search-footer");
+    loadMoreBtn = document.getElementById("load-more-btn");
+    loadMoreContainer = document.getElementById("load-more-container");
+
+    // Reset state
+    isOpen = false;
+    results = [];
+    displayedCount = 10;
+    focusedIndex = -1;
+
+    // Set up callbacks
+    setCallbacks(
+      (searchResults) => {
+        results = searchResults;
+        displayedCount = 10;
+        renderResults();
+      },
+      (loading) => {
+        if (loading && !indexInitialized) {
+          showSkeleton();
+        }
+      },
+      (error) => {
+        if (error) {
+          showError(error);
+        }
+      }
+    );
+
+    // Bind event listeners to fresh DOM elements
+    document.getElementById("close-search-modal")?.addEventListener("click", closeModal);
+    searchInput?.addEventListener("input", handleSearchInput);
+    document.getElementById("retry-search")?.addEventListener("click", handleRetry);
+    loadMoreBtn?.addEventListener("click", handleLoadMore);
+
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Expose open function globally for the header button
+    (window as Window & { openSearchModal?: () => void }).openSearchModal = openModal;
+  }
+
+  // Keyboard listener only needs to be bound once (uses document, not swapped elements)
   document.addEventListener("keydown", handleKeyDown);
 
-  // Click outside to close
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
+  // Initialize on first load and after each view transition swap
+  init();
+
+  document.addEventListener("astro:after-swap", () => {
+    clearSearchIndex();
+    indexInitialized = false;
+    init();
   });
 
-  // Expose open function globally for the header button
-  (window as Window & { openSearchModal?: () => void }).openSearchModal = openModal;
-
-  // Cleanup on page unload
   window.addEventListener("beforeunload", () => {
     clearCallbacks();
     clearSearchIndex();
-  });
-
-  // Astro view transitions support
-  document.addEventListener("astro:after-swap", () => {
-    clearCallbacks();
-    clearSearchIndex();
-    indexInitialized = false;
   });
 </script>

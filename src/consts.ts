@@ -9,12 +9,10 @@ export const SITE = {
   locale: "en-US",
 
   // Hero Section
-  greeting: "Hey, I'm Abijith",
+  greeting: "Abijith Suresh",
   role: "Software Developer",
   heroIntro:
-    "I'm a backend-focused developer who enjoys building things that work well. Currently crafting web applications with Java and Spring Boot, while exploring the broader world of software development.",
-  whatIDo:
-    "I spend most of my time working on backend systems, but I'm comfortable across the stack. I like solving problems, writing clean code, and learning new technologies. When I'm not coding, I'm probably gaming, watching anime, or reading something interesting.",
+    "I build things for the web, mostly on the backend with Java and Spring Boot. I like clean code, good documentation, and solving problems that matter. Outside of work, I'm into gaming, anime, and stories in all their forms.",
 
   // Pagination
   postsPerPage: 10,
@@ -45,12 +43,9 @@ export const AUTHOR = {
   twitterHandle: "@abijith_sh", // Kept for SEO compatibility (twitter:creator metadata)
 
   // About Page Content
-  aboutIntro:
-    "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things.",
-  aboutJourney:
-    "I got into programming because I liked the idea of building things from scratch. What started as curiosity turned into a career, and I'm still figuring things out as I go. I've worked with React, Python, and TypeScript along the way, though backend development is where I feel most at home.",
-  aboutBlog:
-    "This blog is where I document my journey—the things I learn, the problems I solve, and occasional thoughts on tech and life. It's mostly for my future self, but if you find something useful here, that's a bonus.",
-  aboutInterests:
-    "Outside of work, I'm usually gaming, watching anime or TV shows, reading, or catching up on movies. I like stories in all their forms.",
+  aboutNarrative:
+    "I'm Abijith, a software developer based in Kochi, India. I've been working professionally for about a year and a half, primarily with Java and Spring Boot on the backend side of things. I got into programming because I liked the idea of building things from scratch — what started as curiosity turned into a career, and I'm still figuring things out as I go. Along the way I've picked up React, Python, and TypeScript, though backend development is where I feel most at home.\n\nThis site is where I document my journey — the things I learn, the problems I solve, and occasional thoughts on tech and life. It's mostly for my future self, but if you find something useful here, that's a bonus.",
+
+  // Interests (for tag pills on about page)
+  interests: ["Gaming", "Anime", "Reading", "Movies & TV"],
 } as const;
