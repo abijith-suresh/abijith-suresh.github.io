@@ -1,26 +1,10 @@
-/**
- * Global Styles
- *
- * This file contains all global CSS for the portfolio site.
- * Theme colors are defined using the Rose Pine palette.
- *
- * Color System:
- * - Light mode uses Rose Pine Dawn variant
- * - Dark mode uses Rose Pine Main variant
- *
- * To change the color theme, modify the values in src/themes/
- * and update the CSS variables below accordingly.
- */
-
 @import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ==========================================================================
-   Theme Configuration (Tailwind CSS v4)
-   ========================================================================== */
-
 @theme inline {
+  --font-sans: "Satoshi", system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -48,96 +32,80 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-warm: var(--color-warm);
+  --color-warm-muted: var(--color-warm-muted);
 }
 
-/* ==========================================================================
-   Rose Pine Theme - Dawn (Light Mode)
-   https://rosepinetheme.com/palette
-   ========================================================================== */
-
 :root {
-  /* Backgrounds */
-  --background: #faf4ed; /* Base */
-  --foreground: #575279; /* Text */
+  --background: #faf8f5;
+  --foreground: #2c2c2c;
 
-  --card: #fffaf3; /* Surface */
-  --card-foreground: #575279; /* Text */
+  --card: #f3f0eb;
+  --card-foreground: #2c2c2c;
 
-  --popover: #f2e9e1; /* Overlay */
-  --popover-foreground: #575279; /* Text */
+  --popover: #ede9e3;
+  --popover-foreground: #2c2c2c;
 
-  /* Primary - Rose accent */
-  --primary: #d7827e; /* Rose */
-  --primary-foreground: #faf4ed; /* Base */
+  --primary: #2c2c2c;
+  --primary-foreground: #faf8f5;
 
-  /* Secondary */
-  --secondary: #f2e9e1; /* Overlay */
-  --secondary-foreground: #575279; /* Text */
+  --secondary: #f3f0eb;
+  --secondary-foreground: #2c2c2c;
 
-  /* Muted elements */
-  --muted: #f2e9e1; /* Overlay */
-  --muted-foreground: #9893a5; /* Muted */
+  --muted: #f3f0eb;
+  --muted-foreground: #8a8580;
 
-  /* Accent highlights */
-  --accent: #f4ede8; /* Highlight Low */
-  --accent-foreground: #575279; /* Text */
+  --accent: #ede9e3;
+  --accent-foreground: #2c2c2c;
 
-  /* Destructive (errors/warnings) */
-  --destructive: #b4637a; /* Love */
-  --destructive-foreground: #faf4ed; /* Base */
+  --destructive: #c4453a;
+  --destructive-foreground: #faf8f5;
 
-  /* Borders and inputs */
-  --border: #dfdad9; /* Highlight Med */
-  --input: #dfdad9; /* Highlight Med */
-  --ring: #d7827e; /* Rose */
+  --border: #e4dfd8;
+  --input: #e4dfd8;
+  --ring: #4a8f8c;
 
-  /* Transition durations */
+  --color-warm: #4a8f8c;
+  --color-warm-muted: #4a8f8c18;
+
   --transition-fast: 150ms;
   --transition-normal: 200ms;
   --transition-slow: 300ms;
   --ease-default: ease-out;
 }
 
-/* ==========================================================================
-   Rose Pine Theme - Main (Dark Mode)
-   https://rosepinetheme.com/palette
-   ========================================================================== */
-
 [data-theme="dark"] {
-  /* Backgrounds */
-  --background: #191724; /* Base */
-  --foreground: #e0def4; /* Text */
+  --background: #1a1a1d;
+  --foreground: #e8e4df;
 
-  --card: #1f1d2e; /* Surface */
-  --card-foreground: #e0def4; /* Text */
+  --card: #222225;
+  --card-foreground: #e8e4df;
 
-  --popover: #26233a; /* Overlay */
-  --popover-foreground: #e0def4; /* Text */
+  --popover: #2a2a2e;
+  --popover-foreground: #e8e4df;
 
-  /* Primary - Rose accent */
-  --primary: #ebbcba; /* Rose */
-  --primary-foreground: #191724; /* Base */
+  --primary: #e8e4df;
+  --primary-foreground: #1a1a1d;
 
-  /* Secondary */
-  --secondary: #26233a; /* Overlay */
-  --secondary-foreground: #e0def4; /* Text */
+  --secondary: #222225;
+  --secondary-foreground: #e8e4df;
 
-  /* Muted elements */
-  --muted: #26233a; /* Overlay */
-  --muted-foreground: #6e6a86; /* Muted */
+  --muted: #2a2a2e;
+  --muted-foreground: #8a8580;
 
-  /* Accent highlights */
-  --accent: #21202e; /* Highlight Low */
-  --accent-foreground: #e0def4; /* Text */
+  --accent: #222225;
+  --accent-foreground: #e8e4df;
 
-  /* Destructive (errors/warnings) */
-  --destructive: #eb6f92; /* Love */
-  --destructive-foreground: #191724; /* Base */
+  --destructive: #e05a4f;
+  --destructive-foreground: #1a1a1d;
 
-  /* Borders and inputs */
-  --border: #403d52; /* Highlight Med */
-  --input: #403d52; /* Highlight Med */
-  --ring: #ebbcba; /* Rose */
+  --border: #363639;
+  --input: #363639;
+  --ring: #6db3b0;
+
+  --color-warm: #6db3b0;
+  --color-warm-muted: #6db3b018;
 }
 
 /* Smooth theme transitions */
@@ -161,7 +129,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 
   /* Typography base styles */
@@ -195,93 +163,83 @@
    ========================================================================== */
 
 @layer components {
-  /* Card hover effect - used by BlogCard, ProjectCard */
   .card-hover {
-    @apply border border-border rounded-lg overflow-hidden;
-    @apply hover:bg-muted/50 transition-colors ease-in-out;
+    @apply rounded-lg overflow-hidden border border-border/60;
+    @apply hover:border-border hover:bg-accent transition-all;
     transition-duration: var(--transition-normal);
-    transition-property: background-color, border-color, color, transform, box-shadow;
   }
 
   .card-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px -18px hsl(var(--foreground) / 0.35);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.06);
   }
 
-  /* Tag pill styling - used for tags in cards and posts */
+  :where([data-theme="dark"]) .card-hover:hover {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+  }
+
   .tag-pill {
-    @apply text-xs px-2 py-1 bg-muted text-muted-foreground rounded-md;
+    @apply inline-flex items-center text-xs px-2 py-0.5 rounded-full;
+    @apply bg-muted text-muted-foreground;
   }
 
-  /* Icon button - used for social links, theme picker, search */
   .icon-button {
     @apply inline-flex items-center justify-center;
-    @apply text-foreground/60 hover:text-foreground hover:bg-muted;
-    @apply rounded-md transition-colors;
+    @apply text-foreground/60 hover:text-foreground;
+    @apply rounded-md transition-colors hover:bg-muted;
   }
 
-  /* Nav link styling */
   .nav-link {
-    @apply text-foreground/60 hover:text-foreground transition-colors;
-    position: relative;
+    @apply relative text-muted-foreground hover:text-foreground transition-colors;
   }
 
   .nav-link::after {
     content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--transition-normal) var(--ease-default);
-    opacity: 0.5;
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-foreground/40;
+    transition: width 0.2s ease-out;
   }
 
   .nav-link:hover::after {
-    transform: scaleX(1);
+    @apply w-full;
   }
 
-  /* Fade-in animation */
   .fade-in {
-    animation: fadeIn 0.6s var(--ease-default) forwards;
+    animation: fadeIn 0.35s var(--ease-default) forwards;
     opacity: 0;
   }
 
   .page-enter {
-    animation: pageEnter 0.45s var(--ease-default) both;
+    animation: pageEnter 0.4s var(--ease-default) both;
   }
 
   .page-enter-delay-1 {
-    animation-delay: 0.08s;
+    animation-delay: 0.06s;
   }
 
   .page-enter-delay-2 {
-    animation-delay: 0.16s;
+    animation-delay: 0.12s;
   }
 
   .page-enter-delay-3 {
-    animation-delay: 0.24s;
+    animation-delay: 0.18s;
   }
 
   .fade-in-delay-1 {
-    animation-delay: 0.1s;
+    animation-delay: 0.06s;
   }
 
   .fade-in-delay-2 {
-    animation-delay: 0.2s;
+    animation-delay: 0.12s;
   }
 
   .fade-in-delay-3 {
-    animation-delay: 0.3s;
+    animation-delay: 0.18s;
   }
 
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(6px);
     }
     to {
       opacity: 1;
@@ -292,7 +250,7 @@
   @keyframes pageEnter {
     from {
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(8px);
     }
     to {
       opacity: 1;
@@ -305,14 +263,14 @@
      ========================================================================== */
 
   .prose {
-    @apply text-foreground text-base leading-7;
+    @apply text-foreground text-base leading-relaxed;
 
     :where(p):not(:where(.not-prose, .not-prose *)) {
       @apply text-foreground/80 my-5;
     }
 
     :where(h1, h2, h3, h4, h5, h6):not(:where(.not-prose, .not-prose *)) {
-      @apply text-foreground scroll-mt-24 font-medium;
+      @apply text-foreground scroll-mt-24 font-semibold;
     }
 
     :first-child:not(:where(.not-prose, .not-prose *)) {
@@ -415,16 +373,16 @@
 @layer base {
   ::view-transition-old(page-main),
   ::view-transition-new(page-main) {
-    animation-duration: 220ms;
+    animation-duration: 200ms;
     animation-timing-function: var(--ease-default);
   }
 
   ::view-transition-old(page-main) {
-    animation-name: fadeOut;
+    animation-name: viewFadeOut;
   }
 
   ::view-transition-new(page-main) {
-    animation-name: fadeIn;
+    animation-name: viewFadeIn;
   }
 
   /* Theme transition animations */
@@ -435,11 +393,29 @@
   }
 
   ::view-transition-old(root) {
-    animation-name: fadeOut;
+    animation-name: viewFadeOut;
   }
 
   ::view-transition-new(root) {
-    animation-name: fadeIn;
+    animation-name: viewFadeIn;
+  }
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes viewFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
