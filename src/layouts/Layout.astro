@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
 import SearchModal from "@/components/SearchModal.astro";
 import SEO from "@/components/seo/SEO.astro";
 import JsonLd from "@/components/seo/JsonLd.astro";
@@ -35,6 +36,11 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
 
     <title>{title}</title>
 
@@ -63,7 +69,7 @@ const {
       class="bg-background/50 sticky top-0 z-50 backdrop-blur-sm"
       style="view-transition-name: site-header;"
     >
-      <slot name="header" />
+      <Header />
       <slot name="table-of-contents" />
     </header>
     <main
