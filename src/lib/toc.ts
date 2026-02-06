@@ -1,3 +1,9 @@
+import type { MarkdownHeading } from "astro";
+
+export function filterTocHeadings(headings: MarkdownHeading[]): MarkdownHeading[] {
+  return headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+}
+
 type HeadingConfig = {
   headingSelector: string;
   headerOffset: number;
