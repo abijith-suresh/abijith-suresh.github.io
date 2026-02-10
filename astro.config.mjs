@@ -1,6 +1,7 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import icon from "astro-icon";
 import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
 
@@ -39,6 +40,12 @@ export default defineConfig({
     }),
     mdx(),
     sitemap(),
+    icon({
+      include: {
+        "fa6-brands": ["bluesky", "x-twitter", "linkedin", "github"],
+        "fa6-solid": ["rss"],
+      },
+    }),
   ],
   prefetch: {
     prefetchAll: false,
