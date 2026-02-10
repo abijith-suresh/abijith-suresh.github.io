@@ -2,59 +2,18 @@ import { Index } from "flexsearch";
 
 import type { SearchResult } from "@/pages/api/search-index.json";
 
-/**
- * Search index cache key
- */
 const INDEX_CACHE_KEY = "search_index_data";
-
-/**
- * Cache version - increment when index structure changes
- */
 const INDEX_VERSION = "1.0";
-
-/**
- * Cache version key
- */
 const CACHE_VERSION_KEY = "search_index_version";
-
-/**
- * Debounce delay for search (ms)
- */
 const SEARCH_DEBOUNCE = 150;
 
-/**
- * FlexSearch index instance
- */
 let searchIndex: Index | null = null;
-
-/**
- * Search data array
- */
 let searchData: SearchResult[] = [];
-
-/**
- * Search debounce timer
- */
 let searchTimer: ReturnType<typeof setTimeout> | null = null;
-
-/**
- * Callback for search results
- */
 let resultsCallback: ((results: SearchResult[]) => void) | null = null;
-
-/**
- * Callback for loading state
- */
 let loadingCallback: ((loading: boolean) => void) | null = null;
-
-/**
- * Callback for error state
- */
 let errorCallback: ((error: string | null) => void) | null = null;
 
-/**
- * Get cached search index from localStorage
- */
 function getCachedIndex(): SearchResult[] | null {
   try {
     const cachedVersion = localStorage.getItem(CACHE_VERSION_KEY);
@@ -74,9 +33,6 @@ function getCachedIndex(): SearchResult[] | null {
   return null;
 }
 
-/**
- * Cache search index to localStorage
- */
 function cacheIndex(data: SearchResult[]): void {
   try {
     localStorage.setItem(INDEX_CACHE_KEY, JSON.stringify(data));
@@ -86,9 +42,6 @@ function cacheIndex(data: SearchResult[]): void {
   }
 }
 
-/**
- * Calculate relevance score for search results
- */
 function calculateRelevanceScore(result: SearchResult, query: string, queryLower: string): number {
   let score = 0;
   const titleLower = result.title.toLowerCase();
@@ -142,9 +95,6 @@ function calculateRelevanceScore(result: SearchResult, query: string, queryLower
   return score;
 }
 
-/**
- * Initialize the search index
- */
 export async function initSearchIndex(): Promise<void> {
   // Check cache first
   const cached = getCachedIndex();
@@ -180,9 +130,6 @@ export async function initSearchIndex(): Promise<void> {
   }
 }
 
-/**
- * Build the FlexSearch index from data
- */
 function buildIndex(): void {
   searchIndex = new Index({
     tokenize: "forward",
@@ -197,9 +144,6 @@ function buildIndex(): void {
   });
 }
 
-/**
- * Set callbacks for search state
- */
 export function setCallbacks(
   onResults: (results: SearchResult[]) => void,
   onLoading: (loading: boolean) => void,
@@ -210,18 +154,12 @@ export function setCallbacks(
   errorCallback = onError;
 }
 
-/**
- * Clear callbacks
- */
 export function clearCallbacks(): void {
   resultsCallback = null;
   loadingCallback = null;
   errorCallback = null;
 }
 
-/**
- * Perform search with debouncing
- */
 export function search(query: string): void {
   // Clear existing timer
   if (searchTimer) {
@@ -240,9 +178,6 @@ export function search(query: string): void {
   }, SEARCH_DEBOUNCE);
 }
 
-/**
- * Execute the actual search
- */
 function performSearch(query: string): void {
   if (!searchIndex || searchData.length === 0) {
     resultsCallback?.([]);
@@ -296,16 +231,10 @@ function performSearch(query: string): void {
   }
 }
 
-/**
- * Get all search data (for initial display)
- */
 export function getAllData(): SearchResult[] {
   return searchData;
 }
 
-/**
- * Clear the search index and data
- */
 export function clearSearchIndex(): void {
   searchIndex = null;
   searchData = [];
@@ -315,9 +244,6 @@ export function clearSearchIndex(): void {
   }
 }
 
-/**
- * Extract content snippet around search terms
- */
 export function extractSnippet(content: string, query: string, maxLength: number = 150): string {
   if (!content) return "";
   if (!query) return content.substring(0, maxLength) + (content.length > maxLength ? "..." : "");
@@ -340,9 +266,6 @@ export function extractSnippet(content: string, query: string, maxLength: number
   return snippet;
 }
 
-/**
- * Highlight search terms in text
- */
 export function highlightText(text: string, query: string): string {
   if (!query.trim() || !text) return text;
 

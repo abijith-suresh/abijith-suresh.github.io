@@ -4,23 +4,18 @@ import { getAllTagsWithCount } from "@/lib/utils";
 
 type Project = CollectionEntry<"projects">;
 
-/**
- * Get all projects with optional filtering
- */
 export async function getAllProjects(options?: {
   tags?: string[];
   limit?: number;
 }): Promise<Project[]> {
   let projects = await getCollection("projects");
 
-  // Filter by tags
   if (options?.tags && options.tags.length > 0) {
     projects = projects.filter((project) =>
       options.tags!.some((tag) => project.data.tags.includes(tag))
     );
   }
 
-  // Apply limit
   if (options?.limit) {
     projects = projects.slice(0, options.limit);
   }
@@ -28,9 +23,6 @@ export async function getAllProjects(options?: {
   return projects;
 }
 
-/**
- * Sort projects by different criteria
- */
 export function sortProjects(projects: Project[], sortBy: "date" | "title" = "date"): Project[] {
   const sorted = [...projects];
 
@@ -44,9 +36,6 @@ export function sortProjects(projects: Project[], sortBy: "date" | "title" = "da
   }
 }
 
-/**
- * Format project date range
- */
 export function formatProjectDate(startDate: Date, endDate?: Date): string {
   const formatMonth = (date: Date) => {
     return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
@@ -62,17 +51,11 @@ export function formatProjectDate(startDate: Date, endDate?: Date): string {
   return `${start} - ${end}`;
 }
 
-/**
- * Get all unique tags from projects with counts
- */
 export async function getAllProjectTagsWithCount(): Promise<Array<{ tag: string; count: number }>> {
   const projects = await getCollection("projects");
   return getAllTagsWithCount(projects, (project) => project.data.tags);
 }
 
-/**
- * Get all unique tags from projects (without counts)
- */
 export async function getAllProjectTags(): Promise<string[]> {
   const tagsWithCount = await getAllProjectTagsWithCount();
   return tagsWithCount.map((t) => t.tag);
