@@ -1,7 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
 import { SOCIAL_LINKS } from "@/consts";
-import { Github, Linkedin, Rss, Twitter } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   class?: string;
@@ -18,7 +18,7 @@ const { class: className, size = 20 } = Astro.props;
     class="text-muted-foreground hover:text-foreground transition-colors"
     aria-label="GitHub"
   >
-    <Github size={size} />
+    <Icon name="fa6-brands:github" width={size} height={size} />
   </Link>
   <Link
     href={SOCIAL_LINKS.x}
@@ -26,7 +26,7 @@ const { class: className, size = 20 } = Astro.props;
     class="text-muted-foreground hover:text-foreground transition-colors"
     aria-label="X (formerly Twitter)"
   >
-    <Twitter size={size} />
+    <Icon name="fa6-brands:x-twitter" width={size} height={size} />
   </Link>
   <Link
     href={SOCIAL_LINKS.linkedin}
@@ -34,7 +34,7 @@ const { class: className, size = 20 } = Astro.props;
     class="text-muted-foreground hover:text-foreground transition-colors"
     aria-label="LinkedIn"
   >
-    <Linkedin size={size} />
+    <Icon name="fa6-brands:linkedin" width={size} height={size} />
   </Link>
   <Link
     href={SOCIAL_LINKS.bluesky}
@@ -42,17 +42,13 @@ const { class: className, size = 20 } = Astro.props;
     class="text-muted-foreground hover:text-foreground transition-colors"
     aria-label="Bluesky"
   >
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path
-        d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.63 3.59 3.502 6.157 3.18-4.476.643-8.653 2.462-5.155 8.638.93 1.024 5.7 5.262 10.373-2.528C16.696 25.368 21.456 22.122 22.373 21.065c3.5-6.176-.677-7.995-5.155-8.638 2.568.322 5.373-.55 6.157-3.18.247-.828.624-5.79.624-6.479 0-.688-.138-1.86-.9-2.203-.66-.299-1.665-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"
-      ></path>
-    </svg>
+    <Icon name="fa6-brands:bluesky" width={size} height={size} />
   </Link>
   <Link
     href="/rss.xml"
     class="text-muted-foreground hover:text-foreground transition-colors"
     aria-label="RSS Feed"
   >
-    <Rss size={size} />
+    <Icon name="fa6-solid:rss" width={size} height={size} />
   </Link>
 </div>
