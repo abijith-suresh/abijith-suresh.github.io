@@ -1,0 +1,27 @@
+---
+import { FileText } from "lucide-astro";
+---
+
+<div id="search-empty" class="hidden flex-col items-center justify-center py-12 px-4 text-center">
+  <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+    <FileText class="w-8 h-8 text-muted-foreground" />
+  </div>
+  <h3 class="text-lg font-medium text-foreground mb-2">No results found</h3>
+  <p class="text-sm text-muted-foreground max-w-sm mb-6">
+    We couldn't find any matches for your search. Try different keywords or check your spelling.
+  </p>
+  <div class="flex flex-wrap gap-2 justify-center">
+    <a
+      href="/blog"
+      class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+    >
+      Browse Blog
+    </a>
+    <a
+      href="/projects"
+      class="px-4 py-2 bg-muted text-foreground rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
+    >
+      Browse Projects
+    </a>
+  </div>
+</div>
