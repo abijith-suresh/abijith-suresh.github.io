@@ -2,8 +2,7 @@
 title: "Markdown Editor with Live Preview"
 description: "A lightweight, distraction-free markdown editor with syntax highlighting and live preview."
 tags: ["TypeScript", "CodeMirror", "Vite"]
-startDate: 2025-08-01
-endDate: 2025-09-15
+date: 2025-08-01
 ---
 
 A modern markdown editor focused on writing experience, featuring a clean interface, keyboard shortcuts, and export capabilities.

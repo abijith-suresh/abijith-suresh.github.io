@@ -2,8 +2,7 @@
 title: "E-commerce Platform"
 description: "Full-stack e-commerce platform with payment integration, inventory management, and admin dashboard."
 tags: ["React", "Node.js", "mongodb", "stripe"]
-startDate: 2025-11-15
-endDate: 2025-12-20
+date: 2025-11-15
 ---
 
 A comprehensive e-commerce platform built with the MERN stack, featuring secure payment processing, real-time inventory management, and a powerful admin dashboard.

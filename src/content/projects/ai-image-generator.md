@@ -2,8 +2,7 @@
 title: "AI Image Generator"
 description: "Web app that generates images from text descriptions using AI models, with style customization options."
 tags: ["python", "flask", "stable-diffusion", "React"]
-startDate: 2025-09-01
-endDate: 2025-10-15
+date: 2025-09-01
 ---
 
 An AI-powered image generation platform that transforms text prompts into stunning images using Stable Diffusion models.

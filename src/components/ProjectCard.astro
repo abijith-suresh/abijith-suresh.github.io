@@ -1,6 +1,6 @@
 ---
 import ContentCard from "@/components/ContentCard.astro";
-import { formatProjectDate } from "@/lib/projects";
+import { formatBlogDate } from "@/lib/utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 }
 
 const { project, class: className } = Astro.props;
-const { title, description, tags, startDate, endDate } = project.data;
+const { title, description, tags, date } = project.data;
 const projectUrl = `/projects/${project.slug}`;
-const formattedDate = formatProjectDate(startDate, endDate);
+const formattedDate = formatBlogDate(date);
 ---
 
 <ContentCard

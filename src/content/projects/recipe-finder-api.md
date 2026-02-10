@@ -2,8 +2,7 @@
 title: "Recipe Finder API"
 description: "RESTful API for searching recipes by ingredients, dietary restrictions, and cuisine types with nutrition data."
 tags: ["Node.js", "express", "mongodb", "elasticsearch"]
-startDate: 2025-05-01
-endDate: 2025-06-15
+date: 2025-05-01
 ---
 
 A comprehensive recipe API that allows searching by ingredients, dietary preferences, and cuisine types, with detailed nutrition information.

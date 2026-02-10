@@ -2,8 +2,7 @@
 title: "Task Management Application"
 description: "A collaborative task management tool with real-time updates and team features."
 tags: ["React", "Node.js", "PostgreSQL", "WebSocket"]
-startDate: 2025-06-15
-endDate: 2025-11-30
+date: 2025-06-15
 ---
 
 A full-stack task management application designed for small teams, featuring real-time collaboration, project organization, and deadline tracking.

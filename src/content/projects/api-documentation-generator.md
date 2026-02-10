@@ -2,8 +2,7 @@
 title: "API Documentation Generator"
 description: "Tool that automatically generates beautiful API documentation from OpenAPI specs with interactive examples."
 tags: ["Rust", "webassembly", "svelte", "openapi"]
-startDate: 2025-01-01
-endDate: 2025-02-28
+date: 2025-01-01
 ---
 
 An automated API documentation generator that creates beautiful, interactive documentation from OpenAPI/Swagger specifications.

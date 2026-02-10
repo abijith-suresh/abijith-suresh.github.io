@@ -39,7 +39,7 @@ const { items: projects, currentPage, totalPages, hasNext, hasPrev } = Astro.pro
 const prevUrl = hasPrev ? (currentPage === 2 ? "/projects" : `/projects/${currentPage - 1}`) : null;
 const nextUrl = hasNext ? `/projects/${currentPage + 1}` : null;
 
-const projectsByYear = groupByYear(projects, (project) => project.data.startDate);
+const projectsByYear = groupByYear(projects, (project) => project.data.date);
 ---
 
 <Layout

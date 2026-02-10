@@ -4,8 +4,9 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
 import TagList from "@/components/TagList.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { formatProjectDate } from "@/lib/projects";
+import { formatBlogDate } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
+import { ExternalLink, Github } from "lucide-astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -20,9 +21,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, tags, startDate, endDate } = project.data;
+const { title, description, tags, date, github, demo } = project.data;
 const { Content } = await project.render();
-const formattedDate = formatProjectDate(startDate, endDate);
+const formattedDate = formatBlogDate(date);
 ---
 
 <Layout
@@ -46,10 +47,39 @@ const formattedDate = formatProjectDate(startDate, endDate);
         <h1 class="text-3xl sm:text-4xl font-semibold text-foreground">{title}</h1>
 
         <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-          <time datetime={startDate.toISOString()}>{formattedDate}</time>
+          <time datetime={date.toISOString()}>{formattedDate}</time>
         </div>
 
         <p class="text-lg text-muted-foreground max-w-2xl">{description}</p>
+
+        {
+          (github || demo) && (
+            <div class="flex flex-wrap gap-3">
+              {github && (
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-accent transition-colors"
+                >
+                  <Github size={16} />
+                  View Source
+                </a>
+              )}
+              {demo && (
+                <a
+                  href={demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-foreground text-background rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  <ExternalLink size={16} />
+                  Live Demo
+                </a>
+              )}
+            </div>
+          )
+        }
 
         <div>
           <TagList tags={tags} />

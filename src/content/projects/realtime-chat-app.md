@@ -2,8 +2,7 @@
 title: "Real-time Chat Application"
 description: "WebSocket-based chat app with rooms, private messages, typing indicators, and message persistence."
 tags: ["socket.io", "Node.js", "React", "PostgreSQL"]
-startDate: 2025-10-01
-endDate: 2025-11-10
+date: 2025-10-01
 ---
 
 A real-time chat application using WebSocket technology, supporting multiple chat rooms, private messaging, and rich media sharing.

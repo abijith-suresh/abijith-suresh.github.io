@@ -28,27 +28,12 @@ export function sortProjects(projects: Project[], sortBy: "date" | "title" = "da
 
   switch (sortBy) {
     case "date":
-      return sorted.sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+      return sorted.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
     case "title":
       return sorted.sort((a, b) => a.data.title.localeCompare(b.data.title));
     default:
       return sorted;
   }
-}
-
-export function formatProjectDate(startDate: Date, endDate?: Date): string {
-  const formatMonth = (date: Date) => {
-    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  };
-
-  const start = formatMonth(startDate);
-
-  if (!endDate) {
-    return `${start} - Present`;
-  }
-
-  const end = formatMonth(endDate);
-  return `${start} - ${end}`;
 }
 
 export async function getAllProjectTagsWithCount(): Promise<Array<{ tag: string; count: number }>> {

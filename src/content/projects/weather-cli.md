@@ -2,8 +2,7 @@
 title: "Weather CLI Tool"
 description: "A command-line weather application with beautiful ASCII art visualizations."
 tags: ["Rust", "CLI", "API Integration"]
-startDate: 2025-03-10
-endDate: 2025-04-05
+date: 2025-03-10
 ---
 
 A terminal-based weather application written in Rust, providing weather forecasts with beautiful ASCII art representations of weather conditions.

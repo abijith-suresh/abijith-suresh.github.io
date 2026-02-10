@@ -62,7 +62,7 @@ async function generateSearchIndex(): Promise<SearchResult[]> {
       id: project.id,
       title: project.data.title,
       description: project.data.description,
-      date: project.data.startDate.toISOString(),
+      date: project.data.date.toISOString(),
       tags: project.data.tags,
       url: `/projects/${project.slug}`,
       content: content.substring(0, 5000),
