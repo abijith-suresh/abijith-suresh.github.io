@@ -1,12 +1,14 @@
 ---
 import type { MarkdownHeading } from "astro";
 import { filterTocHeadings } from "@/lib/toc";
+import { cn } from "@/lib/utils";
 
 interface Props {
   headings: MarkdownHeading[];
+  class?: string;
 }
 
-const { headings } = Astro.props;
+const { headings, class: className } = Astro.props;
 const filteredHeadings = filterTocHeadings(headings);
 
 function getIndent(depth: number): string {
@@ -18,7 +20,10 @@ function getIndent(depth: number): string {
   filteredHeadings.length > 0 && (
     <div
       id="toc-sidebar-container"
-      class="sticky top-20 col-start-1 row-span-1 mr-8 ml-auto hidden h-[calc(100vh-5rem)] max-w-64 lg:block"
+      class:list={cn(
+        "sticky top-20 col-start-1 row-span-1 mr-8 ml-auto hidden h-[calc(100vh-5rem)] max-w-64 lg:block",
+        className
+      )}
     >
       <div class="flex max-h-[calc(100vh-8rem)] flex-col overflow-y-auto pr-4">
         <span class="text-base font-semibold mb-3">On this page</span>

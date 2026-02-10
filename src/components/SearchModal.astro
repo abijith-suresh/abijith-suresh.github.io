@@ -1,5 +1,9 @@
 ---
-import { FileText, Search, X } from "lucide-astro";
+import { Search, X } from "lucide-astro";
+import SearchModalEmpty from "@/components/SearchModalEmpty.astro";
+import SearchModalError from "@/components/SearchModalError.astro";
+import SearchModalFooter from "@/components/SearchModalFooter.astro";
+import SearchModalSkeleton from "@/components/SearchModalSkeleton.astro";
 ---
 
 <!-- Search Modal -->
@@ -45,86 +49,9 @@ import { FileText, Search, X } from "lucide-astro";
 
       <!-- Results Container -->
       <div id="search-results" class="flex-1 min-h-0 overflow-y-auto overscroll-contain">
-        <!-- Skeleton Loading State -->
-        <div id="search-skeleton" class="hidden">
-          {
-            [1, 2, 3, 4].map((_i) => (
-              <div class="p-4 border-b border-border animate-pulse">
-                <div class="flex items-start gap-3">
-                  <div class="w-4 h-4 bg-muted rounded mt-1 shrink-0" />
-                  <div class="flex-1 space-y-2">
-                    <div class="h-4 bg-muted rounded w-3/4" />
-                    <div class="h-3 bg-muted rounded w-full" />
-                    <div class="h-3 bg-muted rounded w-2/3" />
-                  </div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-
-        <!-- No Results State -->
-        <div
-          id="search-empty"
-          class="hidden flex-col items-center justify-center py-12 px-4 text-center"
-        >
-          <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-            <FileText class="w-8 h-8 text-muted-foreground" />
-          </div>
-          <h3 class="text-lg font-medium text-foreground mb-2">No results found</h3>
-          <p class="text-sm text-muted-foreground max-w-sm mb-6">
-            We couldn't find any matches for your search. Try different keywords or check your
-            spelling.
-          </p>
-          <div class="flex flex-wrap gap-2 justify-center">
-            <a
-              href="/blog"
-              class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              Browse Blog
-            </a>
-            <a
-              href="/projects"
-              class="px-4 py-2 bg-muted text-foreground rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
-            >
-              Browse Projects
-            </a>
-          </div>
-        </div>
-
-        <!-- Error State -->
-        <div
-          id="search-error"
-          class="hidden flex-col items-center justify-center py-12 px-4 text-center"
-        >
-          <div
-            class="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-4"
-          >
-            <svg
-              class="w-8 h-8 text-destructive"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              ></path>
-            </svg>
-          </div>
-          <h3 class="text-lg font-medium text-foreground mb-2">Something went wrong</h3>
-          <p class="text-sm text-muted-foreground max-w-sm mb-4">
-            Failed to load search. Please try again later.
-          </p>
-          <button
-            id="retry-search"
-            class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
-          >
-            Try Again
-          </button>
-        </div>
+        <SearchModalSkeleton />
+        <SearchModalEmpty />
+        <SearchModalError />
 
         <!-- Results List -->
         <div id="search-results-list" class="hidden">
@@ -142,35 +69,7 @@ import { FileText, Search, X } from "lucide-astro";
         </div>
       </div>
 
-      <!-- Keyboard Shortcuts Footer - only show when there are results -->
-      <div
-        id="search-footer"
-        class="hidden shrink-0 items-center justify-center border-t border-border bg-muted/50 px-4 py-3 sm:py-2 text-xs text-muted-foreground"
-      >
-        <div class="hidden sm:flex flex-wrap items-center gap-4">
-          <span>
-            <kbd
-              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
-              >↑↓</kbd
-            >{" "}
-            navigate
-          </span>
-          <span>
-            <kbd
-              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
-              >↵</kbd
-            >{" "}
-            select
-          </span>
-          <span>
-            <kbd
-              class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium"
-              >esc</kbd
-            >{" "}
-            close
-          </span>
-        </div>
-      </div>
+      <SearchModalFooter />
     </div>
   </div>
 </div>
