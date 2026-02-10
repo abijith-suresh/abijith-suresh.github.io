@@ -1,15 +1,17 @@
 ---
 import Link from "@/components/Link.astro";
+import { cn } from "@/lib/utils";
 
 interface Props {
   href: string;
   label: string;
+  class?: string;
 }
 
-const { href, label } = Astro.props;
+const { href, label, class: className } = Astro.props;
 ---
 
-<div class="pt-6 border-t border-border">
+<div class:list={cn("pt-6 border-t border-border", className)}>
   <Link
     href={href}
     class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
