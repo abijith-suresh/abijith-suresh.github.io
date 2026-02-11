@@ -1,6 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
-import { ChevronDown } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 import { filterTocHeadings } from "@/lib/toc";
 import { cn } from "@/lib/utils";
 
@@ -57,9 +57,9 @@ function getIndent(depth: number): string {
               Overview
             </span>
             <span class="text-muted-foreground ml-2">
-              <ChevronDown
-                size={16}
-                class="transition-transform duration-200 group-open:rotate-180"
+              <Icon
+                name="fa6-solid:chevron-down"
+                class="w-4 h-4 transition-transform duration-200 group-open:rotate-180"
               />
             </span>
           </div>

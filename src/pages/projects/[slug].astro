@@ -6,7 +6,7 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import { formatBlogDate } from "@/lib/utils";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { ExternalLink, Github } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -62,7 +62,7 @@ const formattedDate = formatBlogDate(date);
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-accent transition-colors"
                 >
-                  <Github size={16} />
+                  <Icon name="fa6-brands:github" class="w-4 h-4" />
                   View Source
                 </a>
               )}
@@ -73,7 +73,7 @@ const formattedDate = formatBlogDate(date);
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-foreground text-background rounded-lg hover:opacity-90 transition-opacity"
                 >
-                  <ExternalLink size={16} />
+                  <Icon name="fa6-solid:arrow-up-right-from-square" class="w-4 h-4" />
                   Live Demo
                 </a>
               )}

@@ -1,27 +1,27 @@
 ---
 import { cn } from "@/lib/utils";
-import { AlertTriangle, ChevronDown, Info, Lightbulb, ShieldAlert } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 const calloutConfig = {
   note: {
     style: "border-blue-500 bg-blue-500/5",
     textColor: "text-blue-600 dark:text-blue-400",
-    icon: Info,
+    icon: "fa6-solid:circle-info",
   },
   tip: {
     style: "border-green-500 bg-green-500/5",
     textColor: "text-green-600 dark:text-green-400",
-    icon: Lightbulb,
+    icon: "fa6-solid:lightbulb",
   },
   warning: {
     style: "border-amber-500 bg-amber-500/5",
     textColor: "text-amber-600 dark:text-amber-400",
-    icon: AlertTriangle,
+    icon: "fa6-solid:triangle-exclamation",
   },
   danger: {
     style: "border-red-500 bg-red-500/5",
     textColor: "text-red-600 dark:text-red-400",
-    icon: ShieldAlert,
+    icon: "fa6-solid:circle-exclamation",
   },
 } as const;
 
@@ -44,7 +44,6 @@ const {
 } = Astro.props;
 
 const config = calloutConfig[variant];
-const Icon = config.icon;
 const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1);
 ---
 
@@ -60,12 +59,12 @@ const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1)
       open={defaultOpen}
     >
       <summary class="flex cursor-pointer items-center font-medium list-none [&::-webkit-details-marker]:hidden">
-        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <Icon name={config.icon} class:list={cn("w-4 h-4 mr-2 shrink-0", config.textColor)} />
         <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
-        <ChevronDown
-          size={16}
+        <Icon
+          name="fa6-solid:chevron-down"
           class:list={cn(
-            "chevron ml-auto shrink-0 transition-transform duration-200",
+            "chevron w-4 h-4 ml-auto shrink-0 transition-transform duration-200",
             config.textColor
           )}
         />
@@ -83,7 +82,7 @@ const displayTitle = title || variant.charAt(0).toUpperCase() + variant.slice(1)
       )}
     >
       <div class="flex items-center font-medium mb-2">
-        <Icon size={16} class:list={cn("mr-2 shrink-0", config.textColor)} />
+        <Icon name={config.icon} class:list={cn("w-4 h-4 mr-2 shrink-0", config.textColor)} />
         <span class:list={cn("font-medium", config.textColor)}>{displayTitle}</span>
       </div>
       <div class="text-foreground/80">

@@ -3,7 +3,7 @@ import BlogCard from "@/components/BlogCard.astro";
 import Link from "@/components/Link.astro";
 import { getAllBlogPosts } from "@/lib/blog";
 import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   limit?: number;
@@ -26,7 +26,10 @@ const recentPosts = allPosts.slice(0, limit);
           prefetch="viewport"
         >
           View all
-          <ArrowRight size={14} class="transition-transform group-hover:translate-x-0.5" />
+          <Icon
+            name="fa6-solid:arrow-right"
+            class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
+          />
         </Link>
       </div>
 

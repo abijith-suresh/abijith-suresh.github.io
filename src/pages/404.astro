@@ -3,7 +3,7 @@ import Link from "@/components/Link.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
-import { ArrowLeft, Search } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout
@@ -35,14 +35,14 @@ import { ArrowLeft, Search } from "lucide-astro";
           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-foreground text-background rounded-lg hover:opacity-90 transition-opacity"
           prefetch="viewport"
         >
-          <ArrowLeft size={14} />
+          <Icon name="fa6-solid:arrow-left" class="w-3.5 h-3.5" />
           Back to Home
         </Link>
         <button
           onclick="window.openSearchModal?.()"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-accent transition-colors cursor-pointer"
         >
-          <Search size={14} />
+          <Icon name="fa6-solid:magnifying-glass" class="w-3.5 h-3.5" />
           Search the site
         </button>
       </div>

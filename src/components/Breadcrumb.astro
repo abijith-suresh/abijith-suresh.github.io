@@ -1,16 +1,6 @@
 ---
 import Link from "@/components/Link.astro";
-import {
-  BookOpen,
-  ChevronRight,
-  Code,
-  FileText,
-  FolderOpen,
-  Home,
-  Tag,
-  Tags,
-  User,
-} from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 interface BreadcrumbItem {
   label: string;
@@ -25,15 +15,15 @@ interface Props {
 
 const { items, class: className } = Astro.props;
 
-const ICON_MAP: Record<string, typeof Home> = {
-  home: Home,
-  blog: BookOpen,
-  blogpost: FileText,
-  projects: Code,
-  project: FolderOpen,
-  tags: Tags,
-  tag: Tag,
-  about: User,
+const ICON_MAP: Record<string, string> = {
+  home: "fa6-solid:house",
+  blog: "fa6-solid:book-open",
+  blogpost: "fa6-solid:file-lines",
+  projects: "fa6-solid:code",
+  project: "fa6-solid:folder-open",
+  tags: "fa6-solid:tags",
+  tag: "fa6-solid:tag",
+  about: "fa6-solid:user",
 };
 ---
 
@@ -43,7 +33,7 @@ const ICON_MAP: Record<string, typeof Home> = {
 >
   {
     items.map((item, index) => {
-      const IconComponent = item.icon ? ICON_MAP[item.icon] : null;
+      const iconName = item.icon ? ICON_MAP[item.icon] : null;
 
       return (
         <>
@@ -52,17 +42,20 @@ const ICON_MAP: Record<string, typeof Home> = {
               href={item.href}
               class="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
             >
-              {IconComponent && <IconComponent size={14} />}
+              {iconName && <Icon name={iconName} class="w-3.5 h-3.5" />}
               {item.label}
             </Link>
           ) : (
             <span class="inline-flex items-center gap-1.5 text-foreground truncate">
-              {IconComponent && <IconComponent size={14} />}
+              {iconName && <Icon name={iconName} class="w-3.5 h-3.5" />}
               {item.label}
             </span>
           )}
           {index < items.length - 1 && (
-            <ChevronRight size={14} class="text-muted-foreground/40 shrink-0" />
+            <Icon
+              name="fa6-solid:chevron-right"
+              class="w-3.5 h-3.5 text-muted-foreground/40 shrink-0"
+            />
           )}
         </>
       );
