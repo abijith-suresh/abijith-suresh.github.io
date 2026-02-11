@@ -3,6 +3,10 @@ import Hero from "@/components/Hero.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
 import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
+import { getAllBlogPosts } from "@/lib/blog";
+
+const allPosts = await getAllBlogPosts();
+const hasPosts = allPosts.length > 0;
 ---
 
 <Layout
@@ -14,8 +18,12 @@ import Layout from "@/layouts/Layout.astro";
   <div class="w-full mx-auto flex grow flex-col px-4 max-w-3xl page-enter">
     <Hero />
 
-    <section class="py-12 border-t border-border/50 page-enter page-enter-delay-2">
-      <RecentPosts />
-    </section>
+    {
+      hasPosts && (
+        <section class="py-12 border-t border-border/50 page-enter page-enter-delay-2">
+          <RecentPosts />
+        </section>
+      )
+    }
   </div>
 </Layout>

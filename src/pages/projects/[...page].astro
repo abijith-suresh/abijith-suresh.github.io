@@ -14,6 +14,22 @@ export async function getStaticPaths() {
   const totalProjects = sortedProjects.length;
   const totalPages = Math.ceil(totalProjects / SITE.projectsPerPage);
 
+  // Always generate at least the first page, even when empty
+  if (totalPages === 0) {
+    return [
+      {
+        params: { page: undefined },
+        props: {
+          items: [],
+          currentPage: 1,
+          totalPages: 0,
+          hasNext: false,
+          hasPrev: false,
+        },
+      },
+    ];
+  }
+
   // Generate paths for all pages
   return Array.from({ length: totalPages }, (_, i) => {
     const page = i + 1;
