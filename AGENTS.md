@@ -245,6 +245,7 @@ src/
 - `tsconfig.json` - TypeScript strict mode with @ path alias
 - `src/content/config.ts` - Zod schemas for content validation
 - `.lintstagedrc.json` - Lint-staged configuration for pre-commit hooks
+- `CHANGELOG.md` - Project changelog following Keep a Changelog 1.1.0 spec
 
 ## Pre-commit Hooks
 
