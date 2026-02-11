@@ -9,6 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit",
+    "new:blog": "node .scripts/new-blog.js",
+    "new:project": "node .scripts/new-project.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

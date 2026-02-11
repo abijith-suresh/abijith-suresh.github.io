@@ -1,0 +1,65 @@
+---
+title: "{{TITLE}}"
+description: "{{DESCRIPTION}}"
+publishDate: { { DATE } }
+tags: []
+draft: true
+---
+
+import Callout from "@/components/mdx/Callout.astro";
+import Image from "@/components/mdx/Image.astro";
+import Video from "@/components/mdx/Video.astro";
+
+Write your content here using Markdown and MDX components.
+
+## Section Header
+
+Your content goes here...
+
+<Callout variant="note">This is a note callout. Use it for general information.</Callout>
+
+<Callout variant="tip">This is a tip callout. Use it for helpful suggestions.</Callout>
+
+<Callout variant="warning">This is a warning callout. Use it for important cautions.</Callout>
+
+<Callout variant="danger">This is a danger callout. Use it for critical warnings.</Callout>
+
+## Available Components
+
+### Callouts
+
+```mdx
+<Callout variant="note|tip|warning|danger">Your content here</Callout>
+
+<Callout variant="tip" title="Custom Title">
+  With a custom title
+</Callout>
+
+<Callout variant="note" title="Click to expand" collapsible>
+  Collapsible content
+</Callout>
+```
+
+### Images
+
+```mdx
+<Image src="/path/to/image.jpg" alt="Descriptive alt text" caption="Optional caption" />
+```
+
+### Videos
+
+```mdx
+<Video id="YOUTUBE_VIDEO_ID" title="Video Title" />
+```
+
+## Code Blocks
+
+Use triple backticks with language:
+
+```typescript
+const greeting: string = "Hello, World!";
+```
+
+## Conclusion
+
+Wrap up your post here.

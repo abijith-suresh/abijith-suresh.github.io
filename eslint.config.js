@@ -53,6 +53,6 @@ export default [
 
   // Ignore patterns
   {
-    ignores: ["dist/", ".astro/", "node_modules/", "*.config.js", "*.config.mjs"],
+    ignores: ["dist/", ".astro/", "node_modules/", "*.config.js", "*.config.mjs", ".scripts/"],
   },
 ];
