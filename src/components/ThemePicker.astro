@@ -1,10 +1,10 @@
 ---
-import { Moon, Sun } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <button id="theme-toggle" aria-label="Toggle theme" class="icon-button p-2 cursor-pointer">
-  <Sun size={16} id="theme-icon-light" class="hidden" />
-  <Moon size={16} id="theme-icon-dark" class="hidden" />
+  <Icon name="fa6-solid:sun" class="w-4 h-4 hidden" id="theme-icon-light" />
+  <Icon name="fa6-solid:moon" class="w-4 h-4 hidden" id="theme-icon-dark" />
 </button>
 
 <script>
