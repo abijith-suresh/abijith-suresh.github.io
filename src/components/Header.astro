@@ -2,7 +2,7 @@
 import { NAV_LINKS } from "@/consts";
 import Link from "@/components/Link.astro";
 import ThemePicker from "@/components/ThemePicker.astro";
-import { Search } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <div
@@ -34,7 +34,7 @@ import { Search } from "lucide-astro";
         class="icon-button p-2"
         title="Search"
       >
-        <Search size={16} />
+        <Icon name="fa6-solid:magnifying-glass" class="w-4 h-4" />
       </button>
 
       <ThemePicker />
