@@ -1,5 +1,5 @@
 ---
-import { Search, X } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 import SearchModalEmpty from "@/components/SearchModalEmpty.astro";
 import SearchModalError from "@/components/SearchModalError.astro";
 import SearchModalFooter from "@/components/SearchModalFooter.astro";
@@ -30,7 +30,7 @@ import SearchModalSkeleton from "@/components/SearchModalSkeleton.astro";
       </div>
       <!-- Header with Search Input -->
       <div class="flex items-center gap-3 px-4 py-4 border-b border-border">
-        <Search class="w-5 h-5 text-muted-foreground shrink-0" />
+        <Icon name="fa6-solid:magnifying-glass" class="w-5 h-5 text-muted-foreground shrink-0" />
         <input
           id="search-input"
           type="text"
@@ -43,7 +43,7 @@ import SearchModalSkeleton from "@/components/SearchModalSkeleton.astro";
           class="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors shrink-0"
           aria-label="Close search"
         >
-          <X class="w-4 h-4" />
+          <Icon name="fa6-solid:xmark" class="w-4 h-4" />
         </button>
       </div>
 
