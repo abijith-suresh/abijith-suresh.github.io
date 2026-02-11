@@ -15,20 +15,26 @@ const allPosts = await getAllBlogPosts();
 const recentPosts = allPosts.slice(0, limit);
 ---
 
-<section class:list={cn("flex flex-col gap-y-4", className)}>
-  <div class="flex items-center justify-between">
-    <h2 class="text-lg font-semibold text-foreground">Latest Posts</h2>
-    <Link
-      href="/blog"
-      class="group inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      prefetch="viewport"
-    >
-      View all
-      <ArrowRight size={14} class="transition-transform group-hover:translate-x-0.5" />
-    </Link>
-  </div>
+{
+  recentPosts.length > 0 && (
+    <section class:list={cn("flex flex-col gap-y-4", className)}>
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">Latest Posts</h2>
+        <Link
+          href="/blog"
+          class="group inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          prefetch="viewport"
+        >
+          View all
+          <ArrowRight size={14} class="transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </div>
 
-  <div class="flex flex-col gap-4">
-    {recentPosts.map((post) => <BlogCard post={post} />)}
-  </div>
-</section>
+      <div class="flex flex-col gap-4">
+        {recentPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    </section>
+  )
+}
