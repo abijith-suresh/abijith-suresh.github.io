@@ -150,6 +150,98 @@ let y = 2;
 - **Props interface:** Always named `Props`
 - **Collection types:** Use `CollectionEntry<"blog">` from `astro:content`
 
+## Content Creation
+
+This project includes templates and scripts for creating new blog posts and projects.
+
+### Quick Start
+
+```bash
+# Create a new blog post
+bun run new:blog
+
+# Create a new project
+bun run new:project
+```
+
+### Blog Posts
+
+**Frontmatter Schema:**
+
+```yaml
+---
+title: "Your Post Title"
+description: "Brief description of the post"
+publishDate: 2026-01-15
+tags: ["tag1", "tag2"]
+draft: true # Set to false when ready to publish
+---
+```
+
+**Process:**
+
+1. Run `bun run new:blog`
+2. Enter title and description
+3. Choose format (md or mdx)
+4. Edit the generated file
+5. Set `draft: false` when ready to publish
+6. Commit and push
+
+**File Location:** Posts are created in `src/content/blog/YYYY/` where `YYYY` is the current year.
+
+**MDX Components:** When creating MDX posts, components are auto-imported:
+
+- `Callout` - For notes, tips, warnings, and danger alerts
+- `Image` - For images with optional captions
+- `Video` - For YouTube embeds
+
+See `.templates/mdx-cheatsheet.md` for full component documentation.
+
+### Projects
+
+**Frontmatter Schema:**
+
+```yaml
+---
+title: "Project Name"
+description: "Brief description of the project"
+date: 2026-01-15
+tags: ["React", "TypeScript"]
+github: "https://github.com/username/repo" # Optional
+demo: "https://example.com" # Optional
+---
+```
+
+**Process:**
+
+1. Run `bun run new:project`
+2. Enter title and description
+3. Optionally add GitHub and demo URLs
+4. Edit the generated file
+5. Commit and push
+
+**File Location:** Projects are created in `src/content/projects/`.
+
+### Templates
+
+All templates are stored in `.templates/`:
+
+- `blog-post.md` - Basic Markdown template
+- `blog-post.mdx` - MDX template with component imports
+- `project.md` - Project template
+- `mdx-cheatsheet.md` - Component usage reference
+- `README.md` - Template documentation
+
+### Manual Content Creation
+
+If you prefer not to use the scripts:
+
+1. Copy the appropriate template from `.templates/`
+2. Rename with a kebab-case slug (e.g., `my-post.md`)
+3. Place in the correct directory
+4. Update frontmatter fields
+5. Write content
+
 ### Component Patterns
 
 ```astro
