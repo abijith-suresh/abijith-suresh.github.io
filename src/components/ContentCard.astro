@@ -1,7 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight } from "lucide-astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   title: string;
@@ -24,9 +24,9 @@ const { title, description, tags, href, meta, class: className } = Astro.props;
         >
           {title}
         </h3>
-        <ArrowUpRight
-          size={16}
-          class="shrink-0 mt-1 text-muted-foreground/0 group-hover:text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        <Icon
+          name="fa6-solid:arrow-up-right"
+          class="w-4 h-4 shrink-0 mt-1 text-muted-foreground/0 group-hover:text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </div>
       {meta && <p class="text-sm text-muted-foreground">{meta}</p>}
