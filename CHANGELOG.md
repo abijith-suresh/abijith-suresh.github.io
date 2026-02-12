@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Portfolio redesign with Ink & Paper theme featuring editorial design, custom color palette, and Satoshi font
 - Custom AS branding favicon replacing default Astro icon
 - Font Awesome integration for social media icons
-- Avatar and flowing narrative layout on about page
+- Redesigned about page with centered layout, labeled content sections, and inline interests
 - Year-based organization for blog and project listings
 - Bluesky butterfly SVG icon
 

@@ -532,6 +532,7 @@ Features: RSS feed at `/rss.xml`, auto-generated sitemap
 
 ## Recent Important Changes
 
+- **2026-02-12:** Redesigned about page — centered layout with labeled content sections and inline interests
 - **2026-02-06:** Portfolio redesign — Ink & Paper theme, editorial Hero, about page with avatar, search fixes
 - **2026-01-31:** Migrated from Pagefind to FlexSearch for improved search experience (PR #176)
 - **2026-01-25:** Migrated to GitHub Pages deployment, removed Vercel analytics (PR #136)
