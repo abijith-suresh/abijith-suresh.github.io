@@ -2,6 +2,8 @@
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { AUTHOR, SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
+
+const paragraphs = AUTHOR.aboutNarrative.split("\n\n");
 ---
 
 <Layout
@@ -18,30 +20,80 @@ import Layout from "@/layouts/Layout.astro";
       ]}
     />
 
-    <header class="flex items-center gap-5 sm:gap-6 page-enter page-enter-delay-1">
+    <!-- Centered identity block -->
+    <header class="flex flex-col items-center text-center gap-4 page-enter page-enter-delay-1">
       <img
         src={AUTHOR.avatar}
         alt={AUTHOR.name}
-        class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover ring-2 ring-border shrink-0"
+        class="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover ring-2 ring-border"
       />
       <div>
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">About</h1>
-        <p class="mt-1.5 text-muted-foreground">{AUTHOR.tagline}</p>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+          {AUTHOR.fullName}
+        </h1>
+        <p class="mt-1.5 text-muted-foreground text-sm">{AUTHOR.tagline}</p>
       </div>
     </header>
 
-    <article class="space-y-5 text-foreground/80 leading-relaxed page-enter page-enter-delay-2">
-      {AUTHOR.aboutNarrative.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
-    </article>
+    <!-- Content sections -->
+    <div class="mx-auto max-w-2xl w-full flex flex-col gap-10">
+      <!-- Section: Background -->
+      <section class="flex flex-col gap-3 page-enter page-enter-delay-2">
+        <div class="flex items-center gap-2.5">
+          <div
+            class="w-[3px] h-4 rounded-sm shrink-0"
+            style="background-color: var(--color-warm);"
+            aria-hidden="true"
+          >
+          </div>
+          <h2 class="text-[0.8125rem] font-semibold uppercase tracking-wide text-muted-foreground">
+            Background
+          </h2>
+        </div>
+        <p class="text-foreground/80 leading-relaxed">{paragraphs[0]}</p>
+      </section>
 
-    <aside class="page-enter page-enter-delay-3">
-      <div class="h-px w-10 mb-6" style="background-color: var(--color-warm);" aria-hidden="true">
-      </div>
+      <!-- Section: This site -->
+      <section class="flex flex-col gap-3 page-enter page-enter-delay-3">
+        <div class="flex items-center gap-2.5">
+          <div
+            class="w-[3px] h-4 rounded-sm shrink-0"
+            style="background-color: var(--color-warm);"
+            aria-hidden="true"
+          >
+          </div>
+          <h2 class="text-[0.8125rem] font-semibold uppercase tracking-wide text-muted-foreground">
+            This site
+          </h2>
+        </div>
+        <p class="text-foreground/80 leading-relaxed">{paragraphs[1]}</p>
+      </section>
 
-      <p class="text-sm font-medium text-muted-foreground mb-3">When I'm not coding</p>
-      <div class="flex flex-wrap gap-2">
-        {AUTHOR.interests.map((interest) => <span class="tag-pill">{interest}</span>)}
-      </div>
-    </aside>
+      <!-- Interests -->
+      <aside class="page-enter page-enter-delay-3">
+        <div class="h-px w-full mb-8 bg-border" aria-hidden="true"></div>
+        <div class="flex flex-col gap-2.5 sm:flex-row sm:items-baseline sm:gap-4">
+          <span
+            class="text-[0.8125rem] font-semibold uppercase tracking-wide text-muted-foreground whitespace-nowrap"
+          >
+            Away from the keyboard
+          </span>
+          <span class="flex flex-wrap items-baseline gap-1">
+            {
+              AUTHOR.interests.map((interest, i) => (
+                <>
+                  <span class="text-sm text-foreground/70">{interest}</span>
+                  {i < AUTHOR.interests.length - 1 && (
+                    <span class="mx-1 font-light opacity-60" style="color: var(--color-warm);">
+                      /
+                    </span>
+                  )}
+                </>
+              ))
+            }
+          </span>
+        </div>
+      </aside>
+    </div>
   </div>
 </Layout>
