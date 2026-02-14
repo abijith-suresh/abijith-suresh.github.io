@@ -20,7 +20,7 @@ export interface SEOProps {
 const {
   title = SITE.title,
   description = SITE.description,
-  image = "/og-default.png",
+  image,
   imageAlt = `${SITE.title} - ${SITE.description}`,
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   noindex = false,
@@ -28,8 +28,18 @@ const {
   type = "website",
 } = Astro.props;
 
-const ogImage = new URL(image, Astro.site).href;
 const ogType = article ? "article" : type;
+
+// Generate dynamic OG image URL if no custom image provided
+const ogImagePath = image
+  ? image
+  : `/api/og.png?${new URLSearchParams({
+      title,
+      description,
+      type: ogType,
+    }).toString()}`;
+
+const ogImage = new URL(ogImagePath, Astro.site).href;
 ---
 
 <!-- Primary Meta Tags -->
