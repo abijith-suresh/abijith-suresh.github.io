@@ -34,6 +34,11 @@ bun run lint:fix       # Auto-fix issues
 # Formatting
 bun run format         # Auto-format with Prettier
 bun run format:check   # Check formatting only
+
+# Testing
+bun run test           # Run all tests
+bun run test:watch     # Run tests in watch mode
+bun run test:ui        # Run tests with UI
 ```
 
 ### Pre-commit Validation
@@ -48,14 +53,27 @@ If any command fails, fix the issues before committing.
 
 ### Running Tests
 
-This project does not have automated tests configured yet (see Issue #26). Validation is done through:
+This project uses [Vitest](https://vitest.dev/) for unit testing.
 
-1. **TypeScript type checking** - Runs during `bun run build`
-2. **ESLint checks** - Run `bun run lint`
-3. **Prettier formatting** - Run `bun run format:check`
-4. **Successful build** - Run `bun run build` (must complete without errors)
+```bash
+# Run all tests
+bun run test
 
-**Note:** To run a "single test", validate one specific file/component by building the project, as Astro validates all dependencies during build.
+# Run tests in watch mode
+bun run test:watch
+
+# Run tests with UI
+bun run test:ui
+```
+
+Test files live in `src/test/` and alongside source files (`*.test.ts`). A placeholder test is included at `src/test/example.test.ts`.
+
+**Additional validation:**
+
+1. **TypeScript type checking** - `bun run type-check`
+2. **ESLint checks** - `bun run lint`
+3. **Prettier formatting** - `bun run format:check`
+4. **Successful build** - `bun run build`
 
 ## DevContainer Setup
 
@@ -331,8 +349,8 @@ src/
 
 ## Key Configuration Files
 
-- `astro.config.mjs` - Astro configuration, integrations, Vite settings
-- `eslint.config.js` - ESLint flat config with TypeScript, Astro, a11y rules
+- `astro.config.ts` - Astro configuration, integrations, Vite settings
+- `eslint.config.ts` - ESLint flat config with TypeScript, Astro, a11y rules
 - `.prettierrc` - Prettier formatting config
 - `tsconfig.json` - TypeScript strict mode with @ path alias
 - `src/content/config.ts` - Zod schemas for content validation
@@ -429,101 +447,51 @@ await getAllBlogPosts({ limit: 5 });
 
 ## Git Workflow
 
-### Branch Naming Conventions
+### Branch Naming
 
-All branches should follow the `type/description` format:
-
-| Prefix      | Purpose               | Example                   |
-| ----------- | --------------------- | ------------------------- |
-| `feat/`     | New features          | `feat/add-search-modal`   |
-| `fix/`      | Bug fixes             | `fix/header-alignment`    |
-| `docs/`     | Documentation changes | `docs/update-readme`      |
-| `refactor/` | Code refactoring      | `refactor/simplify-utils` |
-| `chore/`    | Maintenance tasks     | `chore/update-deps`       |
-
-**Examples:**
-
-- `feat/add-dark-mode`
-- `fix/mobile-navigation-bug`
-- `docs/api-documentation`
+- Format: `type/description` (kebab-case)
+- Examples: `feat/add-og-images`, `fix/broken-nav`, `chore/update-deps`
+- Types: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`
 
 ### Commit Message Format
 
-Use [Conventional Commits](https://www.conventionalcommits.org/) format:
+Follows [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
 type(scope): subject
 ```
 
-**Types:**
-| Type | Description | Example |
-|------|-------------|---------|
-| `feat` | New feature | `feat: add dark mode toggle` |
-| `fix` | Bug fix | `fix: resolve mobile navigation bug` |
-| `docs` | Documentation | `docs: update README with setup instructions` |
-| `refactor` | Code refactoring | `refactor: simplify search component logic` |
-| `chore` | Maintenance | `chore: update dependencies` |
-| `test` | Adding tests | `test: add unit tests for utils` |
+- **type**: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`
+- **scope**: optional, e.g., `feat(nav): add mobile menu`
+- **subject**: present tense, ≤50 chars, no period at end
 
-**Guidelines:**
+| Type       | When to use                     |
+| ---------- | ------------------------------- |
+| `feat`     | New feature                     |
+| `fix`      | Bug fix                         |
+| `docs`     | Documentation only              |
+| `refactor` | Code change without feature/fix |
+| `chore`    | Build, deps, config             |
+| `test`     | Tests only                      |
 
-- Use present tense ("add" not "added")
-- Keep subject under 50 characters
-- Reference issue numbers when applicable: `fix: resolve header bug (#42)`
+### PR Workflow
 
-### Pull Request Workflow
+1. Pull latest main: `git checkout main && git pull origin main`
+2. Cut branch: `git checkout -b type/description`
+3. Make atomic commits (one logical change per commit)
+4. Push branch: `git push -u origin type/description`
+5. Open PR: `gh pr create --title "type: description" --body "..."`
+6. Wait for CI to pass
+7. **Merge using squash merge** (keeps main history linear)
+8. Delete branch after merge
+9. Update `CHANGELOG.md` with a summary of changes
 
-1. **Create branch from main:**
+### Key Rules
 
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b feat/your-feature-name
-   ```
-
-2. **Make atomic commits:**
-   - Each commit should represent a single logical change
-   - Write clear, descriptive commit messages
-
-3. **Push branch to origin:**
-
-   ```bash
-   git push -u origin feat/your-feature-name
-   ```
-
-4. **Create PR using gh CLI:**
-
-   ```bash
-   gh pr create --title "feat: add new feature" --body "Description of changes"
-   ```
-
-5. **Wait for CI checks to pass:**
-   - PRs require all CI checks (lint, format, build) to pass
-   - Review and address any failures
-
-6. **Merge using squash merge:**
-   - Squash all commits into a single clean commit
-   - Ensures linear history on main branch
-
-7. **Delete branch after merge:**
-   ```bash
-   git branch -d feat/your-feature-name
-   git push origin --delete feat/your-feature-name
-   ```
-
-### Pre-commit Checklist
-
-**MUST run before every commit:**
-
-```bash
-bun install && bun run lint && bun run format:check && bun run build
-```
-
-**All checks must pass.** If any fail:
-
-1. Fix the reported issues
-2. Re-run the command
-3. Only commit after success
+- Never commit directly to `main`
+- Pre-commit hook runs lint-staged automatically
+- `commit-msg` hook validates commit format via commitlint
+- Keep commits atomic — one logical change, one commit
 
 ## Site Configuration
 
